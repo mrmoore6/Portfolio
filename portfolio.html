@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael Moore - Web Designer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --black: #0d0d0d; --dark: #151515; --gold: #c9a227; --cream: #f8f4e8; --gray: #9a9a9a; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lora', Georgia, serif; line-height: 1.8; color: var(--cream); background: var(--black); }
+        h1, h2, h3 { font-family: 'Bodoni Moda', serif; font-weight: 400; letter-spacing: 0.02em; }
+        
+        .gold-frame { position: fixed; top: 0; bottom: 0; width: 12px; background: linear-gradient(180deg, var(--gold) 0%, #8b7355 50%, var(--gold) 100%); z-index: 9999; overflow: hidden; }
+        .gold-frame::after { content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 200%; background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%); animation: goldShimmer 4s ease-in-out infinite; }
+        @keyframes goldShimmer { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+        .gold-frame.left { left: 0; }
+        .gold-frame.right { right: 0; }
+        .gold-frame-top { position: fixed; top: 0; left: 12px; right: 12px; height: 12px; background: linear-gradient(90deg, var(--gold) 0%, #8b7355 50%, var(--gold) 100%); z-index: 9999; overflow: hidden; }
+        .gold-frame-top::after { content: ''; position: absolute; left: -100%; top: 0; width: 200%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%); animation: goldShimmerH 5s ease-in-out infinite; }
+        @keyframes goldShimmerH { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .gold-frame-bottom { position: fixed; bottom: 0; left: 12px; right: 12px; height: 12px; background: linear-gradient(90deg, var(--gold) 0%, #8b7355 50%, var(--gold) 100%); z-index: 9999; overflow: hidden; }
+        .gold-frame-bottom::after { content: ''; position: absolute; left: -100%; top: 0; width: 200%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%); animation: goldShimmerH 5s ease-in-out infinite 2s; }
+        
+        .content { margin: 0 12px; }
+        
+        nav { background: var(--black); padding: 2rem 5%; position: fixed; width: calc(100% - 24px); top: 12px; left: 12px; z-index: 1000; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(201,162,39,0.2); }
+        .logo { font-family: 'Bodoni Moda', serif; color: var(--gold); font-size: 1.5rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; }
+        .nav-links { display: flex; list-style: none; gap: 3rem; }
+        .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--gold); }
+        
+        .hero { background: var(--black); min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 140px 5%; }
+        .hero-label { font-size: 0.7rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; border: 1px solid var(--gold); padding: 8px 20px; display: inline-block; position: relative; overflow: hidden; }
+        .hero-label::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(201,162,39,0.12) 50%, transparent 100%); animation: labelShimmer 4s ease-in-out infinite; }
+        @keyframes labelShimmer { 0%, 100% { left: -100%; } 50% { left: 100%; } }
+        .hero h1 { font-size: 4rem; color: var(--cream); line-height: 1.15; max-width: 700px; margin-bottom: 2rem; }
+        .hero h1 em { font-style: italic; color: var(--gold); }
+        .hero p { font-size: 1.05rem; max-width: 500px; color: var(--gray); margin-bottom: 3rem; }
+        .btn { display: inline-block; padding: 16px 50px; background: var(--gold); color: var(--black); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; transition: all 0.3s; position: relative; overflow: hidden; }
+        .btn::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%); animation: btnShimmer 3.5s ease-in-out infinite; }
+        @keyframes btnShimmer { 0%, 100% { left: -100%; } 50%, 55% { left: 100%; } }
+        .btn:hover { background: var(--cream); }
+        
+        .divider { display: flex; align-items: center; justify-content: center; padding: 3rem 0; }
+        .divider-line { width: 100px; height: 1px; background: var(--gold); position: relative; overflow: hidden; }
+        .divider-line::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%); animation: dividerShimmer 3s ease-in-out infinite; }
+        @keyframes dividerShimmer { 0%, 100% { left: -100%; } 50% { left: 100%; } }
+        .divider-icon { margin: 0 1.5rem; color: var(--gold); font-size: 0.8rem; animation: iconPulse 3s ease-in-out infinite; }
+        @keyframes iconPulse { 0%, 100% { opacity: 1; text-shadow: 0 0 3px rgba(201,162,39,0.3); } 50% { opacity: 0.85; text-shadow: 0 0 8px rgba(201,162,39,0.4); } }
+        
+        .services { padding: 100px 5%; background: var(--dark); }
+        .section-label { font-size: 0.7rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); text-align: center; margin-bottom: 1rem; }
+        .section-title { text-align: center; font-size: 2.8rem; color: var(--cream); margin-bottom: 4rem; }
+        .section-title em { font-style: italic; color: var(--gold); }
+        .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 1400px; margin: 0 auto; }
+        .service-card { background: var(--dark); padding: 2rem 1.5rem; text-align: center; }
+        .service-num { font-family: 'Bodoni Moda', serif; font-size: 3rem; color: rgba(201,162,39,0.15); margin-bottom: 1rem; }
+        .service-card h3 { font-size: 1.2rem; color: var(--cream); margin-bottom: 1rem; letter-spacing: 0.05em; }
+        .service-card p { color: var(--gray); font-size: 0.9rem; }
+        
+        .portfolio { padding: 100px 5%; background: var(--black); }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+        .portfolio-item { position: relative; overflow: hidden; border: 1px solid rgba(201,162,39,0.2); }
+        .portfolio-item img { width: 100%; height: 280px; object-fit: cover; filter: grayscale(100%); transition: all 0.5s; }
+        .portfolio-item:hover img { filter: grayscale(0%); }
+        .portfolio-item::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(201,162,39,0.15) 0%, transparent 50%); opacity: 0; transition: opacity 0.3s ease; z-index: 2; pointer-events: none; }
+        .portfolio-item:hover::before { opacity: 1; }
+        .portfolio-overlay { position: absolute; inset: 0; background: linear-gradient(transparent 30%, rgba(0,0,0,0.95)); display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem; }
+        .portfolio-overlay h3 { font-size: 1.4rem; color: var(--cream); margin-bottom: 0.5rem; }
+        .portfolio-overlay p { color: var(--gray); font-size: 0.85rem; }
+        .portfolio-tags { margin-top: 1rem; display: flex; gap: 1rem; }
+        .portfolio-tag { color: var(--gold); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; position: relative; }
+        .portfolio-tag::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: tagShimmer 3s ease-in-out infinite; }
+        @keyframes tagShimmer { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.5; } }
+        
+        .about { padding: 100px 5%; background: var(--dark); }
+        .about-container { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr; gap: 4rem; align-items: center; }
+        .about-image { position: relative; border: 1px solid var(--gold); padding: 15px; }
+        .about-image img { width: 100%; display: block; }
+        .about-content h2 { font-size: 2.2rem; color: var(--cream); margin-bottom: 1.5rem; }
+        .about-content h2 em { font-style: italic; color: var(--gold); }
+        .about-content p { color: var(--gray); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .skills { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+        .skill { color: var(--gold); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 10px 18px; border: 1px solid var(--gold); position: relative; overflow: hidden; }
+        .skill::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(201,162,39,0.08) 50%, transparent 100%); animation: skillShimmer 4s ease-in-out infinite; }
+        .skill:nth-child(2)::after { animation-delay: 0.5s; }
+        .skill:nth-child(3)::after { animation-delay: 1s; }
+        .skill:nth-child(4)::after { animation-delay: 1.5s; }
+        .skill:nth-child(5)::after { animation-delay: 2s; }
+        @keyframes skillShimmer { 0%, 100% { left: -100%; } 50% { left: 100%; } }
+        
+        .contact { padding: 100px 5%; background: var(--black); text-align: center; }
+        .contact h2 { font-size: 2.8rem; color: var(--cream); margin-bottom: 1.5rem; }
+        .contact h2 em { font-style: italic; color: var(--gold); }
+        .contact p { color: var(--gray); margin-bottom: 2.5rem; max-width: 450px; margin-left: auto; margin-right: auto; }
+        .contact-email { font-family: 'Bodoni Moda', serif; font-size: 1.6rem; color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 5px; position: relative; overflow: hidden; }
+        .contact-email::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); animation: emailShimmer 4s linear infinite alternate; }
+        @keyframes emailShimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .contact-email:hover { color: var(--cream); border-color: var(--cream); }
+        .social-links { margin-top: 3rem; display: flex; justify-content: center; gap: 2rem; }
+        .social-links a { color: var(--gray); text-decoration: none; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; }
+        .social-links a:hover { color: var(--gold); }
+        
+        footer { background: var(--dark); color: var(--gray); text-align: center; padding: 2.5rem; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; border-top: 1px solid rgba(201,162,39,0.2); }
+        
+        .cursor-spotlight { position: fixed; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(201,162,39,0.08) 0%, rgba(201,162,39,0.03) 40%, transparent 70%); pointer-events: none; transform: translate(-50%, -50%); z-index: 9998; transition: opacity 0.3s ease; }
+        
+        .gold-rain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9997; overflow: hidden; }
+        .gold-particle { position: absolute; width: 2px; height: 8px; background: linear-gradient(180deg, rgba(201,162,39,0.6), rgba(201,162,39,0)); border-radius: 50%; animation: rainFall linear infinite; }
+        @keyframes rainFall { 0% { transform: translateY(-10px) rotate(15deg); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(100vh) rotate(15deg); opacity: 0; } }
+        
+        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .about-container { grid-template-columns: 1fr; } .portfolio-grid { grid-template-columns: 1fr; } .nav-links { display: none; } .gold-frame, .gold-frame-top, .gold-frame-bottom { display: none; } .content { margin: 0; } nav { width: 100%; left: 0; top: 0; } }
+    </style>
+</head>
+<body>
+    <div class="gold-frame left"></div>
+    <div class="gold-frame right"></div>
+    <div class="gold-frame-top"></div>
+    <div class="gold-frame-bottom"></div>
+    
+    <div class="content">
+        <nav>
+            <div class="logo">Michael Moore</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Work</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <section class="hero" id="home">
+            <span class="hero-label">Web Designer</span>
+            <h1>Designing <em>Digital</em> Experiences with Soul</h1>
+            <p>I craft bespoke websites that blend timeless aesthetics with modern functionality. Every pixel placed with purpose.</p>
+            <a href="#portfolio" class="btn">View Portfolio</a>
+        </section>
+
+        <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+
+        <section class="services" id="services">
+            <p class="section-label">What I Do</p>
+            <h2 class="section-title">Services <em>Offered</em></h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-num">01</div>
+                    <h3>Web Design</h3>
+                    <p>Bespoke designs that capture your brand essence.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-num">02</div>
+                    <h3>Brand Identity</h3>
+                    <p>Cohesive visual systems across every touchpoint.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-num">03</div>
+                    <h3>E-Commerce</h3>
+                    <p>Elegant stores designed to convert browsers.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-num">04</div>
+                    <h3>UI/UX Design</h3>
+                    <p>Intuitive interfaces for seamless journeys.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="portfolio" id="portfolio">
+            <p class="section-label">Selected Work</p>
+            <h2 class="section-title">Recent <em>Projects</em></h2>
+            <div class="portfolio-grid">
+                <a href="../Michael%20Moore%20Profolio/techflow.html" class="portfolio-item" style="text-decoration:none;">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="TechFlow">
+                    <div class="portfolio-overlay">
+                        <h3>TechFlow</h3>
+                        <p>Landing page for a modern SaaS startup</p>
+                        <div class="portfolio-tags"><span class="portfolio-tag">Web Design</span></div>
+                    </div>
+                </a>
+                <a href="savory-bites.html" class="portfolio-item" style="text-decoration:none;">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80" alt="Savory Bites">
+                    <div class="portfolio-overlay">
+                        <h3>Savory Bites</h3>
+                        <p>Restaurant website with reservations</p>
+                        <div class="portfolio-tags"><span class="portfolio-tag">Restaurant</span></div>
+                    </div>
+                </a>
+                <a href="../Michael%20Moore%20Profolio/stylehub.html" class="portfolio-item" style="text-decoration:none;">
+                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80" alt="StyleHub">
+                    <div class="portfolio-overlay">
+                        <h3>StyleHub</h3>
+                        <p>E-commerce platform for fashion</p>
+                        <div class="portfolio-tags"><span class="portfolio-tag">E-Commerce</span></div>
+                    </div>
+                </a>
+                <a href="workspace-co.html" class="portfolio-item" style="text-decoration:none;">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" alt="Workspace">
+                    <div class="portfolio-overlay">
+                        <h3>Workspace Co</h3>
+                        <p>Corporate website for coworking</p>
+                        <div class="portfolio-tags"><span class="portfolio-tag">Corporate</span></div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <p class="section-label">About</p>
+            <h2 class="section-title">The <em>Designer</em></h2>
+            <div class="about-container">
+                <div class="about-image">
+                    <img src="../Downloads/Self Portait cropped  copy.png" alt="Michael Moore">
+                </div>
+                <div class="about-content">
+                    <h2>Hello, I'm <em>Michael</em></h2>
+                    <p>With an eye for detail and a passion for elegant design, I create digital experiences that stand the test of time.</p>
+                    <p>Based in Iowa, I work with clients worldwide to bring their visions to life through thoughtful, purposeful design.</p>
+                    <div class="skills">
+                        <span class="skill">Photoshop</span>
+                        <span class="skill">Illustrator</span>
+                        <span class="skill">Figma</span>
+                        <span class="skill">HTML/CSS</span>
+                        <span class="skill">UI/UX</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <p class="section-label">Get In Touch</p>
+            <h2>Let's <em>Collaborate</em></h2>
+            <p>Have a project in mind? I'd love to hear about it.</p>
+            <a href="mailto:contact@michaelmoore.design" class="contact-email">contact@michaelmoore.design</a>
+            <div class="social-links">
+                <a href="#">LinkedIn</a>
+                <a href="#">Behance</a>
+                <a href="#">Instagram</a>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2025 Michael Moore. All Rights Reserved.</p>
+        </footer>
+    </div>
+<div class="cursor-spotlight"></div>
+    <div class="gold-rain"></div>
+    <script>
+        document.querySelectorAll('.portfolio-item').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.setProperty('--mouse-x', x + '%');
+                card.style.setProperty('--mouse-y', y + '%');
+            });
+        });
+
+        const spotlight = document.querySelector('.cursor-spotlight');
+        document.addEventListener('mousemove', (e) => {
+            spotlight.style.left = e.clientX + 'px';
+            spotlight.style.top = e.clientY + 'px';
+        });
+
+        // Gold rain effect
+        const goldRain = document.querySelector('.gold-rain');
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'gold-particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            particle.style.opacity = Math.random() * 0.3 + 0.1;
+            goldRain.appendChild(particle);
+            setTimeout(() => particle.remove(), 7000);
+        }
+        setInterval(createParticle, 200);
+    </script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savory Bites - Fine Dining Experience</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lato', sans-serif; line-height: 1.6; color: #333; }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+        
+        /* Navigation */
+        nav { background: transparent; padding: 1.5rem 5%; position: fixed; width: 100%; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; transition: background 0.3s; }
+        nav.scrolled { background: #2c1810; }
+        .logo { color: #D4AF37; font-size: 1.8rem; font-weight: 700; font-family: 'Playfair Display', serif; font-style: italic; }
+        .nav-links { display: flex; list-style: none; gap: 2.5rem; }
+        .nav-links a { color: #fff; text-decoration: none; transition: color 0.3s; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
+        .nav-links a:hover { color: #D4AF37; }
+        .nav-btn { background: transparent; color: #D4AF37; padding: 12px 30px; border: 2px solid #D4AF37; text-decoration: none; font-weight: 600; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
+        .nav-btn:hover { background: #D4AF37; color: #2c1810; }
+        
+        /* Hero Section */
+        .hero { background: linear-gradient(rgba(44,24,16,0.7), rgba(44,24,16,0.8)), url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920') center/cover; color: #fff; padding: 200px 5% 150px; text-align: center; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .hero-subtitle { color: #D4AF37; text-transform: uppercase; letter-spacing: 4px; font-size: 0.9rem; margin-bottom: 1rem; }
+        .hero h1 { font-size: 4rem; margin-bottom: 1.5rem; max-width: 800px; line-height: 1.2; }
+        .hero p { font-size: 1.2rem; max-width: 600px; margin-bottom: 2.5rem; opacity: 0.9; font-weight: 300; }
+        .btn-primary { background: #D4AF37; color: #2c1810; padding: 15px 45px; text-decoration: none; font-weight: 600; transition: all 0.3s; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; }
+        .btn-primary:hover { background: #c9a227; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(212,175,55,0.3); }
+        
+        /* About Section */
+        .about { padding: 120px 5%; background: #fff; }
+        .about-container { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; max-width: 1200px; margin: 0 auto; align-items: center; }
+        .about-image { height: 500px; background: linear-gradient(rgba(44,24,16,0.3), rgba(44,24,16,0.3)), url('https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800') center/cover; border-radius: 5px; }
+        .about-content .section-subtitle { color: #D4AF37; text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem; margin-bottom: 1rem; }
+        .about-content h2 { font-size: 2.8rem; color: #2c1810; margin-bottom: 1.5rem; line-height: 1.2; }
+        .about-content p { color: #666; margin-bottom: 1.5rem; font-size: 1.05rem; }
+        .signature { font-family: 'Playfair Display', serif; font-style: italic; color: #2c1810; font-size: 1.3rem; margin-top: 2rem; }
+        
+        /* Menu Section */
+        .menu { padding: 120px 5%; background: #f9f6f2; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header .section-subtitle { color: #D4AF37; text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem; margin-bottom: 1rem; }
+        .section-header h2 { font-size: 2.8rem; color: #2c1810; }
+        .menu-categories { display: flex; justify-content: center; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; }
+        .menu-category { background: transparent; border: none; padding: 10px 25px; font-family: 'Lato', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; color: #666; transition: all 0.3s; border-bottom: 2px solid transparent; }
+        .menu-category.active, .menu-category:hover { color: #D4AF37; border-bottom-color: #D4AF37; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+        .menu-item { display: flex; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid #e0d6cc; }
+        .menu-item-info h4 { font-size: 1.2rem; color: #2c1810; margin-bottom: 0.3rem; }
+        .menu-item-info p { color: #888; font-size: 0.95rem; }
+        .menu-item-price { color: #D4AF37; font-size: 1.2rem; font-weight: 600; }
+        
+        /* Specials Section */
+        .specials { padding: 120px 5%; background: #2c1810; color: #fff; }
+        .specials .section-header h2 { color: #fff; }
+        .specials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .special-card { background: rgba(255,255,255,0.05); border-radius: 5px; overflow: hidden; transition: all 0.3s; }
+        .special-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.1); }
+        .special-image { height: 250px; background: linear-gradient(rgba(44,24,16,0.2), rgba(44,24,16,0.2)), url('https://images.unsplash.com/photo-1544025162-d76694265947?w=600') center/cover; }
+        .special-card:nth-child(2) .special-image { background-image: linear-gradient(rgba(44,24,16,0.2), rgba(44,24,16,0.2)), url('https://images.unsplash.com/photo-1559847844-5315695dadae?w=600'); background-position: center; background-size: cover; }
+        .special-card:nth-child(3) .special-image { background-image: linear-gradient(rgba(44,24,16,0.2), rgba(44,24,16,0.2)), url('https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600'); background-position: center; background-size: cover; }
+        .special-content { padding: 1.5rem; }
+        .special-content h3 { color: #D4AF37; margin-bottom: 0.5rem; font-size: 1.3rem; }
+        .special-content p { opacity: 0.8; font-size: 0.95rem; }
+        
+        /* Reservation Section */
+        .reservation { padding: 120px 5%; background: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920') center/cover fixed; position: relative; }
+        .reservation::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(44,24,16,0.9); }
+        .reservation-content { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; text-align: center; color: #fff; }
+        .reservation-content .section-subtitle { color: #D4AF37; text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem; margin-bottom: 1rem; }
+        .reservation-content h2 { font-size: 2.8rem; margin-bottom: 1.5rem; }
+        .reservation-content p { opacity: 0.9; margin-bottom: 2rem; }
+        .reservation-form { display: grid; gap: 1rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .reservation-form input, .reservation-form select { padding: 15px 20px; border: 1px solid rgba(255,255,255,0.3); background: transparent; color: #fff; font-family: 'Lato', sans-serif; font-size: 1rem; }
+        .reservation-form input::placeholder { color: rgba(255,255,255,0.6); }
+        .reservation-form button { background: #D4AF37; color: #2c1810; padding: 18px 45px; border: none; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; cursor: pointer; transition: all 0.3s; margin-top: 1rem; }
+        .reservation-form button:hover { background: #c9a227; }
+        
+        /* Testimonials */
+        .testimonials { padding: 120px 5%; background: #fff; }
+        .testimonial-slider { max-width: 800px; margin: 0 auto; text-align: center; }
+        .testimonial-text { font-size: 1.5rem; font-style: italic; color: #2c1810; margin-bottom: 2rem; line-height: 1.8; font-family: 'Playfair Display', serif; }
+        .testimonial-author { color: #D4AF37; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; }
+        
+        /* Footer */
+        footer { background: #1a0f0a; color: #fff; padding: 80px 5% 30px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto 4rem; }
+        .footer-col h4 { color: #D4AF37; margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .footer-col p { opacity: 0.7; line-height: 1.8; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 0.8rem; }
+        .footer-col ul a { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.3s; }
+        .footer-col ul a:hover { color: #D4AF37; }
+        .footer-logo { font-family: 'Playfair Display', serif; font-size: 2rem; color: #D4AF37; font-style: italic; margin-bottom: 1rem; }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.6; font-size: 0.9rem; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .about-container { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Savory Bites</div>
+        <ul class="nav-links">
+            <li><a href="#about">Our Story</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#specials">Specials</a></li>
+            <li><a href="#reservation">Reservations</a></li>
+        </ul>
+        <a href="#reservation" class="nav-btn">Book a Table</a>
+    </nav>
+
+    <section class="hero">
+        <p class="hero-subtitle">Welcome to Savory Bites</p>
+        <h1>A Fine Dining Experience Like No Other</h1>
+        <p>Indulge in exquisite cuisine crafted with passion, using only the finest locally-sourced ingredients.</p>
+        <a href="#reservation" class="btn-primary">Reserve Your Table</a>
+    </section>
+
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-image"></div>
+            <div class="about-content">
+                <p class="section-subtitle">Our Story</p>
+                <h2>A Passion for Culinary Excellence</h2>
+                <p>Founded in 2010, Savory Bites has been serving exceptional cuisine that celebrates the art of fine dining. Our award-winning chef brings over 20 years of experience from Michelin-starred restaurants around the world.</p>
+                <p>Every dish tells a story, combining traditional techniques with innovative flavors. We source our ingredients from local farms and sustainable suppliers, ensuring that each plate reflects our commitment to quality and freshness.</p>
+                <p class="signature">- Chef Marcus Williams</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="menu" id="menu">
+        <div class="section-header">
+            <p class="section-subtitle">Culinary Delights</p>
+            <h2>Our Menu</h2>
+        </div>
+        <div class="menu-categories">
+            <button class="menu-category active">Starters</button>
+            <button class="menu-category">Main Course</button>
+            <button class="menu-category">Desserts</button>
+            <button class="menu-category">Beverages</button>
+        </div>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <div class="menu-item-info">
+                    <h4>Truffle Arancini</h4>
+                    <p>Crispy risotto balls with black truffle and parmesan</p>
+                </div>
+                <span class="menu-item-price">$18</span>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-info">
+                    <h4>Seared Scallops</h4>
+                    <p>Pan-seared scallops with cauliflower puree and caviar</p>
+                </div>
+                <span class="menu-item-price">$24</span>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-info">
+                    <h4>Beef Carpaccio</h4>
+                    <p>Thinly sliced wagyu with arugula and aged balsamic</p>
+                </div>
+                <span class="menu-item-price">$22</span>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-info">
+                    <h4>Lobster Bisque</h4>
+                    <p>Creamy soup with fresh lobster and cognac</p>
+                </div>
+                <span class="menu-item-price">$19</span>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-info">
+                    <h4>Foie Gras Terrine</h4>
+                    <p>With brioche toast and fig compote</p>
+                </div>
+                <span class="menu-item-price">$28</span>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-info">
+                    <h4>Burrata Salad</h4>
+                    <p>Fresh burrata with heirloom tomatoes and basil oil</p>
+                </div>
+                <span class="menu-item-price">$16</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="specials" id="specials">
+        <div class="section-header">
+            <p class="section-subtitle">Chef's Selection</p>
+            <h2>Today's Specials</h2>
+        </div>
+        <div class="specials-grid">
+            <div class="special-card">
+                <div class="special-image"></div>
+                <div class="special-content">
+                    <h3>Wagyu Ribeye</h3>
+                    <p>A5 Japanese wagyu with roasted vegetables and red wine reduction. A true delicacy for meat lovers.</p>
+                </div>
+            </div>
+            <div class="special-card">
+                <div class="special-image"></div>
+                <div class="special-content">
+                    <h3>Mediterranean Sea Bass</h3>
+                    <p>Fresh catch of the day with saffron risotto and lemon butter sauce.</p>
+                </div>
+            </div>
+            <div class="special-card">
+                <div class="special-image"></div>
+                <div class="special-content">
+                    <h3>Chocolate Soufflé</h3>
+                    <p>Warm chocolate soufflé with vanilla bean ice cream and raspberry coulis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reservation" id="reservation">
+        <div class="reservation-content">
+            <p class="section-subtitle">Join Us</p>
+            <h2>Make a Reservation</h2>
+            <p>Reserve your table for an unforgettable dining experience. For parties larger than 8, please call us directly.</p>
+            <form class="reservation-form">
+                <div class="form-row">
+                    <input type="text" placeholder="Your Name">
+                    <input type="email" placeholder="Email Address">
+                </div>
+                <div class="form-row">
+                    <input type="date">
+                    <input type="time">
+                </div>
+                <div class="form-row">
+                    <select>
+                        <option>Number of Guests</option>
+                        <option>1 Guest</option>
+                        <option>2 Guests</option>
+                        <option>3 Guests</option>
+                        <option>4 Guests</option>
+                        <option>5 Guests</option>
+                        <option>6 Guests</option>
+                        <option>7 Guests</option>
+                        <option>8 Guests</option>
+                    </select>
+                    <input type="tel" placeholder="Phone Number">
+                </div>
+                <button type="submit">Reserve Now</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="section-header">
+            <p class="section-subtitle">Guest Reviews</p>
+            <h2>What Our Guests Say</h2>
+        </div>
+        <div class="testimonial-slider">
+            <p class="testimonial-text">"An absolutely magical evening. The tasting menu was a journey through flavors I've never experienced before. Every course was a masterpiece."</p>
+            <p class="testimonial-author">- James & Elizabeth Thompson</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <p class="footer-logo">Savory Bites</p>
+                <p>Experience the art of fine dining in an elegant atmosphere. Where every meal becomes a cherished memory.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Hours</h4>
+                <ul>
+                    <li>Mon - Thu: 5pm - 10pm</li>
+                    <li>Fri - Sat: 5pm - 11pm</li>
+                    <li>Sunday: 4pm - 9pm</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li>123 Gourmet Avenue</li>
+                    <li>New York, NY 10001</li>
+                    <li>(555) 123-4567</li>
+                    <li>info@savorybites.com</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Yelp</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Savory Bites. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
