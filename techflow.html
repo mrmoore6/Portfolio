@@ -7,24 +7,23 @@
     <meta name="description" content="TechFlow helps engineering teams automate recurring workflows, reduce handoffs, and ship faster.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         :root {
-            --blue-950: #0c1f52;
-            --blue-900: #153b95;
-            --blue-700: #2c72ff;
-            --blue-500: #4f99ff;
-            --blue-100: #e8f1ff;
-            --ink: #122654;
-            --muted: #5f739f;
-            --paper: #ffffff;
-            --cream: #f8fbff;
-            --line: #d8e4ff;
-            --radius-sm: 14px;
-            --radius-md: 20px;
-            --shadow-soft: 0 14px 34px rgba(17, 55, 143, 0.09);
-            --shadow-strong: 0 26px 62px rgba(15, 50, 140, 0.17);
+            --bg-0: #060d1f;
+            --bg-1: #0b1430;
+            --bg-2: #0f1d46;
+            --panel: #0f1a3d;
+            --panel-soft: #132352;
+            --line: rgba(123, 171, 255, 0.24);
+            --text: #e8f0ff;
+            --muted: #9eb2df;
+            --blue: #4a8dff;
+            --cyan: #35d0ff;
+            --white: #ffffff;
+            --shadow: 0 24px 56px rgba(0, 0, 0, 0.4);
+            --radius: 18px;
         }
 
         * {
@@ -38,13 +37,13 @@
         }
 
         body {
-            font-family: 'Space Grotesk', sans-serif;
-            color: var(--ink);
+            font-family: 'Manrope', sans-serif;
+            color: var(--text);
             background:
-                radial-gradient(circle at 12% 0%, rgba(92, 160, 255, 0.19) 0%, rgba(92, 160, 255, 0) 34%),
-                radial-gradient(circle at 90% 8%, rgba(44, 114, 255, 0.12) 0%, rgba(44, 114, 255, 0) 29%),
-                var(--cream);
-            line-height: 1.55;
+                radial-gradient(circle at 14% 0%, rgba(53, 208, 255, 0.2) 0%, rgba(53, 208, 255, 0) 30%),
+                radial-gradient(circle at 80% 10%, rgba(74, 141, 255, 0.2) 0%, rgba(74, 141, 255, 0) 32%),
+                linear-gradient(180deg, var(--bg-0), var(--bg-1) 30%, var(--bg-2) 100%);
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
@@ -53,9 +52,9 @@
             position: fixed;
             inset: 0;
             pointer-events: none;
-            background-image: linear-gradient(rgba(25, 74, 173, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(25, 74, 173, 0.05) 1px, transparent 1px);
-            background-size: 28px 28px;
-            mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.25), transparent 72%);
+            background-image: linear-gradient(rgba(130, 170, 255, 0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(130, 170, 255, 0.07) 1px, transparent 1px);
+            background-size: 30px 30px;
+            mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.35), transparent 75%);
             z-index: -2;
         }
 
@@ -65,59 +64,55 @@
         }
 
         .container {
-            width: min(1140px, 92%);
+            width: min(1120px, 92%);
             margin: 0 auto;
-        }
-
-        .section-pad {
-            padding: 5.3rem 0;
         }
 
         .site-header {
             position: sticky;
             top: 0;
-            z-index: 200;
-            border-bottom: 1px solid rgba(21, 59, 149, 0.1);
+            z-index: 1000;
             backdrop-filter: blur(10px);
-            background: rgba(248, 251, 255, 0.88);
+            background: rgba(7, 14, 33, 0.78);
+            border-bottom: 1px solid rgba(122, 169, 255, 0.14);
         }
 
         .nav-wrap {
-            min-height: 78px;
+            height: 78px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 1.2rem;
+            gap: 1rem;
         }
 
         .logo {
             display: inline-flex;
             align-items: center;
-            gap: 0.55rem;
-            color: var(--blue-900);
-            font-size: 1.45rem;
+            gap: 0.52rem;
+            font-family: 'Sora', sans-serif;
+            font-size: 1.44rem;
             font-weight: 700;
-            letter-spacing: 0.01em;
+            letter-spacing: 0.02em;
+            color: #dceaff;
         }
 
         .logo i {
-            color: var(--blue-700);
-            transform: rotate(-12deg);
+            color: var(--cyan);
         }
 
         .nav-links {
             list-style: none;
             display: flex;
             align-items: center;
-            gap: 1.75rem;
+            gap: 1.85rem;
             color: var(--muted);
-            font-size: 0.92rem;
+            font-size: 0.93rem;
             font-weight: 600;
         }
 
         .nav-links a {
             position: relative;
-            transition: color 0.22s ease;
+            transition: color 0.2s ease;
         }
 
         .nav-links a::after {
@@ -127,14 +122,14 @@
             bottom: -0.2rem;
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, var(--blue-700), transparent);
+            background: linear-gradient(90deg, var(--cyan), transparent);
             transform: scaleX(0);
             transform-origin: left;
-            transition: transform 0.22s ease;
+            transition: transform 0.2s ease;
         }
 
         .nav-links a:hover {
-            color: var(--blue-900);
+            color: #dcebff;
         }
 
         .nav-links a:hover::after {
@@ -143,22 +138,22 @@
 
         .menu-btn {
             display: none;
-            border: none;
             background: transparent;
-            color: var(--blue-900);
-            font-size: 1.18rem;
+            border: 0;
+            color: #deebff;
+            font-size: 1.2rem;
             cursor: pointer;
         }
 
         .hero {
-            padding: 5.6rem 0 4rem;
+            padding: 5.7rem 0 4.5rem;
             position: relative;
         }
 
         .hero-grid {
             display: grid;
-            grid-template-columns: 1.08fr 1fr;
-            gap: 2.4rem;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 2rem;
             align-items: center;
         }
 
@@ -166,419 +161,363 @@
             display: inline-flex;
             align-items: center;
             gap: 0.45rem;
-            border-radius: 999px;
-            padding: 0.42rem 0.82rem;
             border: 1px solid var(--line);
-            color: var(--blue-900);
-            font-size: 0.75rem;
+            background: rgba(16, 30, 72, 0.7);
+            color: #b8ceff;
+            border-radius: 999px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.74rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            font-weight: 700;
-            background: rgba(255, 255, 255, 0.88);
-            margin-bottom: 0.95rem;
+            margin-bottom: 1rem;
         }
 
         .hero h1 {
-            font-size: clamp(2.2rem, 5vw, 4rem);
-            line-height: 1.04;
-            color: var(--blue-950);
-            margin-bottom: 1rem;
-            max-width: 13ch;
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 4.1rem);
+            line-height: 1.05;
             letter-spacing: -0.01em;
+            margin-bottom: 1rem;
         }
 
-        .hero h1 .flair {
-            font-family: 'Instrument Serif', serif;
-            font-style: italic;
-            font-weight: 400;
-            color: var(--blue-700);
-            letter-spacing: 0;
-            position: relative;
-            margin-left: 0.08em;
-        }
-
-        .hero h1 .flair::after {
-            content: "";
-            position: absolute;
-            left: -0.07em;
-            right: -0.07em;
-            bottom: 0.08em;
-            height: 0.32em;
-            background: linear-gradient(90deg, rgba(79, 153, 255, 0.38), rgba(79, 153, 255, 0));
-            z-index: -1;
-            border-radius: 999px;
-            transform: rotate(-2deg);
+        .hero h1 span {
+            color: var(--cyan);
+            text-shadow: 0 0 24px rgba(53, 208, 255, 0.35);
         }
 
         .hero-copy p {
             color: var(--muted);
-            font-size: 1.05rem;
             max-width: 52ch;
             margin-bottom: 1.8rem;
+            font-size: 1.04rem;
         }
 
         .hero-actions {
             display: flex;
             flex-wrap: wrap;
             gap: 0.75rem;
-            margin-bottom: 1.3rem;
         }
 
         .btn {
             border: 1px solid transparent;
             border-radius: 12px;
+            padding: 0.86rem 1.28rem;
             font-size: 0.92rem;
             font-weight: 700;
-            padding: 0.86rem 1.24rem;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.46rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            gap: 0.5rem;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
         }
 
         .btn-primary {
-            color: #ffffff;
-            background: linear-gradient(135deg, var(--blue-900), var(--blue-700));
-            box-shadow: 0 10px 24px rgba(39, 104, 246, 0.31);
+            background: linear-gradient(135deg, #3b75ff, #32cfff);
+            color: #08132f;
+            box-shadow: 0 10px 26px rgba(50, 183, 255, 0.35);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 16px 28px rgba(39, 104, 246, 0.38);
+            box-shadow: 0 14px 30px rgba(50, 183, 255, 0.44);
         }
 
         .btn-secondary {
-            color: var(--blue-900);
-            border-color: #bfd3ff;
-            background: #ffffff;
+            background: rgba(14, 28, 67, 0.86);
+            border-color: var(--line);
+            color: #d7e7ff;
         }
 
         .btn-secondary:hover {
             transform: translateY(-2px);
-            border-color: #8eb3ff;
-            box-shadow: 0 12px 24px rgba(18, 44, 97, 0.11);
+            border-color: rgba(78, 188, 255, 0.55);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
         }
 
         .hero-metrics {
             display: flex;
-            flex-wrap: wrap;
             gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-top: 1.2rem;
         }
 
-        .metric-pill {
+        .metric {
+            border: 1px solid var(--line);
+            background: rgba(13, 24, 57, 0.8);
+            color: #a7bee8;
+            border-radius: 999px;
+            padding: 0.38rem 0.72rem;
+            font-size: 0.82rem;
             display: inline-flex;
             align-items: center;
-            gap: 0.36rem;
-            border-radius: 999px;
-            border: 1px solid var(--line);
-            background: #ffffff;
-            color: #3b4f7e;
-            font-size: 0.8rem;
-            font-weight: 500;
-            padding: 0.38rem 0.72rem;
+            gap: 0.35rem;
         }
 
-        .metric-pill b {
-            color: var(--blue-900);
-            font-weight: 700;
+        .metric b {
+            color: #dff0ff;
         }
 
-        .hero-canvas {
+        .hero-panel {
             position: relative;
-            background: linear-gradient(155deg, #ffffff 5%, #edf4ff 100%);
-            border: 1px solid #ccdcff;
-            border-radius: 28px;
-            padding: 1.4rem;
-            box-shadow: var(--shadow-strong);
+            background: linear-gradient(170deg, rgba(18, 35, 82, 0.93), rgba(11, 23, 58, 0.92));
+            border: 1px solid rgba(120, 162, 247, 0.22);
+            border-radius: 24px;
+            padding: 1.2rem;
+            box-shadow: var(--shadow);
         }
 
-        .canvas-head {
+        .panel-head {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 0.7rem 0.85rem;
-            background: #ffffff;
-            border-radius: var(--radius-sm);
-            border: 1px solid #dce8ff;
-            margin-bottom: 0.82rem;
+            align-items: center;
+            margin-bottom: 0.8rem;
         }
 
-        .canvas-head h3 {
-            font-size: 0.95rem;
-            color: var(--blue-900);
+        .panel-head h3 {
+            font-size: 0.96rem;
+            color: #ddebff;
         }
 
-        .badge {
+        .chip {
             border-radius: 999px;
-            padding: 0.2rem 0.56rem;
+            background: rgba(53, 208, 255, 0.18);
+            color: #a9f1ff;
             font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--blue-900);
-            background: var(--blue-100);
             text-transform: uppercase;
-            letter-spacing: 0.07em;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+            padding: 0.2rem 0.56rem;
+            border: 1px solid rgba(53, 208, 255, 0.24);
         }
 
         .flow-list {
             list-style: none;
             display: grid;
             gap: 0.58rem;
-            margin-bottom: 0.9rem;
         }
 
         .flow-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px dashed #bfd2ff;
-            background: #ffffff;
-            padding: 0.62rem 0.72rem;
+            border: 1px solid rgba(131, 173, 255, 0.2);
+            background: rgba(8, 18, 47, 0.75);
             border-radius: 11px;
+            padding: 0.62rem 0.72rem;
             font-size: 0.9rem;
-            color: var(--muted);
+            color: #adc2eb;
         }
 
         .flow-item span {
+            color: #93eaff;
             font-size: 0.72rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: #1451c2;
             font-weight: 700;
         }
 
-        .canvas-stats {
+        .stats {
+            margin-top: 0.82rem;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 0.58rem;
         }
 
-        .canvas-stat {
-            border: 1px solid #cde0ff;
-            border-radius: 12px;
-            background: linear-gradient(180deg, #ffffff, #f4f8ff);
+        .stat {
+            border: 1px solid rgba(131, 173, 255, 0.22);
+            border-radius: 11px;
+            background: rgba(10, 21, 52, 0.82);
             text-align: center;
-            padding: 0.62rem 0.4rem;
+            padding: 0.56rem 0.35rem;
         }
 
-        .canvas-stat b {
+        .stat b {
             display: block;
-            color: var(--blue-900);
             font-size: 1.02rem;
+            color: #e2f0ff;
         }
 
-        .canvas-stat small {
-            color: var(--muted);
-            font-size: 0.74rem;
+        .stat small {
+            color: #8ea7d8;
+            font-size: 0.73rem;
         }
 
-        .sticky-note {
+        .floating-note {
             position: absolute;
-            right: -16px;
-            bottom: -18px;
-            background: #ffffff;
-            border: 1px solid #cddfff;
+            right: -12px;
+            bottom: -12px;
+            width: min(210px, 68%);
             border-radius: 14px;
-            width: min(210px, 62%);
-            padding: 0.75rem 0.82rem;
-            box-shadow: 0 10px 24px rgba(24, 52, 121, 0.17);
+            border: 1px solid rgba(100, 163, 255, 0.35);
+            background: linear-gradient(155deg, rgba(49, 120, 255, 0.3), rgba(32, 204, 255, 0.28));
+            padding: 0.7rem 0.76rem;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
             transform: rotate(-4deg);
         }
 
-        .sticky-note p {
-            color: #2d4480;
-            font-size: 0.88rem;
-            margin-bottom: 0.33rem;
-            line-height: 1.35;
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.08rem;
+        .floating-note p {
+            font-family: 'Sora', sans-serif;
+            font-size: 0.84rem;
+            color: #e8f7ff;
+            margin-bottom: 0.25rem;
         }
 
-        .sticky-note span {
-            color: #5a6f9b;
-            font-size: 0.72rem;
-            letter-spacing: 0.04em;
+        .floating-note span {
+            font-size: 0.7rem;
+            color: #d5f2ff;
             text-transform: uppercase;
+            letter-spacing: 0.07em;
             font-weight: 700;
         }
 
-        .section-heading {
-            max-width: 680px;
-            margin: 0 auto 2.55rem;
+        section {
+            padding: 5.3rem 0;
+        }
+
+        .section-header {
+            max-width: 690px;
+            margin: 0 auto 2.7rem;
             text-align: center;
         }
 
-        .section-heading .tag {
-            color: var(--blue-700);
-            text-transform: uppercase;
-            letter-spacing: 0.09em;
+        .section-header .tag {
+            color: #9fc1ff;
             font-size: 0.78rem;
             font-weight: 700;
-            margin-bottom: 0.58rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.52rem;
         }
 
-        .section-heading h2 {
-            color: var(--blue-950);
-            font-size: clamp(1.9rem, 3.8vw, 2.8rem);
+        .section-header h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(1.9rem, 3.7vw, 2.8rem);
+            line-height: 1.14;
             letter-spacing: -0.01em;
-            line-height: 1.12;
-            margin-bottom: 0.72rem;
+            margin-bottom: 0.7rem;
+            color: #eaf2ff;
         }
 
-        .section-heading p {
+        .section-header p {
             color: var(--muted);
-            font-size: 0.99rem;
-        }
-
-        .features {
-            position: relative;
-        }
-
-        .features::before {
-            content: "";
-            position: absolute;
-            left: -6%;
-            top: 10%;
-            width: 130px;
-            height: 130px;
-            background: radial-gradient(circle, rgba(47, 114, 255, 0.16) 0%, rgba(47, 114, 255, 0) 72%);
-            z-index: -1;
         }
 
         .features-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 1rem;
+            gap: 0.95rem;
         }
 
         .feature-card {
-            background: #ffffff;
-            border: 1px solid #d6e4ff;
-            box-shadow: var(--shadow-soft);
-            border-radius: 18px;
-            padding: 1.28rem;
             position: relative;
+            border: 1px solid rgba(121, 164, 255, 0.22);
+            background: linear-gradient(165deg, rgba(19, 35, 81, 0.86), rgba(12, 24, 57, 0.9));
+            border-radius: var(--radius);
+            padding: 1.2rem;
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
             overflow: hidden;
-        }
-
-        .feature-card:nth-child(1) {
-            border-radius: 24px 16px 20px 16px;
-        }
-
-        .feature-card:nth-child(2) {
-            border-radius: 16px 24px 16px 20px;
-        }
-
-        .feature-card:nth-child(3) {
-            border-radius: 20px 16px 24px 16px;
-        }
-
-        .feature-card:nth-child(4) {
-            border-radius: 16px 20px 16px 24px;
         }
 
         .feature-card::after {
             content: "";
             position: absolute;
-            right: -50px;
-            bottom: -50px;
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
+            right: -60px;
+            top: -50px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(79, 153, 255, 0.2) 0%, rgba(79, 153, 255, 0) 68%);
+            background: radial-gradient(circle, rgba(53, 208, 255, 0.2), rgba(53, 208, 255, 0));
             pointer-events: none;
         }
 
         .feature-icon {
-            width: 46px;
-            height: 46px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
             display: grid;
             place-items: center;
-            color: #ffffff;
-            background: linear-gradient(145deg, var(--blue-900), var(--blue-500));
-            margin-bottom: 0.88rem;
-            box-shadow: 0 8px 16px rgba(34, 94, 220, 0.32);
+            color: #051530;
+            background: linear-gradient(140deg, #4c8fff, #36d1ff);
+            box-shadow: 0 10px 20px rgba(52, 177, 255, 0.35);
+            margin-bottom: 0.9rem;
         }
 
         .feature-card h3 {
-            color: var(--blue-900);
-            font-size: 1.05rem;
-            margin-bottom: 0.48rem;
+            font-size: 1.02rem;
+            color: #e6f0ff;
+            margin-bottom: 0.45rem;
         }
 
         .feature-card p {
-            color: var(--muted);
-            font-size: 0.91rem;
+            color: #9db2de;
+            font-size: 0.9rem;
         }
 
         .pricing {
-            background: linear-gradient(180deg, rgba(217, 230, 255, 0.42), rgba(255, 255, 255, 0));
-            border-top: 1px solid rgba(18, 63, 154, 0.08);
-            border-bottom: 1px solid rgba(18, 63, 154, 0.08);
+            background: linear-gradient(180deg, rgba(9, 17, 40, 0.62), rgba(8, 14, 35, 0));
+            border-top: 1px solid rgba(126, 171, 255, 0.14);
+            border-bottom: 1px solid rgba(126, 171, 255, 0.14);
         }
 
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1rem;
-            align-items: stretch;
+            gap: 0.95rem;
         }
 
         .pricing-card {
-            background: #ffffff;
-            border: 1px solid #d4e2ff;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-soft);
-            padding: 1.45rem;
+            border: 1px solid rgba(125, 169, 255, 0.24);
+            border-radius: 20px;
+            background: linear-gradient(165deg, rgba(15, 28, 67, 0.94), rgba(10, 21, 51, 0.9));
+            padding: 1.35rem;
             display: flex;
             flex-direction: column;
-            position: relative;
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3);
         }
 
         .pricing-card h3 {
-            color: var(--blue-900);
-            font-size: 1.12rem;
+            color: #e7f0ff;
+            font-size: 1.1rem;
         }
 
         .pricing-card p {
-            color: var(--muted);
-            font-size: 0.91rem;
-            margin-top: 0.45rem;
+            color: #9db2de;
+            font-size: 0.9rem;
+            margin-top: 0.44rem;
         }
 
         .price {
-            margin: 1.05rem 0 0.9rem;
-            color: var(--blue-950);
-            font-size: 2rem;
+            margin: 1rem 0 0.86rem;
+            font-family: 'Sora', sans-serif;
+            font-size: 1.95rem;
+            color: #eff5ff;
             line-height: 1;
-            letter-spacing: -0.01em;
         }
 
         .price span {
-            color: var(--muted);
-            font-size: 0.93rem;
+            color: #9cb2df;
+            font-size: 0.9rem;
             font-weight: 500;
         }
 
         .price-list {
             list-style: none;
             display: grid;
-            gap: 0.54rem;
-            color: var(--muted);
-            font-size: 0.91rem;
+            gap: 0.5rem;
+            color: #9db2de;
+            font-size: 0.9rem;
             margin-bottom: 1.2rem;
         }
 
         .price-list li {
             display: flex;
-            align-items: flex-start;
-            gap: 0.44rem;
+            align-items: center;
+            gap: 0.45rem;
         }
 
         .price-list i {
-            color: #1f68f3;
-            margin-top: 0.18rem;
+            color: #95eeff;
         }
 
         .pricing-card .btn {
@@ -586,84 +525,56 @@
         }
 
         .pricing-card.featured {
-            border: 2px solid #2c72ff;
-            background: linear-gradient(170deg, #ffffff 0%, #edf5ff 100%);
-            transform: translateY(-8px);
-            box-shadow: 0 18px 35px rgba(24, 74, 187, 0.18);
+            border: 2px solid rgba(53, 208, 255, 0.48);
+            background: linear-gradient(155deg, rgba(22, 46, 104, 0.95), rgba(15, 34, 82, 0.9));
+            transform: translateY(-7px);
+            box-shadow: 0 18px 38px rgba(3, 11, 35, 0.5);
         }
 
         .featured-label {
             align-self: flex-start;
-            color: #1549ad;
-            background: #dcebff;
             border-radius: 999px;
-            padding: 0.2rem 0.58rem;
+            border: 1px solid rgba(53, 208, 255, 0.35);
+            background: rgba(53, 208, 255, 0.16);
+            color: #b6f5ff;
             text-transform: uppercase;
-            letter-spacing: 0.07em;
-            font-size: 0.69rem;
+            font-size: 0.68rem;
             font-weight: 700;
-            margin-bottom: 0.56rem;
-        }
-
-        .pricing-card.ticket::before,
-        .pricing-card.ticket::after {
-            content: "";
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--cream);
-            border: 1px solid #d4e2ff;
-            top: 48%;
-            transform: translateY(-50%);
-        }
-
-        .pricing-card.ticket::before {
-            left: -8px;
-        }
-
-        .pricing-card.ticket::after {
-            right: -8px;
-        }
-
-        .testimonials {
-            position: relative;
+            letter-spacing: 0.08em;
+            padding: 0.2rem 0.58rem;
+            margin-bottom: 0.55rem;
         }
 
         .testimonial-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1rem;
+            gap: 0.95rem;
         }
 
         .testimonial-card {
-            border: 1px solid #d6e4ff;
-            border-radius: 18px;
-            padding: 1.2rem;
-            background: linear-gradient(180deg, #ffffff, #f7fbff);
-            box-shadow: var(--shadow-soft);
-        }
-
-        .testimonial-card:nth-child(2) {
-            transform: translateY(18px);
+            border: 1px solid rgba(121, 165, 255, 0.22);
+            border-radius: 17px;
+            background: linear-gradient(165deg, rgba(16, 30, 69, 0.9), rgba(11, 22, 54, 0.88));
+            padding: 1.15rem;
+            box-shadow: 0 13px 30px rgba(0, 0, 0, 0.27);
         }
 
         .testimonial-card i {
-            color: #2c72ff;
-            margin-bottom: 0.74rem;
-            font-size: 1.02rem;
+            color: #8eeeff;
+            margin-bottom: 0.72rem;
+            font-size: 1rem;
         }
 
         .testimonial-card p {
-            color: var(--muted);
-            font-size: 0.93rem;
+            color: #9eb2df;
+            font-size: 0.92rem;
             margin-bottom: 0.9rem;
         }
 
         .person {
             display: flex;
             align-items: center;
-            gap: 0.7rem;
+            gap: 0.68rem;
         }
 
         .avatar {
@@ -672,29 +583,29 @@
             border-radius: 50%;
             display: grid;
             place-items: center;
+            background: linear-gradient(145deg, #4a8dff, #36d1ff);
+            color: #052345;
             font-size: 0.84rem;
             font-weight: 700;
-            color: var(--blue-900);
-            background: #dce9ff;
-            border: 1px solid #c6d8ff;
+            box-shadow: 0 8px 16px rgba(53, 195, 255, 0.35);
         }
 
         .person b {
             display: block;
-            color: var(--blue-900);
+            color: #e6f0ff;
             font-size: 0.9rem;
         }
 
         .person small {
-            display: block;
-            color: var(--muted);
-            font-size: 0.78rem;
+            color: #95abd9;
+            font-size: 0.77rem;
         }
 
         footer {
-            background: linear-gradient(180deg, #102a67, #0d255f);
-            color: #d7e5ff;
-            padding: 2.85rem 0;
+            background: linear-gradient(180deg, rgba(9, 17, 40, 0.9), rgba(7, 13, 30, 0.98));
+            border-top: 1px solid rgba(125, 169, 255, 0.2);
+            color: #cfe0ff;
+            padding: 2.7rem 0;
             margin-top: 1rem;
         }
 
@@ -702,41 +613,42 @@
             display: grid;
             grid-template-columns: 1.35fr 1fr 1fr;
             gap: 1.2rem;
-            align-items: start;
         }
 
         .footer-brand h3 {
-            color: #ffffff;
-            font-size: 1.35rem;
-            margin-bottom: 0.44rem;
+            font-family: 'Sora', sans-serif;
+            font-size: 1.33rem;
+            color: #eff6ff;
+            margin-bottom: 0.45rem;
         }
 
         .footer-brand p {
-            color: #b5cbf5;
-            font-size: 0.91rem;
-            max-width: 320px;
+            color: #9db2df;
+            font-size: 0.9rem;
+            max-width: 340px;
         }
 
         .footer-col h4 {
-            color: #ffffff;
-            margin-bottom: 0.55rem;
+            color: #e9f2ff;
             font-size: 0.9rem;
+            margin-bottom: 0.54rem;
         }
 
         .footer-links {
             list-style: none;
             display: grid;
-            gap: 0.46rem;
+            gap: 0.45rem;
             font-size: 0.86rem;
+            color: #9db2df;
         }
 
         .footer-links a:hover {
-            color: #ffffff;
+            color: #eaf5ff;
         }
 
         .social-row {
             display: flex;
-            gap: 0.53rem;
+            gap: 0.52rem;
             margin-top: 0.65rem;
         }
 
@@ -746,29 +658,31 @@
             border-radius: 10px;
             display: grid;
             place-items: center;
-            background: rgba(255, 255, 255, 0.08);
-            color: #ffffff;
-            transition: transform 0.2s ease, background 0.2s ease;
+            border: 1px solid rgba(126, 171, 255, 0.26);
+            background: rgba(14, 28, 67, 0.8);
+            color: #e3eeff;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
         }
 
         .social-row a:hover {
             transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(53, 208, 255, 0.55);
+            background: rgba(17, 34, 81, 0.95);
         }
 
         .footer-bottom {
-            margin-top: 1.65rem;
+            margin-top: 1.6rem;
             padding-top: 1rem;
+            border-top: 1px solid rgba(126, 171, 255, 0.22);
             text-align: center;
-            border-top: 1px solid rgba(170, 197, 247, 0.26);
+            color: #94abd9;
             font-size: 0.8rem;
-            color: #b7cdf5;
         }
 
         .reveal {
             opacity: 0;
             transform: translateY(22px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
+            transition: opacity 0.72s ease, transform 0.72s ease;
         }
 
         .reveal.visible {
@@ -794,24 +708,12 @@
                 transform: none;
             }
 
-            .testimonial-card:nth-child(2) {
-                transform: none;
-            }
-
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
             }
         }
 
         @media (max-width: 768px) {
-            .section-pad {
-                padding: 4.55rem 0;
-            }
-
-            .hero {
-                padding-top: 4.6rem;
-            }
-
             .nav-links {
                 display: none;
                 position: absolute;
@@ -819,12 +721,11 @@
                 left: 0;
                 right: 0;
                 padding: 1rem 4%;
-                background: #f8fbff;
-                border-bottom: 1px solid #d9e6ff;
-                box-shadow: 0 12px 20px rgba(13, 38, 93, 0.1);
+                background: rgba(7, 14, 33, 0.97);
+                border-bottom: 1px solid rgba(126, 171, 255, 0.2);
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.84rem;
+                gap: 0.82rem;
             }
 
             .nav-links.open {
@@ -836,6 +737,10 @@
                 place-items: center;
             }
 
+            section {
+                padding: 4.6rem 0;
+            }
+
             .features-grid {
                 grid-template-columns: 1fr;
             }
@@ -844,10 +749,10 @@
                 grid-template-columns: 1fr;
             }
 
-            .sticky-note {
-                width: min(195px, 66%);
-                right: -8px;
-                bottom: -14px;
+            .floating-note {
+                right: -6px;
+                bottom: -10px;
+                width: min(190px, 68%);
             }
         }
     </style>
@@ -872,86 +777,86 @@
         <section class="hero" id="home">
             <div class="container hero-grid">
                 <div class="hero-copy reveal" data-delay="0">
-                    <p class="eyebrow"><i class="fa-solid fa-circle-check"></i> Built for real engineering teams</p>
-                    <h1>Automate the busywork, keep the <span class="flair">human flow.</span></h1>
-                    <p>TechFlow helps product and platform teams orchestrate releases, incident triage, and handoffs from one calm command center.</p>
+                    <p class="eyebrow"><i class="fa-solid fa-circle-check"></i> Built for high-velocity teams</p>
+                    <h1>Automate every handoff, keep your <span>momentum human.</span></h1>
+                    <p>TechFlow centralizes deployment checklists, incident routing, and recurring ops workflows so your team ships faster with less overhead.</p>
                     <div class="hero-actions">
                         <a href="#pricing" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Start Free Trial</a>
-                        <a href="#features" class="btn btn-secondary"><i class="fa-solid fa-play"></i> See Features</a>
+                        <a href="#features" class="btn btn-secondary"><i class="fa-solid fa-play"></i> See Platform</a>
                     </div>
                     <div class="hero-metrics">
-                        <span class="metric-pill"><b>38%</b> less manual work</span>
-                        <span class="metric-pill"><b>4.6h</b> saved per sprint</span>
-                        <span class="metric-pill"><b>99.9%</b> workflow uptime</span>
+                        <span class="metric"><b>38%</b> less manual work</span>
+                        <span class="metric"><b>4.6h</b> saved per sprint</span>
+                        <span class="metric"><b>99.9%</b> uptime</span>
                     </div>
                 </div>
 
-                <div class="hero-canvas reveal" data-delay="120">
-                    <div class="canvas-head">
+                <div class="hero-panel reveal" data-delay="120">
+                    <div class="panel-head">
                         <h3>Live Workflow Board</h3>
-                        <span class="badge">Active</span>
+                        <span class="chip">Active</span>
                     </div>
                     <ul class="flow-list">
                         <li class="flow-item">Code Review Automation <span>Running</span></li>
                         <li class="flow-item">Release Checklist Sync <span>Queued</span></li>
                         <li class="flow-item">On-Call Handoff Summary <span>Done</span></li>
                     </ul>
-                    <div class="canvas-stats">
-                        <div class="canvas-stat"><b>12</b><small>Weekly Runs</small></div>
-                        <div class="canvas-stat"><b>7</b><small>Connected Apps</small></div>
-                        <div class="canvas-stat"><b>2m</b><small>Median Setup</small></div>
+                    <div class="stats">
+                        <div class="stat"><b>12</b><small>Weekly Runs</small></div>
+                        <div class="stat"><b>7</b><small>Apps Connected</small></div>
+                        <div class="stat"><b>2m</b><small>Median Setup</small></div>
                     </div>
-                    <aside class="sticky-note">
-                        <p>"This finally feels easy."</p>
-                        <span>Leah, Eng Manager</span>
+                    <aside class="floating-note">
+                        <p>"Finally a calm release process."</p>
+                        <span>Leah, Engineering Manager</span>
                     </aside>
                 </div>
             </div>
         </section>
 
-        <section class="features section-pad" id="features">
+        <section id="features">
             <div class="container">
-                <div class="section-heading reveal" data-delay="0">
+                <div class="section-header reveal" data-delay="0">
                     <p class="tag">Features</p>
-                    <h2>Designed for technical teams that move fast and hate repetitive work.</h2>
-                    <p>Every block is built to reduce context switching between engineering, ops, and support.</p>
+                    <h2>The workflow layer built for modern engineering systems.</h2>
+                    <p>Turn repetitive delivery work into reliable automation with complete team visibility.</p>
                 </div>
                 <div class="features-grid">
                     <article class="feature-card reveal" data-delay="0">
                         <div class="feature-icon"><i class="fa-solid fa-diagram-project"></i></div>
-                        <h3>Visual Workflow Builder</h3>
-                        <p>Compose triggers, checks, and approvals with clear drag-and-drop logic.</p>
+                        <h3>Visual Builder</h3>
+                        <p>Create multi-step automations with approvals, branching logic, and fallback actions.</p>
                     </article>
-                    <article class="feature-card reveal" data-delay="80">
+                    <article class="feature-card reveal" data-delay="90">
                         <div class="feature-icon"><i class="fa-solid fa-bell"></i></div>
-                        <h3>Smart Incident Routing</h3>
-                        <p>Route alerts instantly by service ownership, urgency, and timezone coverage.</p>
+                        <h3>Smart Alert Routing</h3>
+                        <p>Send incidents directly to the right owner based on service, severity, and schedule.</p>
                     </article>
-                    <article class="feature-card reveal" data-delay="140">
+                    <article class="feature-card reveal" data-delay="150">
                         <div class="feature-icon"><i class="fa-solid fa-plug"></i></div>
                         <h3>Native Integrations</h3>
-                        <p>Connect GitHub, Jira, Slack, and CI/CD tools without glue-code overhead.</p>
+                        <p>Connect GitHub, Jira, Slack, and CI/CD tools without building custom middleware.</p>
                     </article>
-                    <article class="feature-card reveal" data-delay="200">
+                    <article class="feature-card reveal" data-delay="210">
                         <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
-                        <h3>Operational Analytics</h3>
-                        <p>Track cycle time, bottlenecks, and automation ROI in real-time dashboards.</p>
+                        <h3>Operational Insights</h3>
+                        <p>Measure cycle time, bottlenecks, and workflow ROI from one analytics dashboard.</p>
                     </article>
                 </div>
             </div>
         </section>
 
-        <section class="pricing section-pad" id="pricing">
+        <section class="pricing" id="pricing">
             <div class="container">
-                <div class="section-heading reveal" data-delay="0">
+                <div class="section-header reveal" data-delay="0">
                     <p class="tag">Pricing</p>
-                    <h2>Simple plans from startup squads to enterprise platforms.</h2>
-                    <p>Scale from your first workflow to global engineering operations.</p>
+                    <h2>Pricing that scales from startup squads to enterprise platforms.</h2>
+                    <p>Start small, automate quickly, and expand workflows as your team grows.</p>
                 </div>
                 <div class="pricing-grid">
-                    <article class="pricing-card ticket reveal" data-delay="0">
+                    <article class="pricing-card reveal" data-delay="0">
                         <h3>Starter</h3>
-                        <p>Best for small teams automating high-frequency handoffs.</p>
+                        <p>Ideal for small teams automating core release and support workflows.</p>
                         <div class="price">$19 <span>/ user / month</span></div>
                         <ul class="price-list">
                             <li><i class="fa-solid fa-check"></i> Up to 5 automations</li>
@@ -961,10 +866,11 @@
                         </ul>
                         <a href="#" class="btn btn-secondary">Choose Starter</a>
                     </article>
+
                     <article class="pricing-card featured reveal" data-delay="90">
                         <span class="featured-label">Most Popular</span>
                         <h3>Pro</h3>
-                        <p>For scaling product and engineering organizations.</p>
+                        <p>For scaling product and engineering organizations with multi-team workflows.</p>
                         <div class="price">$49 <span>/ user / month</span></div>
                         <ul class="price-list">
                             <li><i class="fa-solid fa-check"></i> Unlimited automations</li>
@@ -974,9 +880,10 @@
                         </ul>
                         <a href="#" class="btn btn-primary">Choose Pro</a>
                     </article>
-                    <article class="pricing-card ticket reveal" data-delay="180">
+
+                    <article class="pricing-card reveal" data-delay="180">
                         <h3>Enterprise</h3>
-                        <p>For regulated teams with strict governance and scale demands.</p>
+                        <p>For regulated environments requiring governance, security, and scale.</p>
                         <div class="price">Custom <span>annual plan</span></div>
                         <ul class="price-list">
                             <li><i class="fa-solid fa-check"></i> SSO + SCIM provisioning</li>
@@ -990,12 +897,12 @@
             </div>
         </section>
 
-        <section class="testimonials section-pad" id="testimonials">
+        <section id="testimonials">
             <div class="container">
-                <div class="section-heading reveal" data-delay="0">
+                <div class="section-header reveal" data-delay="0">
                     <p class="tag">Testimonials</p>
                     <h2>Trusted by teams shipping high-stakes software every week.</h2>
-                    <p>What leaders say after replacing fragile scripts and checklist chaos with TechFlow.</p>
+                    <p>What leaders say after replacing fragile scripts and manual checklists with TechFlow.</p>
                 </div>
                 <div class="testimonial-grid">
                     <article class="testimonial-card reveal" data-delay="0">
@@ -1011,7 +918,7 @@
                     </article>
                     <article class="testimonial-card reveal" data-delay="110">
                         <i class="fa-solid fa-quote-left"></i>
-                        <p>"Incident routing paid for itself in the first month. Response quality improved before we even finished onboarding."</p>
+                        <p>"Incident routing paid for itself in the first month. Response quality improved before onboarding was complete."</p>
                         <div class="person">
                             <div class="avatar">DN</div>
                             <div>
@@ -1022,7 +929,7 @@
                     </article>
                     <article class="testimonial-card reveal" data-delay="180">
                         <i class="fa-solid fa-quote-left"></i>
-                        <p>"Now we can see every recurring process in one place. The team moves faster, and leadership gets clean visibility."</p>
+                        <p>"Now every recurring process is visible and measurable. The team moves faster with way less friction."</p>
                         <div class="person">
                             <div class="avatar">AK</div>
                             <div>
