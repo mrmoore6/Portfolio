@@ -89,6 +89,14 @@
         .skill:nth-child(4)::after { animation-delay: 1.5s; }
         .skill:nth-child(5)::after { animation-delay: 2s; }
         @keyframes skillShimmer { 0%, 100% { left: -100%; } 50% { left: 100%; } }
+
+        .resume-section { padding: 100px 5%; background: var(--black); }
+        .resume-card { max-width: 900px; margin: 0 auto; border: 1px solid rgba(201,162,39,0.25); background: rgba(201,162,39,0.03); padding: 2.2rem; text-align: center; }
+        .resume-card p { color: var(--gray); max-width: 680px; margin: 0 auto 1.6rem; }
+        .resume-highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; }
+        .resume-highlights div { border: 1px solid rgba(201,162,39,0.2); padding: 1rem; color: var(--gray); font-size: 0.88rem; }
+        .resume-highlights strong { display: block; color: var(--cream); font-family: 'Bodoni Moda', serif; margin-bottom: 0.35rem; font-size: 1rem; }
+        .resume-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1.25rem; }
         
         .contact { padding: 100px 5%; background: var(--black); text-align: center; }
         .contact h2 { font-size: 2.8rem; color: var(--cream); margin-bottom: 1.5rem; }
@@ -110,7 +118,7 @@
         .gold-particle { position: absolute; width: 2px; height: 8px; background: linear-gradient(180deg, rgba(201,162,39,0.6), rgba(201,162,39,0)); border-radius: 50%; animation: rainFall linear infinite; }
         @keyframes rainFall { 0% { transform: translateY(-10px) rotate(15deg); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(100vh) rotate(15deg); opacity: 0; } }
         
-        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .about-container { grid-template-columns: 1fr; } .portfolio-grid { grid-template-columns: 1fr; } .nav-links { display: none; } .gold-frame, .gold-frame-top, .gold-frame-bottom { display: none; } .content { margin: 0; } nav { width: 100%; left: 0; top: 0; } }
+        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .about-container { grid-template-columns: 1fr; } .portfolio-grid { grid-template-columns: 1fr; } .resume-highlights { grid-template-columns: 1fr; } .resume-card { padding: 1.5rem; } .nav-links { display: none; } .gold-frame, .gold-frame-top, .gold-frame-bottom { display: none; } .content { margin: 0; } nav { width: 100%; left: 0; top: 0; } }
     </style>
 </head>
 <body>
@@ -128,6 +136,7 @@
                 <li><a href="#portfolio">Work</a></li>
                 <li><a href="#aiml">AI/ML</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#resume">Resume</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -260,6 +269,32 @@
             </div>
         </section>
 
+        <section class="resume-section" id="resume">
+            <p class="section-label">Resume</p>
+            <h2 class="section-title">Professional <em>Background</em></h2>
+            <div class="resume-card">
+                <p>Download my current resume for a full overview of experience in web application and software development, technical skills, and project impact.</p>
+                <div class="resume-highlights">
+                    <div>
+                        <strong>Web Application Development</strong>
+                        Production-ready applications with modern frontend and backend architecture.
+                    </div>
+                    <div>
+                        <strong>Application Engineering</strong>
+                        Business-focused tools and systems designed for reliability and performance.
+                    </div>
+                    <div>
+                        <strong>Cloud & Delivery</strong>
+                        CI/CD pipelines, deployment workflows, and ongoing optimization for scalable systems.
+                    </div>
+                </div>
+                <div class="resume-actions">
+                    <a href="Michael_Moore_General_Resume.docx" class="btn" download>Download Resume</a>
+                    <a href="Michael_Moore_General_Resume.docx" class="btn" target="_blank">Open Resume</a>
+                </div>
+            </div>
+        </section>
+
         <section class="contact" id="contact">
             <p class="section-label">Get In Touch</p>
             <h2>Let's <em>Collaborate</em></h2>
@@ -272,6 +307,7 @@
             <div class="profile-buttons" style="margin-top: 2.5rem; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/michael-moore-855696238/" class="btn" target="_blank">LinkedIn</a>
                 <a href="https://github.com/mrmoore6" class="btn" target="_blank">GitHub</a>
+                <a href="Michael_Moore_General_Resume.docx" class="btn" download>Resume</a>
                 <a href="mailto:mmoore2457@gmail.com" class="btn">Email Me</a>
             </div>
         </section>
