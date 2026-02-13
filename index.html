@@ -27,6 +27,7 @@
         
         nav { background: var(--black); padding: 2rem 5%; position: fixed; width: calc(100% - 24px); top: 12px; left: 12px; z-index: 1000; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(201,162,39,0.2); }
         .logo { font-family: 'Bodoni Moda', serif; color: var(--gold); font-size: 1.5rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; }
+        .menu-toggle { display: none; background: transparent; border: 1px solid rgba(201,162,39,0.4); color: var(--gold); padding: 8px 12px; font-size: 1rem; cursor: pointer; }
         .nav-links { display: flex; list-style: none; gap: 3rem; }
         .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.3s; }
         .nav-links a:hover { color: var(--gold); }
@@ -70,6 +71,7 @@
         .portfolio-overlay { position: absolute; inset: 0; background: linear-gradient(transparent 30%, rgba(0,0,0,0.95)); display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem; }
         .portfolio-overlay h3 { font-size: 1.4rem; color: var(--cream); margin-bottom: 0.5rem; }
         .portfolio-overlay p { color: var(--gray); font-size: 0.85rem; }
+        .project-metric { color: var(--gold); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.7rem; opacity: 0.95; }
         .portfolio-tags { margin-top: 1rem; display: flex; gap: 1rem; }
         .portfolio-tag { color: var(--gold); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; position: relative; }
         .portfolio-tag::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: tagShimmer 3s ease-in-out infinite; }
@@ -144,6 +146,7 @@
             .portfolio-grid { grid-template-columns: 1fr; gap: 1.2rem; }
             .portfolio-item img { height: 230px; }
             .portfolio-overlay { padding: 1.2rem; }
+            .project-metric { font-size: 0.62rem; letter-spacing: 0.1em; }
             .portfolio-tags { flex-wrap: wrap; gap: 0.6rem; }
 
             .about-container { grid-template-columns: 1fr; gap: 2rem; }
@@ -163,10 +166,25 @@
 
             footer { padding: 2rem 1rem; }
 
-            .nav-links { display: none; }
+            .menu-toggle { display: inline-block; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--black);
+                border-top: 1px solid rgba(201,162,39,0.2);
+                border-bottom: 1px solid rgba(201,162,39,0.2);
+                padding: 1rem 6%;
+                flex-direction: column;
+                gap: 0.9rem;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a { font-size: 0.72rem; }
             .gold-frame, .gold-frame-top, .gold-frame-bottom { display: none; }
             .content { margin: 0; }
-            nav { width: 100%; left: 0; top: 0; padding: 1.1rem 6%; }
+            nav { width: 100%; left: 0; top: 0; padding: 1.1rem 6%; position: fixed; }
             .logo { font-size: 1.2rem; }
             .cursor-spotlight, .gold-rain { display: none; }
         }
@@ -181,6 +199,7 @@
     <div class="content">
         <nav>
             <div class="logo">Michael Moore</div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
@@ -237,6 +256,7 @@
                     <div class="portfolio-overlay">
                         <h3>TechFlow</h3>
                         <p>Landing page for a modern SaaS startup</p>
+                        <p class="project-metric">Outcome: clear SaaS positioning and conversion-focused flow</p>
                         <div class="portfolio-tags"><span class="portfolio-tag">Web Design</span></div>
                     </div>
                 </a>
@@ -245,6 +265,7 @@
                     <div class="portfolio-overlay">
                         <h3>Savory Bites</h3>
                         <p>Restaurant website with reservations</p>
+                        <p class="project-metric">Outcome: faster booking path and stronger local discoverability</p>
                         <div class="portfolio-tags"><span class="portfolio-tag">Restaurant</span></div>
                     </div>
                 </a>
@@ -253,6 +274,7 @@
                     <div class="portfolio-overlay">
                         <h3>StyleHub</h3>
                         <p>E-commerce platform for fashion</p>
+                        <p class="project-metric">Outcome: improved product discovery and mobile shopping flow</p>
                         <div class="portfolio-tags"><span class="portfolio-tag">E-Commerce</span></div>
                     </div>
                 </a>
@@ -261,6 +283,7 @@
                     <div class="portfolio-overlay">
                         <h3>Workspace Co</h3>
                         <p>Corporate website for coworking</p>
+                        <p class="project-metric">Outcome: clearer service messaging and lead-ready CTA structure</p>
                         <div class="portfolio-tags"><span class="portfolio-tag">Corporate</span></div>
                     </div>
                 </a>
@@ -324,7 +347,7 @@
             <p class="section-label">Resume</p>
             <h2 class="section-title">Professional <em>Background</em></h2>
             <div class="resume-card">
-                <p>Download my current resume for a full overview of experience in web application and software development, technical skills, and project impact.</p>
+                <p>Download my current resume for a full overview of experience in web application and software development, technical skills, and project impact. PDF is the default format, with DOCX as fallback.</p>
                 <div class="resume-highlights">
                     <div>
                         <strong>Web Application Development</strong>
@@ -340,7 +363,8 @@
                     </div>
                 </div>
                 <div class="resume-actions">
-                    <a href="Michael_Moore_General_Resume.docx" class="btn" download>Download Resume</a>
+                    <a href="Michael_Moore_General_Resume.pdf" class="btn" download>Download Resume (PDF)</a>
+                    <a href="Michael_Moore_General_Resume.docx" class="btn" download>DOCX Fallback</a>
                 </div>
             </div>
         </section>
@@ -357,7 +381,7 @@
             <div class="profile-buttons" style="margin-top: 2.5rem; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
                 <a href="https://www.linkedin.com/in/michael-moore-855696238/" class="btn" target="_blank">LinkedIn</a>
                 <a href="https://github.com/mrmoore6" class="btn" target="_blank">GitHub</a>
-                <a href="Michael_Moore_General_Resume.docx" class="btn" download>Resume</a>
+                <a href="Michael_Moore_General_Resume.pdf" class="btn" download>Resume PDF</a>
                 <a href="mailto:mmoore2457@gmail.com" class="btn">Email Me</a>
             </div>
         </section>
@@ -369,6 +393,22 @@
 <div class="cursor-spotlight"></div>
     <div class="gold-rain"></div>
     <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.querySelector('.nav-links');
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                const isOpen = navLinks.classList.toggle('open');
+                menuToggle.setAttribute('aria-expanded', String(isOpen));
+            });
+
+            navLinks.querySelectorAll('a').forEach((link) => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+
         document.querySelectorAll('.portfolio-item').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
