@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeloxMind Live Example</title>
+    <style>
+        :root { --bg: #0f1117; --panel: #161a22; --gold: #c9a227; --text: #f6f1e7; --muted: #9a9a9a; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); padding: 2rem 1rem; }
+        .wrap { max-width: 840px; margin: 0 auto; }
+        .btn { border: 1px solid rgba(201,162,39,0.5); color: var(--gold); text-decoration: none; padding: 9px 13px; display: inline-block; }
+        .btn:hover { background: var(--gold); color: #101010; }
+        .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-top: 1rem; }
+        .card { background: var(--panel); border: 1px solid rgba(201,162,39,0.25); padding: 1rem; }
+        h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+        p { color: var(--muted); line-height: 1.6; }
+        .chat { height: 360px; overflow-y: auto; margin-top: 0.8rem; border: 1px solid rgba(201,162,39,0.15); padding: 0.7rem; }
+        .msg { margin-bottom: 0.7rem; }
+        .msg b { color: var(--gold); font-size: 0.85rem; display: block; margin-bottom: 0.15rem; }
+        .controls { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
+        input { flex: 1; background: #0f141f; border: 1px solid rgba(201,162,39,0.25); color: var(--text); padding: 10px; }
+        button { border: 1px solid rgba(201,162,39,0.5); background: transparent; color: var(--gold); padding: 10px 12px; cursor: pointer; }
+        button:hover { background: var(--gold); color: #111; }
+        ul { margin-top: 0.7rem; padding-left: 1rem; color: var(--muted); }
+        li { margin-bottom: 0.4rem; }
+        @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } .chat { height: 300px; } }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <a href="index.html#aiml" class="btn">Back to Portfolio</a>
+        <div class="grid">
+            <div class="card">
+                <h1>VeloxMind Studio</h1>
+                <p>Live example: this mini assistant remembers prior topics and references them in future responses.</p>
+                <div id="chat" class="chat"></div>
+                <div class="controls">
+                    <input id="prompt" placeholder="Ask something..." />
+                    <button id="send">Send</button>
+                </div>
+            </div>
+            <div class="card">
+                <h1 style="font-size:1.2rem;">Conversation Memory</h1>
+                <p>Tracked keywords from recent prompts:</p>
+                <ul id="memoryList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chat = document.getElementById('chat');
+        const promptInput = document.getElementById('prompt');
+        const memoryList = document.getElementById('memoryList');
+        const memory = [];
+
+        function extractKeywords(text) {
+            return text
+                .toLowerCase()
+                .replace(/[^a-z0-9\s]/g, '')
+                .split(/\s+/)
+                .filter((w) => w.length > 4)
+                .slice(0, 3);
+        }
+
+        function addMessage(role, text) {
+            const box = document.createElement('div');
+            box.className = 'msg';
+            box.innerHTML = `<b>${role}</b><span>${text}</span>`;
+            chat.appendChild(box);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function renderMemory() {
+            memoryList.innerHTML = '';
+            memory.slice(-6).forEach((item) => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                memoryList.appendChild(li);
+            });
+        }
+
+        function buildReply(input) {
+            const recent = memory.length ? memory[memory.length - 1] : null;
+            if (recent) {
+                return `Based on our earlier context around "${recent}", here is a focused next step: break it into implementation tasks and validate with a quick prototype.`;
+            }
+            return 'Great prompt. I can help structure this into requirements, implementation tasks, and a validation plan.';
+        }
+
+        document.getElementById('send').addEventListener('click', () => {
+            const text = promptInput.value.trim();
+            if (!text) return;
+            addMessage('You', text);
+
+            extractKeywords(text).forEach((k) => memory.push(k));
+            renderMemory();
+
+            const reply = buildReply(text);
+            setTimeout(() => addMessage('VeloxMind', reply), 250);
+            promptInput.value = '';
+            promptInput.focus();
+        });
+
+        promptInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('send').click();
+        });
+
+        addMessage('VeloxMind', 'Welcome. I keep lightweight memory of your recent topics in this session.');
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Job Assistant Live Example</title>
+    <style>
+        :root { --bg: #0f1117; --panel: #161a22; --gold: #c9a227; --text: #f6f1e7; --muted: #9a9a9a; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); padding: 2rem 1rem; }
+        .wrap { max-width: 900px; margin: 0 auto; }
+        .btn { border: 1px solid rgba(201,162,39,0.5); color: var(--gold); text-decoration: none; padding: 9px 13px; display: inline-block; }
+        .btn:hover { background: var(--gold); color: #101010; }
+        .card { margin-top: 1rem; background: var(--panel); border: 1px solid rgba(201,162,39,0.25); padding: 1rem; }
+        h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        p { color: var(--muted); line-height: 1.6; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.8rem; }
+        textarea { width: 100%; min-height: 190px; resize: vertical; background: #0f141f; border: 1px solid rgba(201,162,39,0.25); color: var(--text); padding: 10px; }
+        button { margin-top: 0.8rem; border: 1px solid rgba(201,162,39,0.5); background: transparent; color: var(--gold); padding: 10px 12px; cursor: pointer; }
+        button:hover { background: var(--gold); color: #111; }
+        .result { margin-top: 1rem; border-top: 1px solid rgba(201,162,39,0.2); padding-top: 0.9rem; }
+        .score { font-size: 1.6rem; color: var(--gold); margin-bottom: 0.5rem; }
+        .list { color: var(--muted); margin-bottom: 0.35rem; font-size: 0.95rem; }
+        @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <a href="index.html#aiml" class="btn">Back to Portfolio</a>
+        <div class="card">
+            <h1>AI Job Assistant</h1>
+            <p>Live example: paste resume text and a job description to estimate match score and keyword overlap.</p>
+            <div class="grid">
+                <textarea id="resumeText" placeholder="Paste resume text here..."></textarea>
+                <textarea id="jobText" placeholder="Paste job description here..."></textarea>
+            </div>
+            <button id="analyzeBtn">Analyze Match</button>
+            <div class="result">
+                <div id="score" class="score">Match Score: --%</div>
+                <div id="matched" class="list">Matched Keywords: --</div>
+                <div id="missing" class="list">Missing Keywords: --</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const resumeEl = document.getElementById('resumeText');
+        const jobEl = document.getElementById('jobText');
+        const scoreEl = document.getElementById('score');
+        const matchedEl = document.getElementById('matched');
+        const missingEl = document.getElementById('missing');
+
+        function tokenize(text) {
+            const stop = new Set(['with', 'from', 'that', 'this', 'have', 'your', 'will', 'them', 'into', 'using', 'able', 'work', 'team', 'years', 'experience']);
+            return [...new Set(
+                text
+                    .toLowerCase()
+                    .replace(/[^a-z0-9\s]/g, '')
+                    .split(/\s+/)
+                    .filter((w) => w.length > 3 && !stop.has(w))
+            )];
+        }
+
+        document.getElementById('analyzeBtn').addEventListener('click', () => {
+            const resumeWords = tokenize(resumeEl.value);
+            const jobWords = tokenize(jobEl.value);
+
+            if (!jobWords.length) {
+                scoreEl.textContent = 'Match Score: 0%';
+                matchedEl.textContent = 'Matched Keywords: --';
+                missingEl.textContent = 'Missing Keywords: add a job description to analyze.';
+                return;
+            }
+
+            const resumeSet = new Set(resumeWords);
+            const matched = jobWords.filter((w) => resumeSet.has(w));
+            const missing = jobWords.filter((w) => !resumeSet.has(w));
+            const score = Math.round((matched.length / jobWords.length) * 100);
+
+            scoreEl.textContent = `Match Score: ${score}%`;
+            matchedEl.textContent = `Matched Keywords: ${matched.slice(0, 12).join(', ') || 'none'}`;
+            missingEl.textContent = `Missing Keywords: ${missing.slice(0, 12).join(', ') || 'none'}`;
+        });
+    </script>
+</body>
+</html>

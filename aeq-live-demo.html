@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEQ Live Example</title>
+    <style>
+        :root { --bg: #0f1117; --panel: #161a22; --gold: #c9a227; --text: #f6f1e7; --muted: #9a9a9a; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); padding: 2rem 1rem; }
+        .wrap { max-width: 760px; margin: 0 auto; }
+        .card { background: var(--panel); border: 1px solid rgba(201,162,39,0.28); padding: 1.2rem; margin-top: 1rem; }
+        h1 { font-size: 1.8rem; margin-bottom: 0.6rem; }
+        p { color: var(--muted); line-height: 1.6; }
+        .row { margin-top: 1rem; }
+        label { display: flex; justify-content: space-between; margin-bottom: 0.3rem; font-size: 0.92rem; }
+        input[type="range"] { width: 100%; }
+        .actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1rem; }
+        button, a.btn { border: 1px solid rgba(201,162,39,0.5); background: transparent; color: var(--gold); padding: 10px 14px; cursor: pointer; text-decoration: none; }
+        button:hover, a.btn:hover { background: var(--gold); color: #111; }
+        .status { margin-top: 0.8rem; color: var(--muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <a href="index.html#aiml" class="btn">Back to Portfolio</a>
+        <div class="card">
+            <h1>AEQ: Crystal 3D Audio</h1>
+            <p>Live example: adjust low, mid, and high EQ bands while a test tone is playing.</p>
+
+            <div class="row">
+                <label for="low">Low Shelf <span id="lowVal">0 dB</span></label>
+                <input id="low" type="range" min="-12" max="12" value="0">
+            </div>
+            <div class="row">
+                <label for="mid">Mid Peak <span id="midVal">0 dB</span></label>
+                <input id="mid" type="range" min="-12" max="12" value="0">
+            </div>
+            <div class="row">
+                <label for="high">High Shelf <span id="highVal">0 dB</span></label>
+                <input id="high" type="range" min="-12" max="12" value="0">
+            </div>
+
+            <div class="actions">
+                <button id="playBtn">Play Tone</button>
+                <button id="stopBtn">Stop Tone</button>
+            </div>
+            <p class="status" id="status">Status: idle</p>
+        </div>
+    </div>
+
+    <script>
+        const lowInput = document.getElementById('low');
+        const midInput = document.getElementById('mid');
+        const highInput = document.getElementById('high');
+        const lowVal = document.getElementById('lowVal');
+        const midVal = document.getElementById('midVal');
+        const highVal = document.getElementById('highVal');
+        const statusEl = document.getElementById('status');
+
+        let audioCtx;
+        let oscillator;
+        let lowShelf;
+        let midPeak;
+        let highShelf;
+        let master;
+        let playing = false;
+
+        function updateLabels() {
+            lowVal.textContent = `${lowInput.value} dB`;
+            midVal.textContent = `${midInput.value} dB`;
+            highVal.textContent = `${highInput.value} dB`;
+        }
+
+        function applyEq() {
+            if (!lowShelf) return;
+            lowShelf.gain.value = Number(lowInput.value);
+            midPeak.gain.value = Number(midInput.value);
+            highShelf.gain.value = Number(highInput.value);
+            updateLabels();
+        }
+
+        function initAudio() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+            lowShelf = audioCtx.createBiquadFilter();
+            lowShelf.type = 'lowshelf';
+            lowShelf.frequency.value = 250;
+
+            midPeak = audioCtx.createBiquadFilter();
+            midPeak.type = 'peaking';
+            midPeak.frequency.value = 1200;
+            midPeak.Q.value = 1.0;
+
+            highShelf = audioCtx.createBiquadFilter();
+            highShelf.type = 'highshelf';
+            highShelf.frequency.value = 4000;
+
+            master = audioCtx.createGain();
+            master.gain.value = 0.12;
+
+            lowShelf.connect(midPeak);
+            midPeak.connect(highShelf);
+            highShelf.connect(master);
+            master.connect(audioCtx.destination);
+            applyEq();
+        }
+
+        function playTone() {
+            if (playing) return;
+            if (!audioCtx) initAudio();
+            oscillator = audioCtx.createOscillator();
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.value = 220;
+            oscillator.connect(lowShelf);
+            oscillator.start();
+            playing = true;
+            statusEl.textContent = 'Status: playing test tone';
+        }
+
+        function stopTone() {
+            if (!playing || !oscillator) return;
+            oscillator.stop();
+            oscillator.disconnect();
+            oscillator = null;
+            playing = false;
+            statusEl.textContent = 'Status: stopped';
+        }
+
+        lowInput.addEventListener('input', applyEq);
+        midInput.addEventListener('input', applyEq);
+        highInput.addEventListener('input', applyEq);
+        document.getElementById('playBtn').addEventListener('click', playTone);
+        document.getElementById('stopBtn').addEventListener('click', stopTone);
+        updateLabels();
+    </script>
+</body>
+</html>
