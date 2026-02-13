@@ -9,6 +9,7 @@
         :root { --black: #0d0d0d; --dark: #151515; --gold: #c9a227; --cream: #f8f4e8; --gray: #9a9a9a; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Lora', Georgia, serif; line-height: 1.8; color: var(--cream); background: var(--black); }
+        img { max-width: 100%; height: auto; }
         h1, h2, h3 { font-family: 'Bodoni Moda', serif; font-weight: 400; letter-spacing: 0.02em; }
         
         .gold-frame { position: fixed; top: 0; bottom: 0; width: 12px; background: linear-gradient(180deg, var(--gold) 0%, #8b7355 50%, var(--gold) 100%); z-index: 9999; overflow: hidden; }
@@ -118,7 +119,57 @@
         .gold-particle { position: absolute; width: 2px; height: 8px; background: linear-gradient(180deg, rgba(201,162,39,0.6), rgba(201,162,39,0)); border-radius: 50%; animation: rainFall linear infinite; }
         @keyframes rainFall { 0% { transform: translateY(-10px) rotate(15deg); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(100vh) rotate(15deg); opacity: 0; } }
         
-        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .about-container { grid-template-columns: 1fr; } .portfolio-grid { grid-template-columns: 1fr; } .resume-highlights { grid-template-columns: 1fr; } .resume-card { padding: 1.5rem; } .nav-links { display: none; } .gold-frame, .gold-frame-top, .gold-frame-bottom { display: none; } .content { margin: 0; } nav { width: 100%; left: 0; top: 0; } }
+        @media (max-width: 1024px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .about-container { grid-template-columns: 1fr; gap: 2.5rem; }
+            .section-title { margin-bottom: 3rem; }
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 120px 6% 80px; }
+            .hero-label { font-size: 0.62rem; letter-spacing: 0.22em; padding: 8px 14px; margin-bottom: 1.2rem; }
+            .hero h1 { font-size: 2.25rem; line-height: 1.2; max-width: 95%; margin-bottom: 1.2rem; }
+            .hero p { font-size: 0.98rem; max-width: 92%; margin-bottom: 1.8rem; }
+
+            .btn { padding: 14px 24px; letter-spacing: 0.14em; }
+            .services, .portfolio, .about, .resume-section, .contact { padding: 72px 6%; }
+            .section-label { font-size: 0.62rem; letter-spacing: 0.26em; margin-bottom: 0.8rem; }
+            .section-title { font-size: 2rem; line-height: 1.25; margin-bottom: 2.2rem; }
+
+            .services-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .service-card { padding: 1.5rem 1.2rem; }
+            .service-num { font-size: 2.4rem; }
+
+            .portfolio-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+            .portfolio-item img { height: 230px; }
+            .portfolio-overlay { padding: 1.2rem; }
+            .portfolio-tags { flex-wrap: wrap; gap: 0.6rem; }
+
+            .about-container { grid-template-columns: 1fr; gap: 2rem; }
+            .about-content h2 { font-size: 1.8rem; }
+            .skills { gap: 0.5rem; }
+            .skill { padding: 8px 12px; font-size: 0.58rem; }
+
+            .resume-highlights { grid-template-columns: 1fr; }
+            .resume-card { padding: 1.4rem; }
+            .resume-actions { gap: 0.75rem; }
+
+            .contact h2 { font-size: 2.2rem; margin-bottom: 1rem; }
+            .contact p { margin-bottom: 1.6rem; }
+            .contact-email { font-size: 1.18rem; overflow-wrap: anywhere; }
+            .social-links { gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+            .profile-buttons { gap: 0.75rem !important; }
+
+            footer { padding: 2rem 1rem; }
+
+            .nav-links { display: none; }
+            .gold-frame, .gold-frame-top, .gold-frame-bottom { display: none; }
+            .content { margin: 0; }
+            nav { width: 100%; left: 0; top: 0; padding: 1.1rem 6%; }
+            .logo { font-size: 1.2rem; }
+            .cursor-spotlight, .gold-rain { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -290,7 +341,6 @@
                 </div>
                 <div class="resume-actions">
                     <a href="Michael_Moore_General_Resume.docx" class="btn" download>Download Resume</a>
-                    <a href="Michael_Moore_General_Resume.docx" class="btn" target="_blank">Open Resume</a>
                 </div>
             </div>
         </section>
