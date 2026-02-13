@@ -3,83 +3,391 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Job Assistant Live Example</title>
+    <title>AI Job Application Assistant - Live Example</title>
     <style>
-        :root { --bg: #0f1117; --panel: #161a22; --gold: #c9a227; --text: #f6f1e7; --muted: #9a9a9a; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); padding: 2rem 1rem; }
-        .wrap { max-width: 900px; margin: 0 auto; }
-        .btn { border: 1px solid rgba(201,162,39,0.5); color: var(--gold); text-decoration: none; padding: 9px 13px; display: inline-block; }
-        .btn:hover { background: var(--gold); color: #101010; }
-        .card { margin-top: 1rem; background: var(--panel); border: 1px solid rgba(201,162,39,0.25); padding: 1rem; }
-        h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
-        p { color: var(--muted); line-height: 1.6; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.8rem; }
-        textarea { width: 100%; min-height: 190px; resize: vertical; background: #0f141f; border: 1px solid rgba(201,162,39,0.25); color: var(--text); padding: 10px; }
-        button { margin-top: 0.8rem; border: 1px solid rgba(201,162,39,0.5); background: transparent; color: var(--gold); padding: 10px 12px; cursor: pointer; }
-        button:hover { background: var(--gold); color: #111; }
-        .result { margin-top: 1rem; border-top: 1px solid rgba(201,162,39,0.2); padding-top: 0.9rem; }
-        .score { font-size: 1.6rem; color: var(--gold); margin-bottom: 0.5rem; }
-        .list { color: var(--muted); margin-bottom: 0.35rem; font-size: 0.95rem; }
-        @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+        :root {
+            --bg: #000000;
+            --text: #ff0000;
+            --accent: #cc0000;
+            --panel: #0a0a0a;
+            --field: #1a1a1a;
+            --button: #ffffff;
+            --button-text: #000000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial Narrow', 'Arial', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 0.85rem;
+            min-height: 100vh;
+        }
+
+        .window {
+            max-width: 1360px;
+            margin: 0 auto;
+            border: 2px solid var(--accent);
+            background: #020202;
+            padding: 0.7rem;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.55rem;
+        }
+
+        .chip {
+            display: inline-block;
+            border: 1px solid #640000;
+            background: #0d0d0d;
+            color: #ff6a6a;
+            text-decoration: none;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.42rem 0.62rem;
+        }
+
+        .app-title {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.55rem;
+        }
+
+        .panel {
+            border: 2px ridge var(--accent);
+            background: var(--panel);
+            padding: 0.55rem;
+        }
+
+        .panel-title {
+            display: inline-block;
+            margin-bottom: 0.55rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: 0.01em;
+        }
+
+        .personal-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.45rem;
+        }
+
+        .field-group label {
+            display: block;
+            font-size: 0.77rem;
+            margin-bottom: 0.2rem;
+            color: #ff4a4a;
+            font-weight: 700;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            border: 1px solid #5b0000;
+            background: var(--field);
+            color: var(--text);
+            padding: 0.45rem;
+            font-size: 0.82rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            line-height: 1.35;
+        }
+
+        .button {
+            border: 1px solid #dddddd;
+            background: var(--button);
+            color: var(--button-text);
+            font-weight: 700;
+            font-size: 0.78rem;
+            padding: 0.42rem 0.6rem;
+            cursor: pointer;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-bottom: 0.45rem;
+        }
+
+        .main-grid {
+            margin-top: 0.55rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 0.55rem;
+            min-height: 500px;
+        }
+
+        .log-box {
+            border: 1px solid #550000;
+            background: var(--field);
+            color: var(--text);
+            padding: 0.45rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.78rem;
+            line-height: 1.35;
+            overflow-y: auto;
+            min-height: 130px;
+        }
+
+        .split-actions {
+            display: flex;
+            gap: 0.35rem;
+            margin-bottom: 0.45rem;
+            align-items: center;
+        }
+
+        .bottom-grid {
+            margin-top: 0.55rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 0.55rem;
+            min-height: 200px;
+        }
+
+        .agent-input {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.35rem;
+            margin-top: 0.45rem;
+        }
+
+        .hint {
+            color: #ff6a6a;
+            font-size: 0.72rem;
+            margin-top: 0.35rem;
+        }
+
+        @media (max-width: 1020px) {
+            .personal-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                min-height: auto;
+            }
+
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .window {
+                padding: 0.45rem;
+            }
+
+            .personal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+            .split-actions,
+            .button-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .agent-input {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="wrap">
-        <a href="index.html#aiml" class="btn">Back to Portfolio</a>
-        <div class="card">
-            <h1>AI Job Assistant</h1>
-            <p>Live example: paste resume text and a job description to estimate match score and keyword overlap.</p>
-            <div class="grid">
-                <textarea id="resumeText" placeholder="Paste resume text here..."></textarea>
-                <textarea id="jobText" placeholder="Paste job description here..."></textarea>
+    <div class="window">
+        <div class="top-bar">
+            <a href="index.html#aiml" class="chip">Back to Portfolio</a>
+            <span class="chip">Static UI Replica</span>
+        </div>
+
+        <h1 class="app-title">AI Job Application Assistant</h1>
+
+        <section class="panel">
+            <h2 class="panel-title">Personal Details</h2>
+            <div class="personal-grid">
+                <div class="field-group">
+                    <label for="name">Name</label>
+                    <input id="name" type="text" value="Michael Moore">
+                </div>
+                <div class="field-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" value="michael@example.com">
+                </div>
+                <div class="field-group">
+                    <label for="date">Date</label>
+                    <input id="date" type="text" value="February 13, 2026">
+                </div>
+                <div class="field-group">
+                    <label for="location">Desired Location</label>
+                    <input id="location" type="text" value="Remote / Hybrid">
+                </div>
             </div>
-            <button id="analyzeBtn">Analyze Match</button>
-            <div class="result">
-                <div id="score" class="score">Match Score: --%</div>
-                <div id="matched" class="list">Matched Keywords: --</div>
-                <div id="missing" class="list">Missing Keywords: --</div>
-            </div>
+        </section>
+
+        <div class="main-grid">
+            <section class="panel">
+                <h2 class="panel-title">Resume</h2>
+                <div class="button-row">
+                    <button class="button" id="loadResumeBtn" type="button">Load Resume</button>
+                </div>
+                <textarea id="resumeText">Software engineer with experience in Python, JavaScript, and full-stack application development. Built AI-powered tools for workflow automation and decision support.
+
+Strengths:
+- Backend and API implementation
+- Frontend interfaces for production apps
+- ML integration and automation pipelines</textarea>
+            </section>
+
+            <section class="panel">
+                <h2 class="panel-title">Job Board Browser</h2>
+                <div class="split-actions">
+                    <input id="jobUrl" type="text" value="https://jobs.example.com/posting/123">
+                    <button class="button" id="goBtn" type="button">Go</button>
+                </div>
+                <div class="log-box" id="browserOutput">Browser area - Use URL entry above to open job postings.
+
+Demo mode: external browser launch is simulated here.</div>
+            </section>
+
+            <section class="panel">
+                <h2 class="panel-title">Job Analysis</h2>
+                <label for="jobDesc" style="font-size:0.78rem;font-weight:700;margin-bottom:0.25rem;display:block;color:#ff4a4a;">Job Description</label>
+                <textarea id="jobDesc">We are seeking a software engineer to build web applications, integrate AI capabilities, and optimize cloud-based services.
+
+Requirements:
+- Python and JavaScript proficiency
+- API and database design
+- Experience shipping production features</textarea>
+                <div class="button-row" style="margin-top:0.45rem;">
+                    <button class="button" id="analyzeBtn" type="button">Analyze Job Match</button>
+                </div>
+                <div class="log-box" id="analysisOutput">Analysis results appear here.</div>
+            </section>
+
+            <section class="panel">
+                <h2 class="panel-title">Generated Materials</h2>
+                <div class="button-row">
+                    <button class="button" id="coverBtn" type="button">Generate Cover Letter</button>
+                    <button class="button" id="tailorBtn" type="button">Tailor Resume</button>
+                    <button class="button" id="emailBtn" type="button">Generate Email</button>
+                </div>
+                <textarea id="generatedText" style="min-height:160px;">Generated output will appear here.</textarea>
+                <div class="button-row" style="margin-top:0.45rem;">
+                    <button class="button" id="saveBtn" type="button">Save to File</button>
+                </div>
+            </section>
+        </div>
+
+        <div class="bottom-grid">
+            <section class="panel">
+                <h2 class="panel-title">AI Assistant</h2>
+                <div class="log-box" id="chatLog">[System] Resume loaded successfully.
+[System] Ready for job analysis.
+[Assistant] Ask me to improve your materials for a target role.</div>
+                <div class="agent-input">
+                    <input id="agentInput" type="text" placeholder="Ask AI assistant...">
+                    <button class="button" id="sendBtn" type="button">Send</button>
+                </div>
+            </section>
+
+            <section class="panel">
+                <h2 class="panel-title">Application Log</h2>
+                <div class="log-box" id="jobLog">[09:14] Application tracked: Software Engineer, Acme Labs
+[09:31] Cover letter generated
+[09:34] Resume tailored for role
+[09:40] Draft email prepared</div>
+                <p class="hint">This live example mirrors the desktop panel layout and theme.</p>
+            </section>
         </div>
     </div>
 
     <script>
-        const resumeEl = document.getElementById('resumeText');
-        const jobEl = document.getElementById('jobText');
-        const scoreEl = document.getElementById('score');
-        const matchedEl = document.getElementById('matched');
-        const missingEl = document.getElementById('missing');
+        const analysisOutput = document.getElementById('analysisOutput');
+        const generatedText = document.getElementById('generatedText');
+        const chatLog = document.getElementById('chatLog');
+        const browserOutput = document.getElementById('browserOutput');
 
-        function tokenize(text) {
-            const stop = new Set(['with', 'from', 'that', 'this', 'have', 'your', 'will', 'them', 'into', 'using', 'able', 'work', 'team', 'years', 'experience']);
-            return [...new Set(
-                text
-                    .toLowerCase()
-                    .replace(/[^a-z0-9\s]/g, '')
-                    .split(/\s+/)
-                    .filter((w) => w.length > 3 && !stop.has(w))
-            )];
-        }
+        document.getElementById('loadResumeBtn').addEventListener('click', () => {
+            chatLog.textContent += '\n[System] Resume loaded successfully from selected file.';
+            chatLog.scrollTop = chatLog.scrollHeight;
+        });
+
+        document.getElementById('goBtn').addEventListener('click', () => {
+            const url = document.getElementById('jobUrl').value.trim() || 'https://jobs.example.com';
+            browserOutput.textContent += `\nOpened: ${url}`;
+            browserOutput.scrollTop = browserOutput.scrollHeight;
+        });
 
         document.getElementById('analyzeBtn').addEventListener('click', () => {
-            const resumeWords = tokenize(resumeEl.value);
-            const jobWords = tokenize(jobEl.value);
+            analysisOutput.textContent = [
+                'Match Score: 84%',
+                'Strengths: Python, JavaScript, web app development, API integration',
+                'Gaps: add specific cloud deployment metrics and team leadership examples',
+                'Recommendation: emphasize shipped product outcomes and automation impact'
+            ].join('\n');
+        });
 
-            if (!jobWords.length) {
-                scoreEl.textContent = 'Match Score: 0%';
-                matchedEl.textContent = 'Matched Keywords: --';
-                missingEl.textContent = 'Missing Keywords: add a job description to analyze.';
-                return;
+        document.getElementById('coverBtn').addEventListener('click', () => {
+            generatedText.value = 'Cover Letter Draft\n\nDear Hiring Team,\n\nI am excited to apply for the Software Engineer role. My recent work includes building production web applications and integrating AI-assisted workflows to improve speed and reliability.\n\nSincerely,\nMichael Moore';
+        });
+
+        document.getElementById('tailorBtn').addEventListener('click', () => {
+            generatedText.value = 'Tailored Resume Highlights\n\n- Developed web applications with Python and JavaScript for internal and client-facing use.\n- Built AI-enabled automation tools that reduced manual processing time.\n- Implemented scalable APIs and improved release quality through iterative testing.';
+        });
+
+        document.getElementById('emailBtn').addEventListener('click', () => {
+            generatedText.value = 'Email Draft\n\nSubject: Application for Software Engineer Role\n\nHello,\n\nI am submitting my application for the Software Engineer opening. I have attached tailored materials aligned to your role requirements.\n\nBest regards,\nMichael Moore';
+        });
+
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            generatedText.value += '\n\n[Saved in demo mode]';
+        });
+
+        document.getElementById('sendBtn').addEventListener('click', () => {
+            const input = document.getElementById('agentInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            chatLog.textContent += `\n[You] ${message}`;
+            chatLog.textContent += '\n[Assistant] Focus your examples on deployed web apps, measurable impact, and role-specific keywords.';
+            chatLog.scrollTop = chatLog.scrollHeight;
+            input.value = '';
+        });
+
+        document.getElementById('agentInput').addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('sendBtn').click();
             }
-
-            const resumeSet = new Set(resumeWords);
-            const matched = jobWords.filter((w) => resumeSet.has(w));
-            const missing = jobWords.filter((w) => !resumeSet.has(w));
-            const score = Math.round((matched.length / jobWords.length) * 100);
-
-            scoreEl.textContent = `Match Score: ${score}%`;
-            matchedEl.textContent = `Matched Keywords: ${matched.slice(0, 12).join(', ') || 'none'}`;
-            missingEl.textContent = `Missing Keywords: ${missing.slice(0, 12).join(', ') || 'none'}`;
         });
     </script>
 </body>

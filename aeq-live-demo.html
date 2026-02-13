@@ -3,136 +3,829 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEQ Live Example</title>
+    <title>CRYSTAL 3D AUDIO - Live Example</title>
     <style>
-        :root { --bg: #0f1117; --panel: #161a22; --gold: #c9a227; --text: #f6f1e7; --muted: #9a9a9a; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); padding: 2rem 1rem; }
-        .wrap { max-width: 760px; margin: 0 auto; }
-        .card { background: var(--panel); border: 1px solid rgba(201,162,39,0.28); padding: 1.2rem; margin-top: 1rem; }
-        h1 { font-size: 1.8rem; margin-bottom: 0.6rem; }
-        p { color: var(--muted); line-height: 1.6; }
-        .row { margin-top: 1rem; }
-        label { display: flex; justify-content: space-between; margin-bottom: 0.3rem; font-size: 0.92rem; }
-        input[type="range"] { width: 100%; }
-        .actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1rem; }
-        button, a.btn { border: 1px solid rgba(201,162,39,0.5); background: transparent; color: var(--gold); padding: 10px 14px; cursor: pointer; text-decoration: none; }
-        button:hover, a.btn:hover { background: var(--gold); color: #111; }
-        .status { margin-top: 0.8rem; color: var(--muted); font-size: 0.9rem; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-deep: #0a0e1a;
+            --cyan-primary: #00d9ff;
+            --purple-secondary: #9d4edd;
+            --pink-accent: #ff006e;
+            --teal-success: #06ffa5;
+            --text-primary: #ffffff;
+            --text-secondary: #b8c5d6;
+            --text-tertiary: #6b7a8f;
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 1.2rem;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 18% 40%, rgba(0, 217, 255, 0.18), transparent 45%),
+                radial-gradient(circle at 82% 78%, rgba(157, 78, 221, 0.16), transparent 45%),
+                radial-gradient(circle at 45% 12%, rgba(255, 0, 110, 0.1), transparent 40%),
+                var(--bg-deep);
+        }
+
+        .top-bar {
+            max-width: 1120px;
+            margin: 0 auto 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .chip {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0.5rem 0.8rem;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+        }
+
+        .chip:hover {
+            color: var(--cyan-primary);
+            border-color: rgba(0, 217, 255, 0.5);
+        }
+
+        .main-container {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        .title-section {
+            text-align: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.45rem;
+            background: linear-gradient(135deg, var(--cyan-primary), var(--purple-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.94rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .import-section {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .import-btn {
+            border: 0;
+            padding: 0.9rem 1.6rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.83rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(135deg, var(--cyan-primary), var(--purple-secondary));
+            box-shadow: 0 8px 24px rgba(0, 217, 255, 0.35);
+            cursor: default;
+        }
+
+        .unified-section {
+            background: linear-gradient(140deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 1.2rem;
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(12px);
+        }
+
+        .section-title {
+            font-size: 0.88rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, var(--cyan-primary), var(--purple-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .playlist-section,
+        .player-section,
+        .audio-info-section,
+        .ai-status-section,
+        .ai-eq-controls,
+        .wavelet-section,
+        .eq-section,
+        .log-section {
+            margin-bottom: 1rem;
+        }
+
+        .playlist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .playlist-controls {
+            display: flex;
+            gap: 0.45rem;
+            flex-wrap: wrap;
+        }
+
+        .playlist-btn {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+            padding: 0.45rem 0.62rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .playlist-container {
+            margin-top: 0.75rem;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.45rem;
+            display: grid;
+            gap: 0.35rem;
+        }
+
+        .track {
+            width: 100%;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-secondary);
+            font-size: 0.84rem;
+            padding: 0.55rem 0.6rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .track.active {
+            color: var(--cyan-primary);
+            border-color: rgba(0, 217, 255, 0.45);
+            background: rgba(0, 217, 255, 0.08);
+        }
+
+        .player-card,
+        .panel-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0.9rem;
+        }
+
+        .now-playing {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .time-display {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .position-slider,
+        .volume-slider {
+            width: 100%;
+            accent-color: #00d9ff;
+        }
+
+        .player-controls {
+            margin-top: 0.75rem;
+            display: grid;
+            grid-template-columns: auto auto auto auto minmax(170px, 1fr);
+            gap: 0.45rem;
+            align-items: center;
+        }
+
+        .control-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            min-width: 170px;
+        }
+
+        .volume-icon,
+        .volume-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            letter-spacing: 0.08em;
+        }
+
+        .progress-section {
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            height: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--teal-success), var(--cyan-primary));
+            transition: width 120ms linear;
+        }
+
+        .status-label {
+            margin-top: 0.5rem;
+            color: var(--teal-success);
+            letter-spacing: 0.1em;
+            font-size: 0.71rem;
+            text-transform: uppercase;
+        }
+
+        .audio-info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.5rem;
+        }
+
+        .info-item {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.55rem;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .info-label {
+            display: block;
+            color: var(--text-tertiary);
+            font-size: 0.69rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 0.2rem;
+        }
+
+        .info-value {
+            color: var(--text-secondary);
+            font-size: 0.84rem;
+        }
+
+        .info-value.good {
+            color: var(--teal-success);
+            font-weight: 600;
+        }
+
+        .spatial-audio-indicator {
+            border: 2px solid rgba(0, 150, 255, 0.3);
+            background: rgba(0, 150, 255, 0.1);
+            border-radius: 10px;
+            padding: 0.9rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .spatial-audio-indicator h3 {
+            color: #00d4ff;
+            font-size: 0.88rem;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.35rem;
+            text-transform: uppercase;
+        }
+
+        .spatial-audio-indicator p {
+            color: #00aaff;
+            font-size: 0.76rem;
+            line-height: 1.4;
+        }
+
+        .ai-status-section {
+            border: 2px solid rgba(0, 255, 150, 0.25);
+            background: rgba(0, 255, 150, 0.08);
+            border-radius: 10px;
+            padding: 0.9rem;
+        }
+
+        .ai-status-grid {
+            margin-top: 0.5rem;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.4rem;
+            color: #00d9ff;
+            font-size: 0.72rem;
+            letter-spacing: 0.02em;
+        }
+
+        .status-note {
+            color: #7f95aa;
+            font-size: 0.69rem;
+            text-align: center;
+            margin-top: 0.6rem;
+        }
+
+        .ai-eq-controls {
+            text-align: center;
+        }
+
+        .ai-eq-controls p {
+            color: var(--text-tertiary);
+            font-size: 0.78rem;
+            margin-bottom: 0.65rem;
+        }
+
+        .eq-toggle-btn {
+            border: 0;
+            padding: 0.65rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #fff;
+            background: #00aa00;
+            cursor: pointer;
+        }
+
+        .eq-toggle-btn.off {
+            background: #aa2a2a;
+        }
+
+        .wavelet-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--text-tertiary);
+            font-size: 0.73rem;
+            margin-bottom: 0.55rem;
+        }
+
+        .wavelet-plot {
+            height: 200px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            background:
+                linear-gradient(to top, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                radial-gradient(circle at 28% 34%, rgba(0, 217, 255, 0.12), transparent 45%);
+            background-size: 100% 24px, 40px 100%, auto;
+        }
+
+        .wavelet-line {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(0, 217, 255, 0.75) 18%, rgba(157, 78, 221, 0.75) 78%, transparent 100%);
+            mask: radial-gradient(circle at 50% 64%, transparent 40%, #000 41%);
+            opacity: 0.52;
+        }
+
+        .eq-header-with-indicators {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.6rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .ai-indicators-horizontal {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .ai-text-indicator {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.28rem 0.45rem;
+            font-size: 0.67rem;
+            color: var(--text-tertiary);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .eq-bands {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 0.45rem;
+            align-items: end;
+        }
+
+        .eq-band {
+            text-align: center;
+        }
+
+        .eq-bar-container {
+            height: 118px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .eq-bar {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(255, 0, 110, 0.84), rgba(255, 160, 46, 0.95));
+            transform-origin: bottom;
+            animation: bounce 2.8s ease-in-out infinite;
+        }
+
+        .eq-band:nth-child(1) .eq-bar { height: 22%; animation-delay: 0s; }
+        .eq-band:nth-child(2) .eq-bar { height: 36%; animation-delay: 0.15s; }
+        .eq-band:nth-child(3) .eq-bar { height: 44%; animation-delay: 0.3s; }
+        .eq-band:nth-child(4) .eq-bar { height: 52%; animation-delay: 0.45s; }
+        .eq-band:nth-child(5) .eq-bar { height: 40%; animation-delay: 0.6s; }
+        .eq-band:nth-child(6) .eq-bar { height: 34%; animation-delay: 0.75s; }
+        .eq-band:nth-child(7) .eq-bar { height: 26%; animation-delay: 0.9s; }
+
+        @keyframes bounce {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.82); }
+        }
+
+        .eq-freq {
+            margin-top: 0.32rem;
+            color: var(--text-tertiary);
+            font-size: 0.66rem;
+        }
+
+        .eq-value {
+            color: var(--cyan-primary);
+            font-size: 0.66rem;
+        }
+
+        .log-text {
+            min-height: 120px;
+            max-height: 160px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0.65rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+            display: grid;
+            gap: 0.22rem;
+        }
+
+        .log-ok { color: var(--teal-success); }
+        .log-warn { color: #f8b84e; }
+
+        @media (max-width: 900px) {
+            .audio-info-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .eq-bands {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+
+            .eq-band:nth-child(n + 5) {
+                margin-top: 0.5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 0.8rem;
+            }
+
+            .player-controls {
+                grid-template-columns: auto auto auto auto;
+            }
+
+            .volume-control {
+                grid-column: 1 / -1;
+            }
+
+            .audio-info-grid,
+            .ai-status-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .eq-header-with-indicators {
+                flex-direction: column;
+            }
+
+            .import-btn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="wrap">
-        <a href="index.html#aiml" class="btn">Back to Portfolio</a>
-        <div class="card">
-            <h1>AEQ: Crystal 3D Audio</h1>
-            <p>Live example: adjust low, mid, and high EQ bands while a test tone is playing.</p>
+    <div class="top-bar">
+        <a href="index.html#aiml" class="chip">Back to Portfolio</a>
+        <span class="chip">Static UI Replica</span>
+    </div>
 
-            <div class="row">
-                <label for="low">Low Shelf <span id="lowVal">0 dB</span></label>
-                <input id="low" type="range" min="-12" max="12" value="0">
-            </div>
-            <div class="row">
-                <label for="mid">Mid Peak <span id="midVal">0 dB</span></label>
-                <input id="mid" type="range" min="-12" max="12" value="0">
-            </div>
-            <div class="row">
-                <label for="high">High Shelf <span id="highVal">0 dB</span></label>
-                <input id="high" type="range" min="-12" max="12" value="0">
+    <div class="main-container">
+        <div class="title-section">
+            <h1 class="main-title">CRYSTAL 3D AUDIO</h1>
+            <p class="subtitle">Immersive 3D Sound for Headphones</p>
+        </div>
+
+        <div class="import-section">
+            <button class="import-btn" type="button">Import Audio Files (MP3/MP4)</button>
+        </div>
+
+        <div class="unified-section">
+            <section class="playlist-section">
+                <div class="playlist-header">
+                    <h3 class="section-title">Playlist</h3>
+                    <div class="playlist-controls">
+                        <button class="playlist-btn" id="clearPlaylistBtn" type="button">Clear All</button>
+                        <button class="playlist-btn" id="shuffleBtn" type="button">Shuffle</button>
+                    </div>
+                </div>
+                <div class="playlist-container" id="playlistContainer">
+                    <button class="track active" data-track="Neon Nights (Filtered).wav" type="button">01. Neon Nights (Filtered).wav</button>
+                    <button class="track" data-track="Downtown Echoes.mp3" type="button">02. Downtown Echoes.mp3</button>
+                    <button class="track" data-track="Crystal Drift (Lossless).wav" type="button">03. Crystal Drift (Lossless).wav</button>
+                    <button class="track" data-track="HRTF Test Tone.mp4" type="button">04. HRTF Test Tone.mp4</button>
+                </div>
+            </section>
+
+            <section class="player-section player-card">
+                <h3 class="section-title">Music Player</h3>
+                <p class="now-playing" id="nowPlaying">Now Playing: Neon Nights (Filtered).wav</p>
+                <p class="time-display" id="timeDisplay">01:22 / 03:57</p>
+                <input type="range" class="position-slider" id="positionSlider" min="0" max="237" value="82">
+
+                <div class="player-controls">
+                    <button class="control-btn" id="prevBtn" type="button">&lt;&lt;</button>
+                    <button class="control-btn" id="playBtn" type="button">></button>
+                    <button class="control-btn" id="stopBtn" type="button">[]</button>
+                    <button class="control-btn" id="nextBtn" type="button">&gt;&gt;</button>
+                    <div class="volume-control">
+                        <span class="volume-icon">Vol</span>
+                        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
+                        <span class="volume-label" id="volumeLabel">70%</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="progress-section">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="status-label" id="statusLabel">Ready to Process</p>
             </div>
 
-            <div class="actions">
-                <button id="playBtn">Play Tone</button>
-                <button id="stopBtn">Stop Tone</button>
+            <section class="audio-info-section panel-card">
+                <h3 class="section-title">Lossless Audio Info</h3>
+                <div class="audio-info-grid">
+                    <div class="info-item"><span class="info-label">Sample Rate</span><span class="info-value">48000 Hz</span></div>
+                    <div class="info-item"><span class="info-label">Bit Depth</span><span class="info-value">24 bit</span></div>
+                    <div class="info-item"><span class="info-label">Channels</span><span class="info-value">2 (Stereo)</span></div>
+                    <div class="info-item"><span class="info-label">Duration</span><span class="info-value">03:57</span></div>
+                    <div class="info-item"><span class="info-label">Format</span><span class="info-value">WAV</span></div>
+                    <div class="info-item"><span class="info-label">Quality</span><span class="info-value good">Lossless</span></div>
+                </div>
+            </section>
+
+            <div class="spatial-audio-indicator">
+                <h3>3D Spatial Audio Active</h3>
+                <p>HRTF binaural processing for headphones. Automatic frequency-based positioning and spatial depth tuning.</p>
             </div>
-            <p class="status" id="status">Status: idle</p>
+
+            <section class="ai-status-section">
+                <h3 class="section-title">AI Automation Status</h3>
+                <div class="ai-status-grid">
+                    <div>AI: Analyzing</div>
+                    <div>Genre: Electronic</div>
+                    <div>Mood: Focused</div>
+                    <div>Ambient: 24%</div>
+                    <div>Fatigue: 12%</div>
+                    <div>Spatial: 1.3x</div>
+                    <div>Time Boost: +6%</div>
+                    <div>Learning: Active</div>
+                </div>
+                <p class="status-note">Real-time adaptation based on genre, environment, and listening patterns.</p>
+            </section>
+
+            <section class="ai-eq-controls">
+                <h3 class="section-title">Real-Time Dynamic Wavelet EQ</h3>
+                <p>Adaptive audio enhancement continuously optimizing for clean spatial playback.</p>
+                <button class="eq-toggle-btn" id="eqToggleBtn" type="button">Dynamic EQ: On</button>
+            </section>
+
+            <section class="wavelet-section panel-card">
+                <h3 class="section-title">Wavelet Frequency Response</h3>
+                <div class="wavelet-info">
+                    <span>Harman Target</span>
+                    <span>Preamp: -2.0dB</span>
+                </div>
+                <div class="wavelet-plot">
+                    <div class="wavelet-line"></div>
+                </div>
+            </section>
+
+            <section class="eq-section panel-card">
+                <div class="eq-header-with-indicators">
+                    <h3 class="section-title">Neural EQ Analysis</h3>
+                    <div class="ai-indicators-horizontal">
+                        <span class="ai-text-indicator">CNN: +1.3dB</span>
+                        <span class="ai-text-indicator">GAN: 64%</span>
+                        <span class="ai-text-indicator">Wavelet: 4.1kHz</span>
+                    </div>
+                </div>
+                <div class="eq-bands">
+                    <div class="eq-band"><div class="eq-bar-container"><div class="eq-bar"></div></div><p class="eq-freq">60Hz</p><p class="eq-value">+1.2dB</p></div>
+                    <div class="eq-band"><div class="eq-bar-container"><div class="eq-bar"></div></div><p class="eq-freq">150Hz</p><p class="eq-value">+2.0dB</p></div>
+                    <div class="eq-band"><div class="eq-bar-container"><div class="eq-bar"></div></div><p class="eq-freq">400Hz</p><p class="eq-value">+2.7dB</p></div>
+                    <div class="eq-band"><div class="eq-bar-container"><div class="eq-bar"></div></div><p class="eq-freq">1kHz</p><p class="eq-value">+3.2dB</p></div>
+                    <div class="eq-band"><div class="eq-bar-container"><div class="eq-bar"></div></div><p class="eq-freq">2.5kHz</p><p class="eq-value">+2.4dB</p></div>
+                    <div class="eq-band"><div class="eq-bar-container"><div class="eq-bar"></div></div><p class="eq-freq">6kHz</p><p class="eq-value">+1.9dB</p></div>
+                    <div class="eq-band"><div class="eq-bar-container"><div class="eq-bar"></div></div><p class="eq-freq">12kHz</p><p class="eq-value">+1.1dB</p></div>
+                </div>
+            </section>
+
+            <section class="log-section panel-card">
+                <h3 class="section-title">Processing Log</h3>
+                <div class="log-text" id="logText">
+                    <div class="log-ok">[08:42:12] Audio file loaded: Neon Nights (Filtered).wav</div>
+                    <div>[08:42:13] Neural profile initialized (Electronic, Focused)</div>
+                    <div class="log-ok">[08:42:14] HRTF binaural engine active</div>
+                    <div>[08:42:15] Dynamic wavelet EQ sweep complete</div>
+                    <div class="log-warn">[08:42:16] Mild clipping at 1kHz auto-corrected</div>
+                    <div class="log-ok">[08:42:17] Output stable. Lossless quality preserved</div>
+                </div>
+            </section>
         </div>
     </div>
 
     <script>
-        const lowInput = document.getElementById('low');
-        const midInput = document.getElementById('mid');
-        const highInput = document.getElementById('high');
-        const lowVal = document.getElementById('lowVal');
-        const midVal = document.getElementById('midVal');
-        const highVal = document.getElementById('highVal');
-        const statusEl = document.getElementById('status');
+        const tracks = Array.from(document.querySelectorAll('.track'));
+        const nowPlaying = document.getElementById('nowPlaying');
+        const playBtn = document.getElementById('playBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        const clearPlaylistBtn = document.getElementById('clearPlaylistBtn');
+        const positionSlider = document.getElementById('positionSlider');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeLabel = document.getElementById('volumeLabel');
+        const progressFill = document.getElementById('progressFill');
+        const statusLabel = document.getElementById('statusLabel');
+        const timeDisplay = document.getElementById('timeDisplay');
+        const eqToggleBtn = document.getElementById('eqToggleBtn');
 
-        let audioCtx;
-        let oscillator;
-        let lowShelf;
-        let midPeak;
-        let highShelf;
-        let master;
-        let playing = false;
+        let currentTrack = 0;
+        let isPlaying = false;
+        let playerTimer = null;
+        const duration = 237;
 
-        function updateLabels() {
-            lowVal.textContent = `${lowInput.value} dB`;
-            midVal.textContent = `${midInput.value} dB`;
-            highVal.textContent = `${highInput.value} dB`;
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
         }
 
-        function applyEq() {
-            if (!lowShelf) return;
-            lowShelf.gain.value = Number(lowInput.value);
-            midPeak.gain.value = Number(midInput.value);
-            highShelf.gain.value = Number(highInput.value);
-            updateLabels();
+        function setTrack(index) {
+            if (!tracks.length) {
+                nowPlaying.textContent = 'Now Playing: No file loaded';
+                return;
+            }
+
+            currentTrack = (index + tracks.length) % tracks.length;
+            tracks.forEach((track, i) => track.classList.toggle('active', i === currentTrack));
+            nowPlaying.textContent = `Now Playing: ${tracks[currentTrack].dataset.track}`;
         }
 
-        function initAudio() {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-            lowShelf = audioCtx.createBiquadFilter();
-            lowShelf.type = 'lowshelf';
-            lowShelf.frequency.value = 250;
-
-            midPeak = audioCtx.createBiquadFilter();
-            midPeak.type = 'peaking';
-            midPeak.frequency.value = 1200;
-            midPeak.Q.value = 1.0;
-
-            highShelf = audioCtx.createBiquadFilter();
-            highShelf.type = 'highshelf';
-            highShelf.frequency.value = 4000;
-
-            master = audioCtx.createGain();
-            master.gain.value = 0.12;
-
-            lowShelf.connect(midPeak);
-            midPeak.connect(highShelf);
-            highShelf.connect(master);
-            master.connect(audioCtx.destination);
-            applyEq();
+        function updatePlaybackUI() {
+            const value = Number(positionSlider.value);
+            progressFill.style.width = `${(value / duration) * 100}%`;
+            timeDisplay.textContent = `${formatTime(value)} / ${formatTime(duration)}`;
         }
 
-        function playTone() {
-            if (playing) return;
-            if (!audioCtx) initAudio();
-            oscillator = audioCtx.createOscillator();
-            oscillator.type = 'sawtooth';
-            oscillator.frequency.value = 220;
-            oscillator.connect(lowShelf);
-            oscillator.start();
-            playing = true;
-            statusEl.textContent = 'Status: playing test tone';
+        function startPlayback() {
+            if (playerTimer) return;
+            playerTimer = setInterval(() => {
+                if (Number(positionSlider.value) >= duration) {
+                    setTrack(currentTrack + 1);
+                    positionSlider.value = 0;
+                } else {
+                    positionSlider.value = String(Number(positionSlider.value) + 1);
+                }
+                updatePlaybackUI();
+            }, 200);
         }
 
-        function stopTone() {
-            if (!playing || !oscillator) return;
-            oscillator.stop();
-            oscillator.disconnect();
-            oscillator = null;
-            playing = false;
-            statusEl.textContent = 'Status: stopped';
+        function stopPlaybackTimer() {
+            clearInterval(playerTimer);
+            playerTimer = null;
         }
 
-        lowInput.addEventListener('input', applyEq);
-        midInput.addEventListener('input', applyEq);
-        highInput.addEventListener('input', applyEq);
-        document.getElementById('playBtn').addEventListener('click', playTone);
-        document.getElementById('stopBtn').addEventListener('click', stopTone);
-        updateLabels();
+        tracks.forEach((track, index) => {
+            track.addEventListener('click', () => {
+                setTrack(index);
+                statusLabel.textContent = 'Track Selected';
+            });
+        });
+
+        playBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            playBtn.textContent = isPlaying ? '||' : '>';
+            statusLabel.textContent = isPlaying ? 'Processing Audio Stream' : 'Playback Paused';
+            if (isPlaying) {
+                startPlayback();
+            } else {
+                stopPlaybackTimer();
+            }
+        });
+
+        stopBtn.addEventListener('click', () => {
+            isPlaying = false;
+            playBtn.textContent = '>';
+            stopPlaybackTimer();
+            positionSlider.value = '0';
+            updatePlaybackUI();
+            statusLabel.textContent = 'Ready to Process';
+        });
+
+        nextBtn.addEventListener('click', () => {
+            setTrack(currentTrack + 1);
+        });
+
+        prevBtn.addEventListener('click', () => {
+            setTrack(currentTrack - 1);
+        });
+
+        shuffleBtn.addEventListener('click', () => {
+            const randomIndex = Math.floor(Math.random() * tracks.length);
+            setTrack(randomIndex);
+            statusLabel.textContent = 'Playlist Shuffled';
+        });
+
+        clearPlaylistBtn.addEventListener('click', () => {
+            statusLabel.textContent = 'Demo Mode: Playlist Locked';
+        });
+
+        volumeSlider.addEventListener('input', () => {
+            volumeLabel.textContent = `${volumeSlider.value}%`;
+        });
+
+        positionSlider.addEventListener('input', updatePlaybackUI);
+
+        eqToggleBtn.addEventListener('click', () => {
+            const turnOff = eqToggleBtn.textContent.toLowerCase().includes('on');
+            eqToggleBtn.textContent = turnOff ? 'Dynamic EQ: Off' : 'Dynamic EQ: On';
+            eqToggleBtn.classList.toggle('off', turnOff);
+        });
+
+        updatePlaybackUI();
+        setTrack(0);
     </script>
 </body>
 </html>

@@ -3,110 +3,582 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VeloxMind Live Example</title>
+    <title>VeloxMind Studio - Live Example</title>
     <style>
-        :root { --bg: #0f1117; --panel: #161a22; --gold: #c9a227; --text: #f6f1e7; --muted: #9a9a9a; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); padding: 2rem 1rem; }
-        .wrap { max-width: 840px; margin: 0 auto; }
-        .btn { border: 1px solid rgba(201,162,39,0.5); color: var(--gold); text-decoration: none; padding: 9px 13px; display: inline-block; }
-        .btn:hover { background: var(--gold); color: #101010; }
-        .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-top: 1rem; }
-        .card { background: var(--panel); border: 1px solid rgba(201,162,39,0.25); padding: 1rem; }
-        h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
-        p { color: var(--muted); line-height: 1.6; }
-        .chat { height: 360px; overflow-y: auto; margin-top: 0.8rem; border: 1px solid rgba(201,162,39,0.15); padding: 0.7rem; }
-        .msg { margin-bottom: 0.7rem; }
-        .msg b { color: var(--gold); font-size: 0.85rem; display: block; margin-bottom: 0.15rem; }
-        .controls { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
-        input { flex: 1; background: #0f141f; border: 1px solid rgba(201,162,39,0.25); color: var(--text); padding: 10px; }
-        button { border: 1px solid rgba(201,162,39,0.5); background: transparent; color: var(--gold); padding: 10px 12px; cursor: pointer; }
-        button:hover { background: var(--gold); color: #111; }
-        ul { margin-top: 0.7rem; padding-left: 1rem; color: var(--muted); }
-        li { margin-bottom: 0.4rem; }
-        @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } .chat { height: 300px; } }
+        @import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Nunito:wght@500;700;800&display=swap');
+
+        :root {
+            --bg: #090909;
+            --window: #171717;
+            --panel: #1f1f1f;
+            --field: #2b2b32;
+            --line: #3d3d47;
+            --text: #f4f4f4;
+            --muted: #9e9ea7;
+            --yellow: #f6d32e;
+            --yellow-dark: #c9a500;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: radial-gradient(circle at top, #121212, #050505 62%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .top-bar {
+            max-width: 1220px;
+            margin: 0 auto 0.7rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .chip {
+            display: inline-block;
+            text-decoration: none;
+            border: 1px solid #4a4a4a;
+            color: #cccccc;
+            font-size: 0.73rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.45rem 0.66rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+        }
+
+        .chip:hover {
+            border-color: #777;
+            color: #fff;
+        }
+
+        .app-window {
+            max-width: 1220px;
+            margin: 0 auto;
+            background: var(--window);
+            border: 1px solid #555;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+        }
+
+        .window-header {
+            height: 42px;
+            border-bottom: 1px solid #383838;
+            display: flex;
+            align-items: center;
+            padding: 0 0.9rem;
+            gap: 0.35rem;
+            background: #111214;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+        }
+
+        .dot.red { background: #ff5f57; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #28c840; }
+
+        .window-title {
+            margin-left: 0.4rem;
+            color: #a4a4ad;
+            font-size: 0.84rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(0, 3.2fr) minmax(220px, 1fr);
+            min-height: 780px;
+        }
+
+        .main {
+            padding: 1rem;
+            border-right: 1px solid var(--line);
+        }
+
+        .side {
+            padding: 1rem 0.7rem 0.7rem;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            gap: 0.8rem;
+        }
+
+        .brand {
+            text-align: center;
+            margin-top: 0.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand h1 {
+            font-family: 'Uncial Antiqua', serif;
+            font-size: clamp(1.7rem, 3.6vw, 2.35rem);
+            letter-spacing: 0.02em;
+            margin-bottom: 0.45rem;
+        }
+
+        .brand p {
+            color: var(--yellow);
+            font-size: 0.98rem;
+            font-weight: 800;
+        }
+
+        .field-label {
+            font-size: 2rem;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+
+        .field-label.small {
+            margin-top: 0.55rem;
+        }
+
+        textarea {
+            width: 100%;
+            border: 1px solid #3a3a45;
+            background: var(--field);
+            color: #f6f6fa;
+            font-size: 1.08rem;
+            line-height: 1.4;
+            resize: none;
+            padding: 0.7rem;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        #taskInput {
+            min-height: 280px;
+        }
+
+        #outputInput {
+            min-height: 320px;
+        }
+
+        .button-row {
+            margin: 0.65rem 0 0.55rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            justify-content: center;
+        }
+
+        .btn {
+            border: 1px solid var(--yellow-dark);
+            background: var(--yellow);
+            color: #101010;
+            font-weight: 800;
+            font-size: 0.72rem;
+            letter-spacing: 0.03em;
+            padding: 0.56rem 0.85rem;
+            min-width: 120px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            filter: brightness(0.97);
+        }
+
+        .context-box {
+            text-align: center;
+        }
+
+        .context-box h2 {
+            color: var(--yellow);
+            font-size: 1.7rem;
+            line-height: 1;
+            margin-bottom: 0.35rem;
+        }
+
+        .context-text {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 0.55rem;
+        }
+
+        .side-divider {
+            border-top: 1px solid #3b3b3b;
+            margin-top: 0.7rem;
+        }
+
+        .history-title {
+            text-align: center;
+            font-size: 2rem;
+            line-height: 1;
+            margin-bottom: 0.55rem;
+        }
+
+        .history-list {
+            border: 1px solid #4b4b54;
+            background: #1a1a1f;
+            color: #ededf5;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.76rem;
+            line-height: 1.3;
+            padding: 0.35rem;
+            overflow-y: auto;
+            min-height: 460px;
+            max-height: 460px;
+            list-style: none;
+        }
+
+        .history-item {
+            padding: 0.2rem;
+            border-radius: 3px;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .history-item:hover {
+            background: rgba(246, 211, 46, 0.12);
+        }
+
+        .history-item.active {
+            background: rgba(246, 211, 46, 0.2);
+            color: #fff9dc;
+        }
+
+        .small-btn-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.4rem;
+            margin-top: 0.55rem;
+            flex-wrap: wrap;
+        }
+
+        .small-btn {
+            min-width: 72px;
+            padding: 0.42rem 0.55rem;
+        }
+
+        .note {
+            margin-top: 0.45rem;
+            color: #8f8f99;
+            font-size: 0.72rem;
+            text-align: center;
+        }
+
+        @media (max-width: 1080px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .main {
+                border-right: 0;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .side {
+                grid-template-rows: auto auto auto;
+            }
+
+            .history-list {
+                min-height: 220px;
+                max-height: 220px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 0.55rem;
+            }
+
+            .field-label,
+            .history-title,
+            .context-box h2 {
+                font-size: 1.45rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .small-btn {
+                min-width: unset;
+            }
+
+            #taskInput {
+                min-height: 220px;
+            }
+
+            #outputInput {
+                min-height: 260px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="wrap">
-        <a href="index.html#aiml" class="btn">Back to Portfolio</a>
-        <div class="grid">
-            <div class="card">
-                <h1>VeloxMind Studio</h1>
-                <p>Live example: this mini assistant remembers prior topics and references them in future responses.</p>
-                <div id="chat" class="chat"></div>
-                <div class="controls">
-                    <input id="prompt" placeholder="Ask something..." />
-                    <button id="send">Send</button>
+    <div class="top-bar">
+        <a href="index.html#aiml" class="chip">Back to Portfolio</a>
+        <span class="chip">Static UI Replica</span>
+    </div>
+
+    <div class="app-window">
+        <div class="window-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="window-title">VeloxMind Studio</span>
+        </div>
+
+        <div class="layout">
+            <main class="main">
+                <div class="brand">
+                    <h1>VeloxMind Studio</h1>
+                    <p>AI Assistant with Conversation Memory - remembers context across prompts</p>
                 </div>
-            </div>
-            <div class="card">
-                <h1 style="font-size:1.2rem;">Conversation Memory</h1>
-                <p>Tracked keywords from recent prompts:</p>
-                <ul id="memoryList"></ul>
-            </div>
+
+                <h2 class="field-label">Your Task/Idea:</h2>
+                <textarea id="taskInput" spellcheck="false">Create a clean feature spec for an AI-powered workflow assistant used by engineering teams.</textarea>
+
+                <div class="button-row">
+                    <button class="btn" id="generateBtn" type="button">Generate Prompt</button>
+                    <button class="btn" id="saveBtn" type="button">Save Prompt</button>
+                    <button class="btn" id="spellBtn" type="button">Spell Check</button>
+                    <button class="btn" id="clearTaskBtn" type="button">Clear</button>
+                </div>
+
+                <h2 class="field-label small">Generated Prompt:</h2>
+                <textarea id="outputInput" spellcheck="false">Role: Senior Product Engineer
+
+Task: Draft a structured implementation prompt for building a production-ready AI workflow assistant.
+
+Requirements:
+1. Define user journeys and interface states for task creation, execution, and monitoring.
+2. Specify backend architecture, model integration, and observability requirements.
+3. Include security controls, failure modes, and rollout strategy.
+4. Return output as concise sections with acceptance criteria.
+
+Context: Preserve continuity with previous prompts about automation reliability and dashboard usability.</textarea>
+
+                <div class="button-row">
+                    <button class="btn" id="copyBtn" type="button">Copy to Clipboard</button>
+                    <button class="btn" id="clearAllBtn" type="button">Clear All</button>
+                    <button class="btn" id="exportBtn" type="button">Export</button>
+                </div>
+            </main>
+
+            <aside class="side">
+                <section class="context-box">
+                    <h2>Conversation Context</h2>
+                    <p class="context-text"><span id="turnCount">1</span> turn(s) in context</p>
+                    <button class="btn" id="clearContextBtn" type="button">Clear Context</button>
+                    <div class="side-divider"></div>
+                </section>
+
+                <section>
+                    <h2 class="history-title">History</h2>
+                    <ul class="history-list" id="historyList"></ul>
+                </section>
+
+                <section>
+                    <div class="small-btn-row">
+                        <button class="btn small-btn" id="loadBtn" type="button">Load</button>
+                        <button class="btn small-btn" id="deleteBtn" type="button">Delete</button>
+                        <button class="btn small-btn" id="clearHistoryBtn" type="button">Clear</button>
+                    </div>
+                    <p class="note">Demo mode: history is local to this page session.</p>
+                </section>
+            </aside>
         </div>
     </div>
 
     <script>
-        const chat = document.getElementById('chat');
-        const promptInput = document.getElementById('prompt');
-        const memoryList = document.getElementById('memoryList');
-        const memory = [];
+        const taskInput = document.getElementById('taskInput');
+        const outputInput = document.getElementById('outputInput');
+        const historyList = document.getElementById('historyList');
+        const turnCountEl = document.getElementById('turnCount');
 
-        function extractKeywords(text) {
-            return text
-                .toLowerCase()
-                .replace(/[^a-z0-9\s]/g, '')
-                .split(/\s+/)
-                .filter((w) => w.length > 4)
-                .slice(0, 3);
+        let history = [
+            { task: 'create a prompt generator with memory', prompt: 'Generate reusable prompt template with memory support', timestamp: '01/18 16:26' },
+            { task: 'build me a web scrape workflow', prompt: 'Create scraping workflow with retry strategy and logs', timestamp: '01/18 11:55' },
+            { task: 'fix prompt optimizer bug', prompt: 'Debug prompt optimizer and add unit tests', timestamp: '01/17 17:44' },
+            { task: 'add export button to app', prompt: 'Implement export with JSON and text options', timestamp: '01/17 17:34' }
+        ];
+
+        let contextTurns = 1;
+        let selectedHistoryIndex = 0;
+
+        function nowStamp() {
+            const now = new Date();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hour = String(now.getHours()).padStart(2, '0');
+            const minute = String(now.getMinutes()).padStart(2, '0');
+            return `${month}/${day} ${hour}:${minute}`;
         }
 
-        function addMessage(role, text) {
-            const box = document.createElement('div');
-            box.className = 'msg';
-            box.innerHTML = `<b>${role}</b><span>${text}</span>`;
-            chat.appendChild(box);
-            chat.scrollTop = chat.scrollHeight;
+        function truncate(text, max = 62) {
+            return text.length > max ? `${text.slice(0, max)}...` : text;
         }
 
-        function renderMemory() {
-            memoryList.innerHTML = '';
-            memory.slice(-6).forEach((item) => {
+        function renderHistory() {
+            historyList.innerHTML = '';
+
+            history.forEach((entry, index) => {
                 const li = document.createElement('li');
-                li.textContent = item;
-                memoryList.appendChild(li);
+                li.className = 'history-item';
+                if (index === selectedHistoryIndex) li.classList.add('active');
+                li.textContent = `[${entry.timestamp}] ${truncate(entry.task)}`;
+                li.addEventListener('click', () => {
+                    selectedHistoryIndex = index;
+                    renderHistory();
+                });
+                historyList.appendChild(li);
             });
-        }
 
-        function buildReply(input) {
-            const recent = memory.length ? memory[memory.length - 1] : null;
-            if (recent) {
-                return `Based on our earlier context around "${recent}", here is a focused next step: break it into implementation tasks and validate with a quick prototype.`;
+            if (selectedHistoryIndex >= history.length) {
+                selectedHistoryIndex = history.length - 1;
             }
-            return 'Great prompt. I can help structure this into requirements, implementation tasks, and a validation plan.';
         }
 
-        document.getElementById('send').addEventListener('click', () => {
-            const text = promptInput.value.trim();
+        function updateTurns() {
+            turnCountEl.textContent = String(contextTurns);
+        }
+
+        function buildGeneratedPrompt() {
+            const rawTask = taskInput.value.trim();
+            if (!rawTask) {
+                outputInput.value = '';
+                return;
+            }
+
+            const contextHint = history.length
+                ? `Context from recent history: ${history[0].task}.`
+                : 'No prior history available.';
+
+            outputInput.value = [
+                'Role: Senior AI Product Engineer',
+                '',
+                `Task: ${rawTask}`,
+                '',
+                'Output requirements:',
+                '1. Provide architecture and implementation steps.',
+                '2. Include UI behavior, API flow, and validation checklist.',
+                '3. Add risk handling, metrics, and rollout notes.',
+                '4. Keep response concise, testable, and production-focused.',
+                '',
+                contextHint
+            ].join('\n');
+        }
+
+        document.getElementById('generateBtn').addEventListener('click', () => {
+            buildGeneratedPrompt();
+            if (taskInput.value.trim()) {
+                history.unshift({
+                    task: taskInput.value.trim(),
+                    prompt: outputInput.value,
+                    timestamp: nowStamp()
+                });
+                selectedHistoryIndex = 0;
+                contextTurns += 1;
+                renderHistory();
+                updateTurns();
+            }
+        });
+
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            const task = taskInput.value.trim();
+            const prompt = outputInput.value.trim();
+            if (!task || !prompt) return;
+            history.unshift({ task, prompt, timestamp: nowStamp() });
+            selectedHistoryIndex = 0;
+            renderHistory();
+        });
+
+        document.getElementById('spellBtn').addEventListener('click', () => {
+            const normalized = taskInput.value
+                .replace(/\s+/g, ' ')
+                .replace(/\bi\b/g, 'I')
+                .trim();
+            taskInput.value = normalized;
+        });
+
+        document.getElementById('clearTaskBtn').addEventListener('click', () => {
+            taskInput.value = '';
+        });
+
+        document.getElementById('copyBtn').addEventListener('click', async () => {
+            const text = outputInput.value;
             if (!text) return;
-            addMessage('You', text);
-
-            extractKeywords(text).forEach((k) => memory.push(k));
-            renderMemory();
-
-            const reply = buildReply(text);
-            setTimeout(() => addMessage('VeloxMind', reply), 250);
-            promptInput.value = '';
-            promptInput.focus();
+            try {
+                await navigator.clipboard.writeText(text);
+            } catch (_error) {
+                outputInput.focus();
+                outputInput.select();
+                document.execCommand('copy');
+                outputInput.setSelectionRange(outputInput.value.length, outputInput.value.length);
+            }
         });
 
-        promptInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') document.getElementById('send').click();
+        document.getElementById('clearAllBtn').addEventListener('click', () => {
+            taskInput.value = '';
+            outputInput.value = '';
         });
 
-        addMessage('VeloxMind', 'Welcome. I keep lightweight memory of your recent topics in this session.');
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            const payload = {
+                exported_at: new Date().toISOString(),
+                user_input: taskInput.value,
+                generated_prompt: outputInput.value
+            };
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const anchor = document.createElement('a');
+            anchor.href = url;
+            anchor.download = 'veloxmind-prompt-export.json';
+            document.body.appendChild(anchor);
+            anchor.click();
+            anchor.remove();
+            URL.revokeObjectURL(url);
+        });
+
+        document.getElementById('clearContextBtn').addEventListener('click', () => {
+            contextTurns = 0;
+            updateTurns();
+        });
+
+        document.getElementById('loadBtn').addEventListener('click', () => {
+            const entry = history[selectedHistoryIndex];
+            if (!entry) return;
+            taskInput.value = entry.task;
+            outputInput.value = entry.prompt;
+        });
+
+        document.getElementById('deleteBtn').addEventListener('click', () => {
+            if (!history.length || selectedHistoryIndex < 0) return;
+            history.splice(selectedHistoryIndex, 1);
+            if (!history.length) {
+                selectedHistoryIndex = -1;
+                taskInput.value = '';
+                outputInput.value = '';
+            } else if (selectedHistoryIndex >= history.length) {
+                selectedHistoryIndex = history.length - 1;
+            }
+            renderHistory();
+        });
+
+        document.getElementById('clearHistoryBtn').addEventListener('click', () => {
+            history = [];
+            selectedHistoryIndex = -1;
+            renderHistory();
+        });
+
+        renderHistory();
+        updateTurns();
     </script>
 </body>
 </html>

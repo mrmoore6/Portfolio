@@ -3,85 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Browser Automation Live Example</title>
+    <title>Browser Agent - Live Example</title>
     <style>
-        :root { --bg: #0f1117; --panel: #161a22; --gold: #c9a227; --text: #f6f1e7; --muted: #9a9a9a; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); padding: 2rem 1rem; }
-        .wrap { max-width: 820px; margin: 0 auto; }
-        .btn { border: 1px solid rgba(201,162,39,0.5); color: var(--gold); text-decoration: none; padding: 9px 13px; display: inline-block; }
-        .btn:hover { background: var(--gold); color: #101010; }
-        .card { margin-top: 1rem; background: var(--panel); border: 1px solid rgba(201,162,39,0.25); padding: 1rem; }
-        h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
-        p { color: var(--muted); line-height: 1.6; }
-        .controls { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.8rem; }
-        input { flex: 1; min-width: 240px; background: #0f141f; border: 1px solid rgba(201,162,39,0.25); color: var(--text); padding: 10px; }
-        button { border: 1px solid rgba(201,162,39,0.5); background: transparent; color: var(--gold); padding: 10px 12px; cursor: pointer; }
-        button:hover { background: var(--gold); color: #111; }
-        .steps { margin-top: 1rem; padding-left: 1.1rem; }
-        .steps li { margin-bottom: 0.45rem; color: var(--muted); }
-        .steps li.done { color: #d8c182; }
+        :root {
+            --bg: #1a1a2e;
+            --panel: #252540;
+            --field: #161629;
+            --border: #434367;
+            --text: #eeeeee;
+            --muted: #9a9ab5;
+            --ok: #4caf50;
+            --warn: #ff9800;
+            --error: #f44336;
+            --live: #2196f3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Noto Sans', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 1.2rem;
+        }
+
+        .wrap {
+            max-width: 920px;
+            margin: 0 auto;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .chip {
+            display: inline-block;
+            border: 1px solid #54547c;
+            color: #b6b6cd;
+            text-decoration: none;
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.45rem 0.7rem;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .chip:hover {
+            border-color: #8a8ab4;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 0.01em;
+        }
+
+        .section {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .section h3 {
+            color: #c3c3de;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+
+        label {
+            display: block;
+            color: var(--muted);
+            font-size: 0.76rem;
+            margin-bottom: 0.3rem;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            border: 1px solid #48486c;
+            border-radius: 6px;
+            background: var(--field);
+            color: #fff;
+            padding: 0.62rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+        }
+
+        textarea {
+            min-height: 118px;
+            resize: vertical;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            line-height: 1.42;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin: 0.75rem 0;
+        }
+
+        button {
+            border: 0;
+            border-radius: 6px;
+            padding: 0.62rem 0.86rem;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .btn-run { background: var(--ok); }
+        .btn-continue { background: var(--warn); display: none; }
+        .btn-continue.show { display: inline-block; animation: pulse 1s infinite; }
+        .btn-pause { background: var(--warn); }
+        .btn-close { background: #6b6b83; }
+        .btn-clear { background: #343449; color: #c6c6d8; }
+        .btn-save { background: #36364f; color: #fff; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .status {
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.83rem;
+            font-weight: 700;
+            padding: 0.52rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .status.ready { background: rgba(76, 175, 80, 0.28); color: #d8f5da; }
+        .status.running { background: rgba(255, 152, 0, 0.28); color: #ffe5c1; }
+        .status.captcha { background: rgba(255, 152, 0, 0.45); color: #fff0db; animation: pulse 1s infinite; }
+
+        .live-frame {
+            width: 100%;
+            height: 340px;
+            border: 1px solid #4c4c6e;
+            border-radius: 6px;
+            background: linear-gradient(180deg, #10101c, #07070d);
+            display: grid;
+            place-items: center;
+            color: #7d7d9a;
+            font-size: 0.86rem;
+            text-align: center;
+            padding: 0.8rem;
+        }
+
+        #log {
+            background: #11111d;
+            border: 1px solid #464663;
+            border-radius: 6px;
+            padding: 0.62rem;
+            height: 250px;
+            overflow-y: auto;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.78rem;
+            display: grid;
+            gap: 0.25rem;
+        }
+
+        .log-info { color: #a6a6c2; }
+        .log-success { color: var(--ok); }
+        .log-error { color: var(--error); }
+        .log-captcha { color: var(--warn); font-weight: 700; }
+        .log-live { color: var(--live); }
+
+        .tiny-note {
+            color: var(--muted);
+            font-size: 0.72rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 0.8rem;
+            }
+
+            .buttons {
+                gap: 0.45rem;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .live-frame {
+                height: 260px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="wrap">
-        <a href="index.html#aiml" class="btn">Back to Portfolio</a>
-        <div class="card">
-            <h1>AI Browser Automation</h1>
-            <p>Live example: enter a natural-language command and generate a browser action plan.</p>
-            <div class="controls">
-                <input id="command" placeholder="Example: Login, open dashboard, search for invoices, export CSV" />
-                <button id="runBtn">Generate Plan</button>
-            </div>
-            <ol class="steps" id="steps"></ol>
+        <div class="top-bar">
+            <a href="index.html#aiml" class="chip">Back to Portfolio</a>
+            <span class="chip">Static UI Replica</span>
         </div>
+
+        <h1>Browser Agent</h1>
+
+        <section class="section">
+            <h3>API Keys</h3>
+            <label for="browserlessKey">Browserless API Key</label>
+            <input id="browserlessKey" type="password" placeholder="Your Browserless API key">
+            <button class="btn-save" id="saveKeysBtn" type="button">Save Keys</button>
+        </section>
+
+        <section class="section">
+            <h3>Task</h3>
+            <label for="steps">Steps (one per line)</label>
+            <textarea id="steps" placeholder="search for weather
+click first result
+capture screenshot"></textarea>
+        </section>
+
+        <div class="buttons">
+            <button class="btn-run" id="runBtn" type="button">Run</button>
+            <button class="btn-continue" id="continueBtn" type="button">Continue (CAPTCHA Done)</button>
+            <button class="btn-pause" id="pauseBtn" type="button">Pause for CAPTCHA</button>
+            <button class="btn-close" id="closeBtn" type="button">Close Browser</button>
+            <button class="btn-clear" id="clearBtn" type="button">Clear Log</button>
+        </div>
+
+        <div id="status" class="status ready">Ready</div>
+
+        <section class="section">
+            <h3>Live View</h3>
+            <div class="live-frame" id="liveFrame">Live session preview appears here while automation is running.</div>
+            <p class="tiny-note">Demo mode: this page simulates live updates and logs without backend execution.</p>
+        </section>
+
+        <section class="section">
+            <h3>Log</h3>
+            <div id="log"></div>
+        </section>
     </div>
 
     <script>
-        const commandInput = document.getElementById('command');
-        const stepsEl = document.getElementById('steps');
+        const logEl = document.getElementById('log');
+        const statusEl = document.getElementById('status');
+        const continueBtn = document.getElementById('continueBtn');
+        const liveFrame = document.getElementById('liveFrame');
+        const stepsInput = document.getElementById('steps');
 
-        function buildSteps(command) {
-            const c = command.toLowerCase();
-            const steps = ['Open target website'];
-            if (c.includes('login') || c.includes('sign in')) steps.push('Authenticate with provided credentials');
-            if (c.includes('dashboard')) steps.push('Navigate to dashboard page');
-            if (c.includes('search') || c.includes('find')) steps.push('Use search input with target query');
-            if (c.includes('filter')) steps.push('Apply requested filters');
-            if (c.includes('export') || c.includes('download')) steps.push('Trigger export/download action');
-            steps.push('Validate result and capture completion status');
-            return [...new Set(steps)];
+        let runTimer = null;
+
+        function log(message, type = 'info') {
+            const line = document.createElement('div');
+            line.className = `log-${type}`;
+            line.textContent = `${new Date().toLocaleTimeString()} ${message}`;
+            logEl.appendChild(line);
+            logEl.scrollTop = logEl.scrollHeight;
         }
 
-        function renderAndSimulate(steps) {
-            stepsEl.innerHTML = '';
-            steps.forEach((step) => {
-                const li = document.createElement('li');
-                li.textContent = `${step} [pending]`;
-                stepsEl.appendChild(li);
-            });
-
-            const items = [...stepsEl.querySelectorAll('li')];
-            let i = 0;
-            const timer = setInterval(() => {
-                if (i >= items.length) {
-                    clearInterval(timer);
-                    return;
-                }
-                items[i].classList.add('done');
-                items[i].textContent = items[i].textContent.replace('[pending]', '[done]');
-                i += 1;
-            }, 420);
+        function setStatus(text, stateClass) {
+            statusEl.textContent = text;
+            statusEl.className = `status ${stateClass}`;
         }
+
+        function stopRunTimer() {
+            clearTimeout(runTimer);
+            runTimer = null;
+        }
+
+        document.getElementById('saveKeysBtn').addEventListener('click', () => {
+            const value = document.getElementById('browserlessKey').value.trim();
+            if (!value) {
+                log('No API key entered. Stored empty value in demo mode.', 'info');
+            } else {
+                log('Keys saved', 'success');
+            }
+        });
 
         document.getElementById('runBtn').addEventListener('click', () => {
-            const command = commandInput.value.trim();
-            if (!command) {
-                renderAndSimulate(['Open target website', 'Interpret request intent', 'Execute default safe action', 'Report completion status']);
-                return;
+            stopRunTimer();
+            continueBtn.classList.remove('show');
+            setStatus('Running...', 'running');
+
+            const steps = stepsInput.value
+                .split('\n')
+                .map((line) => line.trim())
+                .filter(Boolean);
+
+            log('Starting run', 'info');
+            log(`Loaded ${steps.length || 1} automation step(s)`, 'info');
+            liveFrame.textContent = 'Navigating target website and initializing live browser stream...';
+            log('Live view connected', 'live');
+
+            if (!steps.length) {
+                log('No steps provided, using default safe sequence', 'info');
             }
-            renderAndSimulate(buildSteps(command));
+
+            runTimer = setTimeout(() => {
+                log('CAPTCHA detected. Manual input required.', 'captcha');
+                continueBtn.classList.add('show');
+                setStatus('CAPTCHA - Solve then Continue', 'captcha');
+                liveFrame.textContent = 'Automation paused at verification checkpoint. Complete CAPTCHA and press Continue.';
+            }, 1200);
         });
+
+        document.getElementById('pauseBtn').addEventListener('click', () => {
+            stopRunTimer();
+            continueBtn.classList.add('show');
+            setStatus('Paused - Awaiting user action', 'captcha');
+            log('Paused manually. Resolve challenge and continue.', 'captcha');
+            liveFrame.textContent = 'Session paused manually for challenge resolution.';
+        });
+
+        continueBtn.addEventListener('click', () => {
+            continueBtn.classList.remove('show');
+            setStatus('Running...', 'running');
+            log('Continuing after CAPTCHA', 'info');
+            liveFrame.textContent = 'Continuing execution and completing final automation steps...';
+
+            stopRunTimer();
+            runTimer = setTimeout(() => {
+                log('Execution completed successfully', 'success');
+                setStatus('Ready', 'ready');
+                liveFrame.textContent = 'Run finished. Session is idle and ready for the next task.';
+            }, 900);
+        });
+
+        document.getElementById('closeBtn').addEventListener('click', () => {
+            stopRunTimer();
+            continueBtn.classList.remove('show');
+            setStatus('Ready', 'ready');
+            log('Browser closed', 'info');
+            liveFrame.textContent = 'Session closed. Start a new run to reopen live browser preview.';
+        });
+
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            logEl.innerHTML = '';
+        });
+
+        log('Browser agent initialized', 'success');
+        log('Waiting for task input', 'info');
     </script>
 </body>
 </html>
