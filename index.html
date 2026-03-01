@@ -569,6 +569,23 @@
             max-width: 62ch;
         }
 
+        .about-strengths {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.7rem;
+        }
+
+        .about-strengths li {
+            padding: 0.8rem 0.9rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(224, 191, 116, 0.12);
+            background: rgba(245, 241, 230, 0.04);
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
         .archive-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -673,6 +690,10 @@
             .button-row,
             .contact-actions {
                 display: grid;
+            }
+
+            .about-strengths {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -1055,23 +1076,31 @@
                     >
                     <ul class="portrait-meta" aria-label="Professional summary tags">
                         <li class="meta-chip">Junior Web Developer</li>
-                        <li class="meta-chip">Detail-oriented</li>
-                        <li class="meta-chip">Reliable under structure</li>
+                        <li class="meta-chip">Bricklaying + Maintenance Background</li>
+                        <li class="meta-chip">Reliable and Detail-Oriented</li>
                     </ul>
                 </div>
 
                 <article class="about-card">
-                    <p class="eyebrow">About</p>
-                    <h2 id="about-title">A junior web developer with a practical, structured approach to work.</h2>
+                    <p class="eyebrow">About Me</p>
+                    <h2 id="about-title">Junior web developer with a practical work background and a structured approach.</h2>
                     <p>
-                        I am a junior web developer with previous experience in bricklaying and maintenance. Those roles
-                        trained me to work reliably, follow structure, solve problems methodically, and pay attention to details that affect the final result.
+                        I am a junior web developer building responsive websites with HTML, CSS, and JavaScript. Before
+                        moving into web development, I worked in bricklaying and maintenance, where reliability,
+                        structure, and accuracy mattered every day.
                     </p>
                     <p>
-                        I bring that same approach into web development: clear implementation, consistent follow-through,
-                        careful cleanup, and a strong work ethic. I am looking for a junior web role where I can contribute
-                        to front-end builds, improve existing pages, and keep developing inside a team environment.
+                        That background carries directly into how I work on the web: I break problems down clearly,
+                        follow process, pay attention to details, and stay consistent through cleanup and completion. I
+                        am looking for a junior web developer role where I can contribute to front-end builds, bug fixes,
+                        UI cleanup, and steady iteration inside a team.
                     </p>
+                    <ul class="about-strengths" aria-label="Transferable strengths">
+                        <li>Reliability</li>
+                        <li>Structured problem-solving</li>
+                        <li>Attention to detail</li>
+                        <li>Strong work ethic</li>
+                    </ul>
                 </article>
             </div>
         </section>
