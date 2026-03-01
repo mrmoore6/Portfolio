@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Michael Moore | Junior Web Developer</title>
+    <title>Michael Moore | Junior Web Developer Portfolio</title>
     <meta
         name="description"
-        content="Junior Web Developer portfolio for Michael Moore featuring responsive HTML, CSS, and JavaScript projects, clear UI work, and practical front-end skills."
+        content="Junior Web Developer portfolio for Michael Moore featuring one interactive task tracker app, honest UI prototypes, and practical HTML, CSS, JavaScript, Git, and responsive design skills."
     >
     <meta name="theme-color" content="#101415">
     <meta name="robots" content="index,follow">
-    <meta property="og:title" content="Michael Moore | Junior Web Developer">
+    <meta property="og:title" content="Michael Moore | Junior Web Developer Portfolio">
     <meta
         property="og:description"
-        content="Responsive web projects, clear front-end structure, and practical junior-level HTML, CSS, JavaScript, Git, and API skills."
+        content="One interactive web app, honest UI prototypes, and recruiter-friendly front-end work built with HTML, CSS, JavaScript, Git, and responsive design."
     >
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mikemooreportfolio.com/">
@@ -21,10 +21,10 @@
     <meta property="og:image" content="https://mikemooreportfolio.com/images/projects/techflow-site.png">
     <meta property="og:image:alt" content="Preview of Michael Moore's junior web developer portfolio">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Michael Moore | Junior Web Developer">
+    <meta name="twitter:title" content="Michael Moore | Junior Web Developer Portfolio">
     <meta
         name="twitter:description"
-        content="Responsive web projects, clear front-end structure, and practical junior-level HTML, CSS, JavaScript, Git, and API skills."
+        content="One interactive web app, honest UI prototypes, and recruiter-friendly front-end work built with HTML, CSS, JavaScript, Git, and responsive design."
     >
     <meta name="twitter:image" content="https://mikemooreportfolio.com/images/projects/techflow-site.png">
     <link rel="icon" href="profile-photo.png" type="image/png">
@@ -46,6 +46,7 @@
             --muted: #c1b8aa;
             --accent: #e0bf74;
             --accent-strong: #f0d79d;
+            --success: #9fd4aa;
             --shadow: 0 22px 48px rgba(0, 0, 0, 0.28);
             --radius-lg: 26px;
             --radius-md: 18px;
@@ -181,12 +182,12 @@
         }
 
         .section-heading {
-            max-width: 56rem;
+            max-width: 58rem;
             margin-bottom: 2.25rem;
         }
 
         .section-heading p:last-child {
-            max-width: 46rem;
+            max-width: 48rem;
         }
 
         .site-header {
@@ -269,7 +270,6 @@
         .button--primary {
             background: linear-gradient(135deg, #e0bf74 0%, #c99936 100%);
             color: #101415;
-            box-shadow: 0 12px 24px rgba(201, 153, 54, 0.24);
         }
 
         .button--secondary {
@@ -278,36 +278,24 @@
             color: var(--text);
         }
 
-        .button--ghost {
-            padding-inline: 0;
-            min-height: auto;
-            border-radius: 0;
-            border: 0;
-            color: var(--accent);
-        }
-
-        .button--ghost:hover {
-            transform: none;
-            color: var(--accent-strong);
-        }
-
         .hero {
-            padding: clamp(5rem, 12vw, 8rem) 0 clamp(3.8rem, 8vw, 5.8rem);
+            padding: clamp(5rem, 12vw, 8rem) 0 clamp(3.8rem, 8vw, 5.6rem);
         }
 
         .hero-grid {
             display: grid;
-            grid-template-columns: minmax(0, 1.18fr) minmax(320px, 0.82fr);
-            gap: 1.15rem;
+            grid-template-columns: minmax(0, 1.14fr) minmax(320px, 0.86fr);
+            gap: 1rem;
             align-items: stretch;
         }
 
-        .hero-copy,
-        .recruiter-panel,
+        .hero-card,
+        .recruiter-card,
         .project-card,
         .stack-card,
         .about-card,
         .archive-card,
+        .resume-card,
         .contact-card {
             border-radius: var(--radius-lg);
             border: 1px solid var(--line);
@@ -315,62 +303,66 @@
             box-shadow: var(--shadow);
         }
 
-        .hero-copy {
+        .hero-card {
             padding: clamp(1.5rem, 4vw, 2.4rem);
             background:
                 radial-gradient(circle at top left, rgba(224, 191, 116, 0.14) 0%, rgba(224, 191, 116, 0) 38%),
                 linear-gradient(180deg, rgba(28, 34, 35, 0.92) 0%, rgba(18, 23, 24, 0.96) 100%);
         }
 
-        .hero-copy h1 {
-            max-width: 11ch;
-            margin-bottom: 1rem;
-            font-size: clamp(3rem, 8vw, 5.6rem);
+        .hero-card h1 {
+            font-size: clamp(3.2rem, 8vw, 5.8rem);
+            margin-bottom: 0.85rem;
         }
 
-        .hero-copy h1 span {
-            color: var(--accent);
-        }
-
-        .hero-copy p {
+        .hero-lead {
             max-width: 58ch;
-            font-size: 1.02rem;
+            font-size: 1.03rem;
         }
 
         .hero-actions {
             display: flex;
             flex-wrap: wrap;
             gap: 0.8rem;
-            margin: 1.6rem 0 1.3rem;
+            margin: 1.5rem 0 1.2rem;
         }
 
-        .hero-scan {
+        .quick-scan {
             list-style: none;
             display: flex;
             flex-wrap: wrap;
-            gap: 0.7rem;
+            gap: 0.65rem;
         }
 
-        .hero-scan li {
-            padding: 0.55rem 0.8rem;
+        .quick-scan li,
+        .meta-chip {
+            padding: 0.5rem 0.75rem;
             border-radius: 999px;
-            background: rgba(245, 241, 230, 0.04);
-            border: 1px solid rgba(224, 191, 116, 0.14);
-            color: var(--muted);
-            font-size: 0.82rem;
+            border: 1px solid rgba(224, 191, 116, 0.12);
+            background: rgba(245, 241, 230, 0.05);
+            color: var(--text);
+            font-size: 0.8rem;
             font-weight: 700;
         }
 
-        .recruiter-panel {
-            padding: clamp(1.4rem, 4vw, 1.9rem);
+        .recruiter-card {
+            padding: clamp(1.35rem, 4vw, 1.95rem);
             background:
                 linear-gradient(180deg, rgba(224, 191, 116, 0.09) 0%, rgba(20, 25, 26, 0.96) 36%),
                 var(--panel-strong);
         }
 
-        .recruiter-panel h2 {
+        .subheading {
+            color: var(--accent-strong);
+            font-size: 0.77rem;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .recruiter-card h2 {
             font-size: clamp(1.65rem, 4vw, 2.3rem);
-            margin-bottom: 1rem;
+            margin: 0.8rem 0 1rem;
         }
 
         .recruiter-list {
@@ -393,30 +385,27 @@
 
         .recruiter-list strong {
             color: var(--text);
-            font-size: 1rem;
         }
 
         .summary-chips {
             display: flex;
             flex-wrap: wrap;
             gap: 0.6rem;
-            margin-top: 1.25rem;
+            margin-top: 1.2rem;
         }
 
-        .summary-chips span,
-        .meta-chip {
-            padding: 0.45rem 0.7rem;
-            border-radius: 999px;
-            background: rgba(224, 191, 116, 0.08);
-            color: var(--accent-strong);
-            font-size: 0.78rem;
-            font-weight: 700;
+        .featured-grid,
+        .stack-grid,
+        .archive-grid,
+        .resume-highlights,
+        .contact-layout,
+        .about-layout {
+            display: grid;
+            gap: 1rem;
         }
 
         .featured-grid {
-            display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1rem;
         }
 
         .project-card {
@@ -428,12 +417,14 @@
             aspect-ratio: 16 / 10;
             object-fit: cover;
             border-bottom: 1px solid var(--line);
+            background: #111617;
         }
 
         .project-body,
         .stack-card,
         .about-card,
         .archive-card,
+        .resume-card,
         .contact-card {
             padding: 1.35rem;
         }
@@ -444,8 +435,8 @@
         }
 
         .project-title {
-            font-size: 1.7rem;
-            margin-bottom: 0.35rem;
+            font-size: 1.68rem;
+            margin-top: 0.35rem;
         }
 
         .project-title a:hover,
@@ -453,13 +444,12 @@
             color: var(--accent);
         }
 
-        .project-summary {
+        .project-copy {
             display: grid;
             gap: 0.75rem;
         }
 
-        .stack-title,
-        .subheading {
+        .stack-title {
             color: var(--accent-strong);
             font-size: 0.77rem;
             font-weight: 800;
@@ -493,9 +483,7 @@
         }
 
         .stack-grid {
-            display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1rem;
         }
 
         .stack-card {
@@ -525,9 +513,7 @@
         }
 
         .about-layout {
-            display: grid;
             grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.18fr);
-            gap: 1rem;
             align-items: center;
         }
 
@@ -566,7 +552,7 @@
         }
 
         .about-card p {
-            max-width: 62ch;
+            max-width: 60ch;
         }
 
         .about-strengths {
@@ -587,9 +573,7 @@
         }
 
         .archive-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
         .archive-card {
@@ -598,13 +582,29 @@
         }
 
         .archive-card h3 {
-            font-size: 1.35rem;
+            font-size: 1.36rem;
+        }
+
+        .resume-highlights {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin: 1.5rem 0;
+        }
+
+        .resume-highlight {
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(224, 191, 116, 0.12);
+            background: rgba(245, 241, 230, 0.04);
+        }
+
+        .resume-highlight strong {
+            display: block;
+            margin-bottom: 0.35rem;
+            color: var(--text);
         }
 
         .contact-layout {
-            display: grid;
-            grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
-            gap: 1rem;
+            grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
         }
 
         .contact-card {
@@ -642,16 +642,14 @@
             }
 
             .featured-grid,
-            .stack-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
+            .stack-grid,
+            .resume-highlights,
             .archive-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
-        @media (max-width: 840px) {
+        @media (max-width: 860px) {
             .nav-toggle {
                 display: inline-flex;
             }
@@ -678,11 +676,16 @@
 
             .featured-grid,
             .stack-grid,
-            .archive-grid {
+            .archive-grid,
+            .resume-highlights,
+            .about-strengths {
                 grid-template-columns: 1fr;
             }
 
-            .button {
+            .button,
+            .hero-actions,
+            .button-row,
+            .contact-actions {
                 width: 100%;
             }
 
@@ -690,10 +693,6 @@
             .button-row,
             .contact-actions {
                 display: grid;
-            }
-
-            .about-strengths {
-                grid-template-columns: 1fr;
             }
         }
 
@@ -706,18 +705,15 @@
                 min-height: 74px;
             }
 
-            .hero-copy,
-            .recruiter-panel,
+            .hero-card,
+            .recruiter-card,
             .project-body,
             .stack-card,
             .about-card,
             .archive-card,
+            .resume-card,
             .contact-card {
                 padding: 1.15rem;
-            }
-
-            .hero-copy h1 {
-                max-width: 9ch;
             }
 
             .section-heading {
@@ -763,6 +759,7 @@
                     <li><a href="#stack">Tech Stack</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#archive">More Work</a></li>
+                    <li><a href="#resume">Resume</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -772,47 +769,47 @@
     <main id="main-content">
         <section class="hero section" id="home" aria-labelledby="hero-title">
             <div class="container hero-grid">
-                <div class="hero-copy">
-                    <p class="eyebrow">Junior Web Developer</p>
-                    <h1 id="hero-title">I build <span>responsive websites</span> with clear structure and practical front-end skills.</h1>
-                    <p>
-                        I am a junior web developer focused on semantic HTML, modern CSS, JavaScript, and Git-based
-                        workflows. My portfolio highlights web projects first so recruiters can quickly see layout,
-                        responsiveness, accessibility basics, and clean UI thinking.
+                <div class="hero-card">
+                    <p class="eyebrow">Portfolio</p>
+                    <h1 id="hero-title">Junior Web Developer</h1>
+                    <p class="hero-lead">
+                        I build responsive front-end interfaces and small interactive web apps with HTML, CSS,
+                        JavaScript, and Git. This portfolio leads with one real interactive app, a few honest UI
+                        prototypes, and the specific web skills each project demonstrates.
                     </p>
                     <div class="hero-actions">
                         <a class="button button--primary" href="#featured">View Featured Projects</a>
                         <a class="button button--secondary" href="Michael_Moore_General_Resume.pdf" download>Download Resume</a>
                     </div>
-                    <ul class="hero-scan" aria-label="Quick skill summary">
-                        <li>Semantic HTML</li>
-                        <li>Responsive CSS</li>
-                        <li>Vanilla JavaScript</li>
-                        <li>Git / GitHub</li>
+                    <ul class="quick-scan" aria-label="Quick scan summary">
+                        <li>1 interactive web app</li>
+                        <li>3 honest UI prototypes</li>
+                        <li>HTML / CSS / JavaScript</li>
+                        <li>Git / localStorage</li>
                     </ul>
                 </div>
 
-                <aside class="recruiter-panel" aria-labelledby="recruiter-title">
-                    <p class="subheading">Recruiter Snapshot</p>
-                    <h2 id="recruiter-title">What you can understand in under a minute</h2>
+                <aside class="recruiter-card" aria-labelledby="recruiter-title">
+                    <p class="subheading">Recruiter Scan</p>
+                    <h2 id="recruiter-title">What you can confirm quickly</h2>
                     <ul class="recruiter-list">
                         <li>
-                            <strong>Role focus</strong>
-                            <p>Junior web developer with front-end projects that show page structure, UI hierarchy, and responsive layout work.</p>
+                            <strong>Role fit</strong>
+                            <p>Junior web developer focused on front-end implementation, responsive layout, UI cleanup, and practical JavaScript.</p>
+                        </li>
+                        <li>
+                            <strong>Featured work</strong>
+                            <p>One real task-tracking app with state and localStorage, plus UI prototypes labeled honestly as previews instead of overstated demos.</p>
                         </li>
                         <li>
                             <strong>Current stack</strong>
-                            <p>HTML, CSS, JavaScript, Git, GitHub, APIs, and basic backend exposure through Python-based projects.</p>
-                        </li>
-                        <li>
-                            <strong>Working style</strong>
-                            <p>Reliable, detail-oriented, and comfortable improving existing pages through cleanup, iteration, and testing.</p>
+                            <p>HTML, CSS, JavaScript, Git/GitHub, responsive design, basic debugging, and supporting API/localStorage work.</p>
                         </li>
                     </ul>
-                    <div class="summary-chips" aria-label="Location and role fit">
-                        <span>Iowa-based</span>
-                        <span>Open to junior roles</span>
-                        <span>Front-end focused</span>
+                    <div class="summary-chips" aria-label="Professional summary">
+                        <span class="meta-chip">Iowa-based</span>
+                        <span class="meta-chip">Open to junior roles</span>
+                        <span class="meta-chip">Front-end focused</span>
                     </div>
                 </aside>
             </div>
@@ -821,35 +818,82 @@
         <section class="section section--soft" id="featured" aria-labelledby="featured-title">
             <div class="container">
                 <div class="section-heading">
-                    <p class="eyebrow">Featured Web Projects</p>
-                    <h2 id="featured-title">The web projects that best represent my current front-end ability</h2>
+                    <p class="eyebrow">Featured Projects</p>
+                    <h2 id="featured-title">One interactive app and three front-end concepts</h2>
                     <p>
-                        Each project below shows a specific type of web interface work. I kept the descriptions concrete
-                        so the value, technology choices, and transferable web skills are easy to evaluate.
+                        The goal here is clarity. The task tracker is a real interactive app, and the remaining
+                        featured pieces are UI prototypes that show layout, hierarchy, and responsive front-end work.
                     </p>
                 </div>
 
                 <div class="featured-grid">
                     <article class="project-card">
                         <img
-                            src="images/projects/techflow-site.png"
-                            alt="TechFlow project screenshot showing a software landing page layout"
+                            src="images/projects/task-tracker-preview.svg"
+                            alt="Illustrated preview of the Task Tracker app showing stats, filters, and task cards"
                             loading="eager"
                             decoding="async"
                         >
                         <div class="project-body">
                             <div>
-                                <p class="subheading">Featured Project</p>
-                                <h3 class="project-title"><a href="techflow.html">TechFlow</a></h3>
+                                <p class="subheading">Interactive Web App</p>
+                                <h3 class="project-title"><a href="task-tracker.html">Task Tracker</a></h3>
                             </div>
-                            <div class="project-summary">
+                            <div class="project-copy">
                                 <p>
-                                    TechFlow is a SaaS-style landing page built to explain a workflow automation product
-                                    clearly and move visitors through features, proof points, and calls to action.
+                                    Task Tracker is a browser-based app for creating, filtering, completing, and removing
+                                    tasks while saving state in localStorage.
                                 </p>
                                 <p>
-                                    Built with HTML, CSS, and JavaScript, it demonstrates responsive marketing-page
-                                    structure, strong section hierarchy, reusable card patterns, and polished CTA layout.
+                                    It demonstrates form validation, state changes, filter logic, empty/error states, and
+                                    responsive UI behavior with HTML, CSS, and JavaScript.
+                                </p>
+                            </div>
+                            <div>
+                                <p class="stack-title">Tech stack</p>
+                                <ul class="tag-list" aria-label="Task Tracker tech stack">
+                                    <li>HTML</li>
+                                    <li>CSS</li>
+                                    <li>JavaScript</li>
+                                    <li>localStorage</li>
+                                    <li>Form Validation</li>
+                                </ul>
+                            </div>
+                            <div class="button-row">
+                                <a class="button button--primary" href="task-tracker.html" aria-label="View the Task Tracker live demo">Live Demo</a>
+                                <a
+                                    class="button button--secondary"
+                                    href="https://github.com/mrmoore6/Portfolio/blob/main/task-tracker.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="View Task Tracker source code on GitHub"
+                                >
+                                    Source Code
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <img
+                            src="images/projects/techflow-site.png"
+                            alt="TechFlow UI preview showing a software landing page layout"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                        <div class="project-body">
+                            <div>
+                                <p class="subheading">Front-End Concept</p>
+                                <h3 class="project-title"><a href="techflow.html">TechFlow</a></h3>
+                            </div>
+                            <div class="project-copy">
+                                <p>
+                                    TechFlow is a SaaS-style marketing page concept for explaining a workflow product and
+                                    moving visitors through features, proof points, and calls to action.
+                                </p>
+                                <p>
+                                    It shows section hierarchy, responsive layout, CTA placement, and polished front-end
+                                    styling built with HTML, CSS, and JavaScript.
                                 </p>
                             </div>
                             <div>
@@ -862,7 +906,7 @@
                                 </ul>
                             </div>
                             <div class="button-row">
-                                <a class="button button--primary" href="techflow.html" aria-label="View TechFlow live demo">Live Demo</a>
+                                <a class="button button--primary" href="techflow.html" aria-label="View the TechFlow UI preview">UI Preview</a>
                                 <a
                                     class="button button--secondary"
                                     href="https://github.com/mrmoore6/Portfolio/blob/main/techflow.html"
@@ -879,23 +923,23 @@
                     <article class="project-card">
                         <img
                             src="images/projects/workspace-co-site.png"
-                            alt="Workspace Co project screenshot showing bold editorial layout blocks"
+                            alt="Workspace Co UI preview showing bold editorial website sections"
                             loading="lazy"
                             decoding="async"
                         >
                         <div class="project-body">
                             <div>
-                                <p class="subheading">Featured Project</p>
+                                <p class="subheading">UI Prototype</p>
                                 <h3 class="project-title"><a href="workspace-co.html">Workspace Co</a></h3>
                             </div>
-                            <div class="project-summary">
+                            <div class="project-copy">
                                 <p>
-                                    Workspace Co is a brand-focused website concept designed to communicate workspace
-                                    services, present offerings clearly, and support inquiry-driven marketing goals.
+                                    Workspace Co is a brand and services website concept for a workspace business with a
+                                    long-form landing page structure.
                                 </p>
                                 <p>
-                                    Built with HTML, CSS, and JavaScript, it demonstrates visual hierarchy, long-form
-                                    landing page composition, responsive spacing systems, and stronger conversion-focused layout decisions.
+                                    It shows typography choices, responsive section pacing, strong visual hierarchy, and
+                                    front-end layout composition using HTML, CSS, and JavaScript.
                                 </p>
                             </div>
                             <div>
@@ -908,7 +952,7 @@
                                 </ul>
                             </div>
                             <div class="button-row">
-                                <a class="button button--primary" href="workspace-co.html" aria-label="View Workspace Co live demo">Live Demo</a>
+                                <a class="button button--primary" href="workspace-co.html" aria-label="View the Workspace Co UI preview">UI Preview</a>
                                 <a
                                     class="button button--secondary"
                                     href="https://github.com/mrmoore6/Portfolio/blob/main/workspace-co.html"
@@ -925,23 +969,23 @@
                     <article class="project-card">
                         <img
                             src="images/projects/stylehub-site.png"
-                            alt="StyleHub project screenshot showing product cards and storefront layout"
+                            alt="StyleHub UI preview showing storefront product cards and category sections"
                             loading="lazy"
                             decoding="async"
                         >
                         <div class="project-body">
                             <div>
-                                <p class="subheading">Featured Project</p>
+                                <p class="subheading">UI Prototype</p>
                                 <h3 class="project-title"><a href="stylehub.html">StyleHub</a></h3>
                             </div>
-                            <div class="project-summary">
+                            <div class="project-copy">
                                 <p>
-                                    StyleHub is an e-commerce storefront concept created to organize category browsing,
-                                    product discovery, and promotional content in a single shopping interface.
+                                    StyleHub is an e-commerce storefront concept for browsing categories, featured items,
+                                    and promotional sections in a single shopping interface.
                                 </p>
                                 <p>
-                                    Built with HTML, CSS, and JavaScript, it demonstrates responsive product grids,
-                                    reusable card UI, content grouping, and layout patterns that apply directly to storefront work.
+                                    It shows reusable product cards, responsive grid layout, and storefront UI patterns
+                                    built with HTML, CSS, and JavaScript.
                                 </p>
                             </div>
                             <div>
@@ -954,59 +998,13 @@
                                 </ul>
                             </div>
                             <div class="button-row">
-                                <a class="button button--primary" href="stylehub.html" aria-label="View StyleHub live demo">Live Demo</a>
+                                <a class="button button--primary" href="stylehub.html" aria-label="View the StyleHub UI preview">UI Preview</a>
                                 <a
                                     class="button button--secondary"
                                     href="https://github.com/mrmoore6/Portfolio/blob/main/stylehub.html"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label="View StyleHub source code on GitHub"
-                                >
-                                    Source Code
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="project-card">
-                        <img
-                            src="images/projects/savory-bites-site.png"
-                            alt="Savory Bites project screenshot showing restaurant landing page sections"
-                            loading="lazy"
-                            decoding="async"
-                        >
-                        <div class="project-body">
-                            <div>
-                                <p class="subheading">Featured Project</p>
-                                <h3 class="project-title"><a href="savory-bites.html">Savory Bites</a></h3>
-                            </div>
-                            <div class="project-summary">
-                                <p>
-                                    Savory Bites is a restaurant landing page concept built to present menu content,
-                                    atmosphere, and reservation prompts in a way that feels clear and conversion-friendly.
-                                </p>
-                                <p>
-                                    Built with HTML, CSS, and JavaScript, it demonstrates storytelling sections, CTA placement,
-                                    image-led layout decisions, and responsive landing page organization for a service business.
-                                </p>
-                            </div>
-                            <div>
-                                <p class="stack-title">Tech stack</p>
-                                <ul class="tag-list" aria-label="Savory Bites tech stack">
-                                    <li>HTML</li>
-                                    <li>CSS</li>
-                                    <li>JavaScript</li>
-                                    <li>Landing Page UI</li>
-                                </ul>
-                            </div>
-                            <div class="button-row">
-                                <a class="button button--primary" href="savory-bites.html" aria-label="View Savory Bites live demo">Live Demo</a>
-                                <a
-                                    class="button button--secondary"
-                                    href="https://github.com/mrmoore6/Portfolio/blob/main/savory-bites.html"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label="View Savory Bites source code on GitHub"
                                 >
                                     Source Code
                                 </a>
@@ -1021,44 +1019,44 @@
             <div class="container">
                 <div class="section-heading">
                     <p class="eyebrow">Tech Stack</p>
-                    <h2 id="stack-title">Skills I can speak to directly in interviews</h2>
+                    <h2 id="stack-title">Skills I can defend in interviews</h2>
                     <p>
-                        I kept this list limited to skills I can support with the projects on this site and discuss
-                        clearly in a junior-level interview.
+                        I kept this section specific to the tools and front-end skills I can point to directly in the
+                        featured work and archive projects on this site.
                     </p>
                 </div>
 
                 <div class="stack-grid">
                     <article class="stack-card">
-                        <p class="subheading">Front-end</p>
-                        <h3>Core Web Skills</h3>
+                        <p class="subheading">Core Web</p>
+                        <h3>Front-End Fundamentals</h3>
                         <ul class="stack-list">
                             <li>HTML with semantic structure, landmarks, headings, and accessible markup basics</li>
-                            <li>CSS with flexbox, grid, responsive spacing, visual hierarchy, and component-style sections</li>
-                            <li>JavaScript for navigation behavior, UI interaction, and lightweight page enhancement</li>
-                            <li>No heavy framework on current featured builds; these projects are written with core web technologies</li>
+                            <li>CSS with flexbox, grid, responsive layout, visual hierarchy, and reusable UI sections</li>
+                            <li>JavaScript for state changes, filtering, form handling, and lightweight interaction</li>
+                            <li>Responsive design across desktop and mobile widths</li>
                         </ul>
                     </article>
 
                     <article class="stack-card">
                         <p class="subheading">Workflow</p>
-                        <h3>Tools and Delivery</h3>
+                        <h3>Delivery and Debugging</h3>
                         <ul class="stack-list">
-                            <li>Git and GitHub for staging, version control, branch-based work, and commit history</li>
-                            <li>Responsive testing across desktop and mobile layouts</li>
-                            <li>Basic accessibility checks including focus states, alt text, and semantic HTML cleanup</li>
-                            <li>Performance cleanup through lighter JavaScript, reduced-motion support, and image loading improvements</li>
+                            <li>Git and GitHub for commits, branch history, and source review</li>
+                            <li>Basic debugging with browser DevTools and step-by-step UI cleanup</li>
+                            <li>Accessibility basics including visible focus states, alt text, and keyboard-friendly controls</li>
+                            <li>Performance cleanup through lighter JavaScript, image loading choices, and reduced-motion support</li>
                         </ul>
                     </article>
 
                     <article class="stack-card">
-                        <p class="subheading">APIs and Back-end</p>
-                        <h3>Supporting Exposure</h3>
+                        <p class="subheading">Supporting Experience</p>
+                        <h3>Data and App Basics</h3>
                         <ul class="stack-list">
-                            <li>API usage and data handling through software and AI-related side projects</li>
-                            <li>Python experience for tooling, automation, and application logic</li>
-                            <li>Basic backend exposure through project logic, integrations, and debugging workflows</li>
-                            <li>Comfortable learning within existing codebases and improving structure incrementally</li>
+                            <li>localStorage persistence in the featured task tracker app</li>
+                            <li>API and data-handling exposure through archive and side projects</li>
+                            <li>Python on side projects for tooling, automation, and application logic</li>
+                            <li>Comfortable learning inside existing code and improving structure incrementally</li>
                         </ul>
                     </article>
                 </div>
@@ -1076,30 +1074,31 @@
                     >
                     <ul class="portrait-meta" aria-label="Professional summary tags">
                         <li class="meta-chip">Junior Web Developer</li>
-                        <li class="meta-chip">Bricklaying + Maintenance Background</li>
-                        <li class="meta-chip">Reliable and Detail-Oriented</li>
+                        <li class="meta-chip">Reliable</li>
+                        <li class="meta-chip">Detail-Oriented</li>
                     </ul>
                 </div>
 
                 <article class="about-card">
-                    <p class="eyebrow">About Me</p>
-                    <h2 id="about-title">Junior web developer with a practical work background and a structured approach.</h2>
+                    <p class="eyebrow">About</p>
+                    <h2 id="about-title">Practical front-end work with a structured approach.</h2>
                     <p>
-                        I am a junior web developer building responsive websites with HTML, CSS, and JavaScript. Before
-                        moving into web development, I worked in bricklaying and maintenance, where reliability,
-                        structure, and accuracy mattered every day.
+                        I am a junior web developer focused on clean front-end implementation, responsive layout, and
+                        practical JavaScript.
                     </p>
                     <p>
-                        That background carries directly into how I work on the web: I break problems down clearly,
-                        follow process, pay attention to details, and stay consistent through cleanup and completion. I
-                        am looking for a junior web developer role where I can contribute to front-end builds, bug fixes,
-                        UI cleanup, and steady iteration inside a team.
+                        Before moving into web development, I worked in bricklaying and maintenance, which reinforced
+                        reliability, structured problem-solving, attention to detail, and work ethic that I now bring into project work.
+                    </p>
+                    <p>
+                        I am looking for a junior web role where I can contribute to front-end builds, UI cleanup, bug
+                        fixing, and steady iteration inside a team.
                     </p>
                     <ul class="about-strengths" aria-label="Transferable strengths">
                         <li>Reliability</li>
                         <li>Structured problem-solving</li>
                         <li>Attention to detail</li>
-                        <li>Strong work ethic</li>
+                        <li>Work ethic</li>
                     </ul>
                 </article>
             </div>
@@ -1109,24 +1108,46 @@
             <div class="container">
                 <div class="section-heading">
                     <p class="eyebrow">More Work / Archive</p>
-                    <h2 id="archive-title">AI and experimental projects that show broader technical range</h2>
+                    <h2 id="archive-title">Older UI concepts, experiments, and side projects</h2>
                     <p>
-                        These projects are useful for showing problem solving, tooling, and technical curiosity, but I
-                        keep them after the featured web work so the homepage stays focused on junior web applications.
+                        These projects stay visible because they show broader technical range, but they sit after the
+                        featured work so the homepage remains focused on junior web applications.
                     </p>
                 </div>
 
                 <div class="archive-grid">
                     <article class="archive-card">
-                        <p class="subheading">Experimental Project</p>
+                        <p class="subheading">Front-End Concept</p>
+                        <h3>Savory Bites</h3>
+                        <p>Restaurant landing page concept focused on storytelling sections, CTA placement, and hospitality-style layout design.</p>
+                        <ul class="tag-list" aria-label="Savory Bites tech stack">
+                            <li>HTML</li>
+                            <li>CSS</li>
+                            <li>JavaScript</li>
+                        </ul>
+                        <div class="button-row">
+                            <a class="button button--secondary" href="savory-bites.html">UI Preview</a>
+                            <a
+                                class="button button--secondary"
+                                href="https://github.com/mrmoore6/Portfolio/blob/main/savory-bites.html"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Source Code
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="archive-card">
+                        <p class="subheading">Experimental UI</p>
                         <h3>AEQ - Crystal 3D Audio</h3>
-                        <p>Audio experiment combining spatial EQ ideas with AI-assisted tuning and signal-processing concepts.</p>
+                        <p>Audio interface experiment combining spatial EQ concepts with an interactive control surface and UI feedback.</p>
                         <ul class="tag-list" aria-label="AEQ tech stack">
                             <li>JavaScript</li>
                             <li>Python</li>
                         </ul>
                         <div class="button-row">
-                            <a class="button button--secondary" href="aeq-live-demo.html">Live Demo</a>
+                            <a class="button button--secondary" href="aeq-live-demo.html">UI Preview</a>
                             <a
                                 class="button button--secondary"
                                 href="https://github.com/mrmoore6/AEQ"
@@ -1139,15 +1160,15 @@
                     </article>
 
                     <article class="archive-card">
-                        <p class="subheading">Experimental Project</p>
+                        <p class="subheading">Experimental UI</p>
                         <h3>VeloxMind Studio</h3>
-                        <p>AI assistant project centered on conversation memory, prompt context, and workflow experimentation.</p>
+                        <p>Assistant-style interface experiment focused on prompt workflows, editing actions, and conversation tooling ideas.</p>
                         <ul class="tag-list" aria-label="VeloxMind Studio tech stack">
                             <li>Python</li>
                             <li>AI Workflows</li>
                         </ul>
                         <div class="button-row">
-                            <a class="button button--secondary" href="veloxmind-live-demo.html">Live Demo</a>
+                            <a class="button button--secondary" href="veloxmind-live-demo.html">UI Preview</a>
                             <a
                                 class="button button--secondary"
                                 href="https://github.com/mrmoore6/VeloxMind_Studio"
@@ -1160,15 +1181,15 @@
                     </article>
 
                     <article class="archive-card">
-                        <p class="subheading">Experimental Project</p>
+                        <p class="subheading">Workflow UI Prototype</p>
                         <h3>AI Job Assistant</h3>
-                        <p>Desktop application for resume analysis, job-match scoring, and job-search workflow support.</p>
+                        <p>Job-search workflow interface concept for resume analysis, tailored materials, and assistant-style prompts.</p>
                         <ul class="tag-list" aria-label="AI Job Assistant tech stack">
                             <li>Python</li>
                             <li>Tkinter</li>
                         </ul>
                         <div class="button-row">
-                            <a class="button button--secondary" href="ai-job-assistant-live-demo.html">Live Demo</a>
+                            <a class="button button--secondary" href="ai-job-assistant-live-demo.html">UI Preview</a>
                             <a
                                 class="button button--secondary"
                                 href="https://github.com/mrmoore6/ai_job_assistant"
@@ -1181,15 +1202,15 @@
                     </article>
 
                     <article class="archive-card">
-                        <p class="subheading">Experimental Project</p>
+                        <p class="subheading">Workflow UI Prototype</p>
                         <h3>AI Browser Automation</h3>
-                        <p>Browser automation experiment using natural-language commands to trigger scripted interaction flows.</p>
+                        <p>Automation interface concept that simulates task input, execution states, and run logs in a browser-like dashboard.</p>
                         <ul class="tag-list" aria-label="AI Browser Automation tech stack">
                             <li>Node.js</li>
                             <li>Playwright</li>
                         </ul>
                         <div class="button-row">
-                            <a class="button button--secondary" href="ai-browser-automation-live-demo.html">Live Demo</a>
+                            <a class="button button--secondary" href="ai-browser-automation-live-demo.html">UI Preview</a>
                             <a
                                 class="button button--secondary"
                                 href="https://github.com/mrmoore6/ai-browser-automation"
@@ -1204,26 +1225,60 @@
             </div>
         </section>
 
-        <section class="section section--soft" id="contact" aria-labelledby="contact-title">
+        <section class="section section--soft" id="resume" aria-labelledby="resume-title">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">Resume</p>
+                    <h2 id="resume-title">Current resume and role focus</h2>
+                    <p>
+                        My resume is focused on junior web applications, front-end project work, and the practical work
+                        habits that carry over from my previous background.
+                    </p>
+                </div>
+
+                <article class="resume-card">
+                    <div class="resume-highlights">
+                        <div class="resume-highlight">
+                            <strong>Primary role target</strong>
+                            Junior web or front-end developer roles where I can contribute to implementation, cleanup, and iteration.
+                        </div>
+                        <div class="resume-highlight">
+                            <strong>Project mix</strong>
+                            One interactive browser app plus UI prototypes that show layout, structure, and responsive work.
+                        </div>
+                        <div class="resume-highlight">
+                            <strong>Transferable strengths</strong>
+                            Reliable execution, structured problem-solving, attention to detail, and consistent follow-through.
+                        </div>
+                    </div>
+                    <div class="button-row">
+                        <a class="button button--primary" href="Michael_Moore_General_Resume.pdf" download>Download Resume PDF</a>
+                        <a class="button button--secondary" href="Michael_Moore_General_Resume.docx" download>Download Resume DOCX</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="contact" aria-labelledby="contact-title">
             <div class="container contact-layout">
                 <article class="contact-card">
                     <p class="eyebrow">Contact</p>
                     <h2 id="contact-title">Open to junior web developer opportunities.</h2>
                     <p>
                         If you are hiring for a junior web or front-end role, I would be glad to share more detail about
-                        the projects above and how I approach implementation, cleanup, and iteration.
+                        the projects above and how I approach implementation, cleanup, and steady improvement.
                     </p>
                     <a class="contact-email" href="mailto:mmoore2457@gmail.com">mmoore2457@gmail.com</a>
                     <div class="contact-actions">
                         <a class="button button--primary" href="mailto:mmoore2457@gmail.com" aria-label="Email Michael Moore">Email Me</a>
-                        <a class="button button--secondary" href="Michael_Moore_General_Resume.pdf" download>Download Resume</a>
+                        <a class="button button--secondary" href="Michael_Moore_General_Resume.pdf" download>Resume PDF</a>
                     </div>
                 </article>
 
                 <aside class="contact-card">
                     <p class="subheading">Links</p>
                     <h3>Profiles and source</h3>
-                    <p>Additional work history and portfolio source are available through the links below.</p>
+                    <p>Additional work history and source links are available below.</p>
                     <ul class="profile-links">
                         <li>
                             <a
@@ -1298,7 +1353,7 @@
             });
 
             window.addEventListener("resize", () => {
-                if (window.innerWidth > 840) {
+                if (window.innerWidth > 860) {
                     closeMenu();
                 }
             });
