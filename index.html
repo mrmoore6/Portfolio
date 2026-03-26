@@ -1427,8 +1427,8 @@
                 </div>
 
                 <div class="archive-grid">
-                    <div class="archive-filter-item" data-archive-categories="html-css-js">
-                        <article class="archive-card scroll-fade">
+                    <div class="archive-filter-item" data-archive-categories="html-css-js" data-archive-filter="html-css-js">
+                        <article class="archive-card scroll-fade" data-archive-filter="html-css-js">
                             <p class="subheading">Front-End Concept</p>
                             <h3>Savory Bites</h3>
                             <p>Restaurant landing page concept focused on storytelling sections, CTA placement, and hospitality-style layout design.</p>
@@ -1451,8 +1451,8 @@
                         </article>
                     </div>
 
-                    <div class="archive-filter-item" data-archive-categories="html-css-js python">
-                        <article class="archive-card scroll-fade">
+                    <div class="archive-filter-item" data-archive-categories="html-css-js python" data-archive-filter="html-css-js python">
+                        <article class="archive-card scroll-fade" data-archive-filter="html-css-js python">
                             <p class="subheading">Experimental UI</p>
                             <h3>AEQ - Crystal 3D Audio</h3>
                             <p>Audio interface experiment combining spatial EQ concepts with an interactive control surface and UI feedback.</p>
@@ -1474,8 +1474,8 @@
                         </article>
                     </div>
 
-                    <div class="archive-filter-item" data-archive-categories="python">
-                        <article class="archive-card scroll-fade">
+                    <div class="archive-filter-item" data-archive-categories="python" data-archive-filter="python">
+                        <article class="archive-card scroll-fade" data-archive-filter="python">
                             <p class="subheading">Experimental UI</p>
                             <h3>VeloxMind Studio</h3>
                             <p>Assistant-style interface experiment focused on prompt workflows, editing actions, and conversation tooling ideas.</p>
@@ -1497,8 +1497,8 @@
                         </article>
                     </div>
 
-                    <div class="archive-filter-item" data-archive-categories="python">
-                        <article class="archive-card scroll-fade">
+                    <div class="archive-filter-item" data-archive-categories="python" data-archive-filter="python">
+                        <article class="archive-card scroll-fade" data-archive-filter="python">
                             <p class="subheading">Workflow UI Prototype</p>
                             <h3>AI Job Assistant</h3>
                             <p>Job-search workflow interface concept for resume analysis, tailored materials, and assistant-style prompts.</p>
@@ -1520,8 +1520,8 @@
                         </article>
                     </div>
 
-                    <div class="archive-filter-item" data-archive-categories="nodejs">
-                        <article class="archive-card scroll-fade">
+                    <div class="archive-filter-item" data-archive-categories="nodejs" data-archive-filter="nodejs">
+                        <article class="archive-card scroll-fade" data-archive-filter="nodejs">
                             <p class="subheading">Workflow UI Prototype</p>
                             <h3>AI Browser Automation</h3>
                             <p>Automation interface concept that simulates task input, execution states, and run logs in a browser-like dashboard.</p>
@@ -1866,6 +1866,19 @@
             item.archiveHideHandler = handleArchiveItemHide;
             item.addEventListener("transitionend", handleArchiveItemHide);
         };
+        const getArchiveItemCategories = (item) => {
+            const archiveCard = item.querySelector(".archive-card");
+            const rawCategories =
+                item.dataset.archiveCategories ||
+                item.dataset.archiveFilter ||
+                archiveCard?.dataset.archiveFilter ||
+                "";
+
+            return rawCategories
+                .split(" ")
+                .map((category) => category.trim())
+                .filter(Boolean);
+        };
         const applyArchiveFilter = (filterValue) => {
             archiveFilterButtons.forEach((button) => {
                 const isActive = (button.dataset.archiveFilter || "all") === filterValue;
@@ -1874,10 +1887,7 @@
             });
 
             archiveFilterItems.forEach((item) => {
-                const itemCategories = (item.dataset.archiveCategories || "")
-                    .split(" ")
-                    .map((category) => category.trim())
-                    .filter(Boolean);
+                const itemCategories = getArchiveItemCategories(item);
                 const shouldShow = filterValue === "all" || itemCategories.includes(filterValue);
 
                 if (shouldShow) {
