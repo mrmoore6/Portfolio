@@ -1866,18 +1866,24 @@
             item.archiveHideHandler = handleArchiveItemHide;
             item.addEventListener("transitionend", handleArchiveItemHide);
         };
-        const getArchiveItemCategories = (item) => {
+        const getArchiveItemFilterValue = (item) => {
             const archiveCard = item.querySelector(".archive-card");
-            const rawCategories =
-                item.dataset.archiveCategories ||
-                item.dataset.archiveFilter ||
+            return (
                 archiveCard?.dataset.archiveFilter ||
-                "";
+                item.dataset.archiveFilter ||
+                item.dataset.archiveCategories ||
+                ""
+            )
+                .trim()
+                .replace(/\s+/g, " ");
+        };
+        const archiveItemMatchesFilter = (item, filterValue) => {
+            if (filterValue === "all") {
+                return true;
+            }
 
-            return rawCategories
-                .split(" ")
-                .map((category) => category.trim())
-                .filter(Boolean);
+            const itemFilterValue = getArchiveItemFilterValue(item);
+            return ` ${itemFilterValue} `.includes(` ${filterValue} `);
         };
         const applyArchiveFilter = (filterValue) => {
             archiveFilterButtons.forEach((button) => {
@@ -1887,8 +1893,7 @@
             });
 
             archiveFilterItems.forEach((item) => {
-                const itemCategories = getArchiveItemCategories(item);
-                const shouldShow = filterValue === "all" || itemCategories.includes(filterValue);
+                const shouldShow = archiveItemMatchesFilter(item, filterValue);
 
                 if (shouldShow) {
                     showArchiveFilterItem(item);
